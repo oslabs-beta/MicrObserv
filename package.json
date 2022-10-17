@@ -1,0 +1,32 @@
+{
+  "name": "microbserv",
+  "version": "1.0.0",
+  "description": "An open source real-time &amp; event-driven observability tool for microservices.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oslabs-beta/MicrObserv.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/MicrObserv/issues"
+  },
+  "homepage": "https://github.com/oslabs-beta/MicrObserv#readme",
+  "devDependencies": {
+    "concurrently": "^7.4.0",
+    "electron": "^21.1.1",
+    "electron-reload": "^2.0.0-alpha.1",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "pg": "^8.8.0",
+    "react": "^18.2.0",
+    "typescript": "^4.8.4"
+  }
+}
