@@ -1,6 +1,5 @@
 require('dotenv').config()
 const { Pool } = require('pg');
-const express = require("express");
 
 let dbQuery;
 // INITIALIZE DATABASE
@@ -68,7 +67,11 @@ if(successfulStart){
     }
 
     // SERVER
+    const express = require("express");
+    const cors = require('cors');
+
     const serviceB = express();
+    serviceB.use(cors());
     const PORT = 8081;
 
     // Return data from database
