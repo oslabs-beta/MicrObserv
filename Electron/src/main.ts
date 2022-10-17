@@ -7,15 +7,14 @@ const createWindow = () => {
     width: 800,
     height: 600,
   });
-  win.loadFile('index.html');
+  win.loadFile('./index.html');
+
+  // Open the DevTools.
+  win.webContents.openDevTools();
 };
 
 app.whenReady().then(() => {
   createWindow();
-  //open a window if non are open (MacOS)
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
 });
 
 //quits the app when all windows are closed
@@ -25,5 +24,14 @@ app.on('window-all-closed', () => {
   // explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit();
+  }
+});
+
+app.on('activate', () => {
+  // On macOS it's common to re-create a window in the
+  // app when the dock icon is clicked and there are no
+  // other windows open.
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
   }
 });
