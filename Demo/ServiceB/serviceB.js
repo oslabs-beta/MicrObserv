@@ -1,5 +1,8 @@
 require('dotenv').config()
 const { Pool } = require('pg');
+require('../../microbserv_package/microbserv/start').httpRequestEventListener();
+require('../../microbserv_package/microbserv/start').consoleLogEventListener();
+
 
 let dbQuery;
 // INITIALIZE DATABASE
