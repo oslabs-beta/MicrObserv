@@ -7,13 +7,13 @@ let fetchData = false;
 const startLoop = async (req, res, next) => {
     // Helper function - recursively makes a request to get data from Service B if fetchData is true
     const getDataFromServiceB = async () => {
-        const reqTime = 500;
+        const { reqTime , timeOut} = req.query;
         try{
             const response = await fetch(`http://localhost:8081/demo?reqTime=${reqTime}`);
             if(response.status === 200){
                 const data = await response.json();
                 console.log("Data from Service B: ", data);
-                if (fetchData) setTimeout(getDataFromServiceB, 1000);
+                if (fetchData) setTimeout(getDataFromServiceB, timeOut);
             }else{
                 return console.log("HTTP Error: ", response);
             }   
