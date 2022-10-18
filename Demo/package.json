@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "concurrently": "^7.4.0",
+    "eslint": "^8.25.0",
     "nodemon": "^2.0.20"
   }
 }

@@ -1,8 +1,10 @@
 const express = require('express');
 const fetch = require('node-fetch');
-
-require('../../microbserv_package/microbserv/start').httpRequestEventListener();
-require('../../microbserv_package/microbserv/start').consoleLogEventListener();
+// REQUIRE MODULE IN EACH SERVER
+// const options = {
+//     URI: 
+// }
+require('../../microbserv_package/microbserv/start').start(options);
 
 let fetchData = false;
 // MIDDLEWARE
@@ -45,5 +47,5 @@ const PORT = 8080;
 serviceA.use('/start', fetchDataTrue, startLoop, (req, res)=> res.status(200).send('Started'));
 serviceA.use('/stop', fetchDataFalse, (req, res) => res.status(200).send('Stopped'));
 
-serviceA.listen(PORT, () => console.log(`Service A running on port: ${PORT}...`));
+serviceA.listen(PORT, () => console.log(`Started Service A, running on port: ${PORT}...`));
 
