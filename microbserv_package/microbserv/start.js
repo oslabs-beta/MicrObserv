@@ -1,15 +1,22 @@
-
-
-const httpRequestEventListener = ()=>{
-    const https = require('https');
-    const og = https.request;
-    https.request = (options, callback)=>{
-        console.log(callback);
-        return og(options, callback);
-    }
+const createTracer = () => {
+    console.log('Creating Tracer...');
 }
 
-httpRequestEventListener();
+const httpRequestEventListener = ()=>{
+    const http = require('http');
+    const ogHttp = http.request;
+    http.request = (options, callback)=>{
+        createTracer();
+        return ogHttp(options, callback);
+    }
+
+    const https = require('https');
+    const ogHttps = https.request;
+    https.request = (options, callback)=>{
+        createTracer();
+        return ogHttps(options, callback);
+    }
+}
 
 const consoleLogEventListener = ()=>{
     const console = require('console');
@@ -23,4 +30,7 @@ const consoleLogEventListener = ()=>{
     }
 }
 
-consoleLogEventListener();
+module.exports = {
+    httpRequestEventListener: httpRequestEventListener,
+    consoleLogEventListener: consoleLogEventListener
+}

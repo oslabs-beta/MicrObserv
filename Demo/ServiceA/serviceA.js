@@ -1,6 +1,9 @@
 const express = require('express');
 const fetch = require('node-fetch');
 
+require('../../microbserv_package/microbserv/start').httpRequestEventListener();
+require('../../microbserv_package/microbserv/start').consoleLogEventListener();
+
 let fetchData = false;
 // MIDDLEWARE
 // startLoop function simulates console logs and http.requests for both microservices
