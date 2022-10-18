@@ -1,7 +1,8 @@
 require('dotenv').config()
 const { Pool } = require('pg');
-require('../../microbserv_package/microbserv/start').httpRequestEventListener();
-require('../../microbserv_package/microbserv/start').consoleLogEventListener();
+// REQUIRE MODULE IN EACH SERVER
+require('../../microbserv_package/microbserv/start').start();
+
 
 
 let dbQuery;
@@ -96,5 +97,5 @@ if(successfulStart){
     });
 
     // Start server
-    serviceB.listen(PORT, () => console.log(`Service B running on port: ${PORT}...`));
+    serviceB.listen(PORT, () => console.log(`Started Service B, running on port: ${PORT}...`));
 }
