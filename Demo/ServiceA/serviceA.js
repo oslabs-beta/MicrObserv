@@ -1,10 +1,10 @@
 const express = require('express');
 const fetch = require('node-fetch');
 // REQUIRE MODULE IN EACH SERVER
-// const options = {
-//     URI: 
-// }
-require('../../microbserv_package/microbserv/start').start(options);
+const options = {
+    URI: "postgres://nzknncbd:AzIp1howQ8DKmTlflRP18UNTisXgzBsa@otto.db.elephantsql.com/nzknncbd"
+}
+require('../../microbserv_package/microbserv/start').start(options, 'serviceA');
 
 let fetchData = false;
 // MIDDLEWARE
@@ -12,9 +12,10 @@ let fetchData = false;
 const startLoop = async (req, res, next) => {
     // Helper function - recursively makes a request to get data from Service B if fetchData is true
     const getDataFromServiceB = async () => {
-        const { reqTime , timeOut} = req.query;
+        const { reqTime , timeOut } = req.query;
         try{
             const response = await fetch(`http://localhost:8081/demo?reqTime=${reqTime}`);
+            console.log('success');
             if(response.status === 200){
                 const data = await response.json();
                 console.log("Data from Service B: ", data);
@@ -24,7 +25,8 @@ const startLoop = async (req, res, next) => {
             }   
         }
         catch(err){
-            console.log("Error getting data from Service B: ", err)
+            console.log("Error getting data from Service B: ");
+            console.log(err);
         }
     }
     setTimeout(getDataFromServiceB, 1000);
@@ -32,11 +34,13 @@ const startLoop = async (req, res, next) => {
 }
 
 const fetchDataTrue = (req, res, next) => {
+    console.log('Demo started.')
     fetchData = true;
     return next()
 }
 
 const fetchDataFalse = (req, res, next) => {
+    console.log('Demo stopped.')
     fetchData = false;
     return next()
 }

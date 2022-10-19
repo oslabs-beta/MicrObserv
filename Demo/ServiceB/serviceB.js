@@ -1,8 +1,10 @@
 require('dotenv').config()
 const { Pool } = require('pg');
 // REQUIRE MODULE IN EACH SERVER
-require('../../microbserv_package/microbserv/start').start();
-
+const options = {
+    URI: "postgres://nzknncbd:AzIp1howQ8DKmTlflRP18UNTisXgzBsa@otto.db.elephantsql.com/nzknncbd"
+}
+require('../../microbserv_package/microbserv/start').start(options, 'serviceB');
 
 
 let dbQuery;
