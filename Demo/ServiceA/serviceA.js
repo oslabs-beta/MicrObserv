@@ -2,7 +2,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 // REQUIRE MODULE IN EACH SERVER
 const options = {
-    URI: "postgres://nzknncbd:AzIp1howQ8DKmTlflRP18UNTisXgzBsa@otto.db.elephantsql.com/nzknncbd"
+    URI: ""
 }
 require('../../microbserv_package/microbserv/start').start(options, 'serviceA');
 
