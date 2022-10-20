@@ -1,0 +1,5 @@
+//babel presets to check for env and react
+{ "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react"
+] }
