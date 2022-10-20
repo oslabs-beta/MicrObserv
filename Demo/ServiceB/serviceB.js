@@ -1,17 +1,29 @@
+const express = require("express");
+const cors = require('cors');
 require('dotenv').config()
 const { Pool } = require('pg');
+// REQUIRE MODULE IN EACH SERVER
+/* SETUP PACKAGE WITH OPTIONS
+ * URI: (postgres uri for storing logs and tracers)
+ */
+/* FOR LOCAL TESTING
+ * DO NOT PUSH YOUR "pgURI" TO GITHUB
+ * REPLACE THE EMPTY STRING WITH YOUR LOCAL/MLAB/ELEPHANTSQL URI AND UNCOMMENT || EXPRESSION ON LINE 11
+ */
+// const pgURI = "";
+const microbservURI = process.env.PG_URI // || pgURI;
+const options = {
+    URI: microbservURI
+}
+require('../../microbserv_package/microbserv/start').start(options, 'serviceB');
+
 
 let dbQuery;
 // INITIALIZE DATABASE
 const startUp = async ()=>{
     try{
         // Connect to database
-        /* FOR LOCAL TESTING
-         * DO NOT PUSH YOUR "pgURI" TO GITHUB
-         * REPLACE THE EMPTY STRING WITH YOUR LOCAL/MLAB/ELEPHANTSQL URI AND UNCOMMENT || EXPRESSION ON LINE 11
-         */
-        // const pgURI = "";
-        const URI = process.env.PG_URI //|| pgURI;
+        const URI = process.env.DEMO_URI //|| pgURI;
         const pool = new Pool({
             connectionString: URI
         });
@@ -67,8 +79,6 @@ if(successfulStart){
     }
 
     // SERVER
-    const express = require("express");
-    const cors = require('cors');
 
     const serviceB = express();
     serviceB.use(cors());
@@ -93,5 +103,5 @@ if(successfulStart){
     });
 
     // Start server
-    serviceB.listen(PORT, () => console.log(`Service B running on port: ${PORT}...`));
+    serviceB.listen(PORT, () => console.log(`Started Service B, running on port: ${PORT}...`));
 }
