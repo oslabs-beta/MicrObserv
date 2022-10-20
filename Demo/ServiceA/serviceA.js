@@ -1,8 +1,18 @@
 const express = require('express');
 const fetch = require('node-fetch');
+require('dotenv').config()
 // REQUIRE MODULE IN EACH SERVER
+/* SETUP PACKAGE WITH OPTIONS
+ * URI: (postgres uri for storing logs and tracers)
+ */
+/* FOR LOCAL TESTING
+ * DO NOT PUSH YOUR "pgURI" TO GITHUB
+ * REPLACE THE EMPTY STRING WITH YOUR LOCAL/MLAB/ELEPHANTSQL URI AND UNCOMMENT || EXPRESSION ON LINE 11
+ */
+// const pgURI = "";
+const microbservURI = process.env.PG_URI // || pgURI;
 const options = {
-    URI: ""
+    URI: microbservURI
 }
 require('../../microbserv_package/microbserv/start').start(options, 'serviceA');
 
@@ -15,10 +25,9 @@ const startLoop = async (req, res, next) => {
         const { reqTime , timeOut } = req.query;
         try{
             const response = await fetch(`http://localhost:8081/demo?reqTime=${reqTime}`);
-            console.log('success');
             if(response.status === 200){
                 const data = await response.json();
-                console.log("Data from Service B: ", data);
+                console.log('Data received from Service B.');
                 if (fetchData) setTimeout(getDataFromServiceB, timeOut);
             }else{
                 return console.log("HTTP Error: ", response);
