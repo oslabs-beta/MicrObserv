@@ -12,8 +12,9 @@ const createWindow = () => {
   });
   ipcMain.handle('ping', () => 'pong');
   //   win.loadURL('https://github.com');
-  win.loadURL('http://localhost:8080/');
-  // win.loadFile('./src/index.html');
+  // win.loadURL('http://localhost:8080/');
+  win.loadFile('./dist/index.html');
+  // win.loadURL(path.join(__dirname, 'dist/index.html'));
 };
 
 app.whenReady().then(() => {
