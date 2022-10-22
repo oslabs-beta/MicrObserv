@@ -1,6 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Login() {
+  //state for grabbing user information
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  console.log('email: ', email);
+  console.log('password: ', password);
+
+  //function to grab input value and change state
+  function handleChange(event) {
+    console.log(event.target);
+    if (event.target.type === 'email') {
+      setEmail(event.target.value);
+    }
+    if (event.target.type === 'password') {
+      setPassword(event.target.value);
+    }
+  }
+  //sending data to server
+  function handleSubmit(event) {}
+
   return (
     <section class='bg-gray-50 dark:bg-gray-900'>
       <div class='flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0'>
@@ -29,6 +49,7 @@ export default function Login() {
                   Email
                 </label>
                 <input
+                  onChange={handleChange}
                   type='email'
                   name='email'
                   id='email'
@@ -45,6 +66,7 @@ export default function Login() {
                   Password
                 </label>
                 <input
+                  onChange={handleChange}
                   type='password'
                   name='password'
                   id='password'
