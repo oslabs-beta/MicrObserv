@@ -10,11 +10,10 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+  // demo example of endpoint
   ipcMain.handle('ping', () => 'pong');
-  //   win.loadURL('https://github.com');
-  // win.loadURL('http://localhost:8080/');
+  //loads webpage from
   win.loadFile('./dist/index.html');
-  // win.loadURL(path.join(__dirname, 'dist/index.html'));
 };
 
 app.whenReady().then(() => {
