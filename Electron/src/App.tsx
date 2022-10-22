@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import ReactDOM, { render } from 'react-dom';
-// import { useState } from 'react';
-// const { useState } = require('react');
-// const ReactDOM = require('react-dom');
-import Login from './pages/login/login.jsx';
-import Signup from './pages/login/signup.jsx';
-import BothDisplay from './pages/dashboard/bothDisplay.jsx';
+//pages
+import Login from './pages/login/login';
+import SignUp from './pages/login/signUp';
+import BothDisplay from './pages/dashboard/bothDisplay';
+//styles
+import './styles';
+
 const App = () => {
   const [page, updatePage] = useState('login');
 
@@ -13,7 +14,7 @@ const App = () => {
     //check to see if user is logged in
     switch (page) {
       case 'login':
-        return <Login updatePage={updatePage} />;
+        return <Login />;
         break;
       case 'home':
         //go to home
