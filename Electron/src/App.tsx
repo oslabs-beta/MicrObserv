@@ -4,11 +4,12 @@ import ReactDOM, { render } from 'react-dom';
 import Login from './pages/login/login';
 import SignUp from './pages/login/signUp';
 import BothDisplay from './pages/dashboard/bothDisplay';
+
 //styles
 import './styles';
 
 const App = () => {
-  const [page, updatePage] = useState('login');
+  const [page, updatePage] = useState('dashboard');
 
   const renderPage = function () {
     //check to see if user is logged in
@@ -23,7 +24,7 @@ const App = () => {
         //go to settings
         break;
       case 'dashboard':
-        //go to dashboard
+        return <BothDisplay />;
         break;
     }
   };

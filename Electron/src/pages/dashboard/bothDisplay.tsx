@@ -1,14 +1,12 @@
 import React from 'react';
+import Navbar from './navbar';
+import Dashboard from './dashboard';
 
 export default function BothDisplay() {
   return (
-   <div>
     <div>
-      Search Bar
+      <Navbar />
+      <Dashboard />
     </div>
-    <div>
-      Graphs
-    </div>
-   </div>
   );
 }
