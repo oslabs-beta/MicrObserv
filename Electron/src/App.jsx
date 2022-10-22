@@ -1,7 +1,10 @@
-// import React from "react";
-// import ReactDOM from "react-dom";
-const { useState } = require('react');
-const ReactDOM = require('react-dom');
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+// import { useState } from 'react';
+// const { useState } = require('react');
+// const ReactDOM = require('react-dom');
+import Login from './pages/login/login.jsx';
+import Signup from './pages/login/signup.jsx';
 
 const App = () => {
   const [page, updatePage] = useState('login');
@@ -22,14 +25,11 @@ const App = () => {
         break;
     }
   };
+
   return (
     <div>
-      <h1>Hello!!</h1>
-      <h2>Welcome to your First React App..!</h2>
-      <h2>hot reload</h2>
-      <h2>hot reload</h2>
-      <h2>hot reload</h2>
-      <h2>hot reload</h2>
+      <Login />
+      <Signup />
     </div>
   );
 };

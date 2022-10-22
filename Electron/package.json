@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron .",
+    "start": "electron main.js",
     "dev": "webpack serve --mode development --open --hot",
     "build": "webpack --mode production"
   },
