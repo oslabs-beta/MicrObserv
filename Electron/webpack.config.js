@@ -12,6 +12,7 @@ module.exports = {
   },
   devServer: {
     port: 8080,
+    host: '0.0.0.0'
   },
   module: {
     rules: [
@@ -19,6 +20,10 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+      },
+      {
+        test: /\.png/,
+        type: 'asset/resource'
       },
       {
         test: /\.css$/,
