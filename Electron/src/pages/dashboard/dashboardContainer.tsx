@@ -1,20 +1,21 @@
 import React from 'react';
-import LogFilterBtn from './smartLogs/logFilter'
+import LogFilterBtn from './smartLogs/logFilter';
+import LogError from './smartLogs/logError';
+import LogSearch from './smartLogs/logSearch';
+
 function DashboardContainer(props) {
   return (
-    <div className="card overflow-visible h-full w-full">
-      <div className="card-body">
-        <div className='dash-nav'>
-          <button className="h-5">{props.title}</button>
-          <LogFilterBtn />
+    <div className='card overflow-visible h-full w-full'>
+      <div className='card-body'>
+        <div className='dash-nav items-center'>
+          <button className='h-15'>{props.title}</button>
+          {/* <LogFilterBtn /> */}
+          <LogSearch />
+          <LogError />
         </div>
       </div>
     </div>
   );
 }
-
-
-
-
 
 export default DashboardContainer;
