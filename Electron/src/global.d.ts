@@ -1,2 +1,6 @@
-declare module "*.jpg"
-declare module "*.png"
+// export {};
+// declare global {
+//   interface Window {
+//     server: any;
+//   }
+// }
