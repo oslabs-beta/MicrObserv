@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LogFilterBtn from './smartLogs/logFilter'
 function DashboardContainer(props) {
+  useEffect(()=>{
+    
+  })
   return (
     <div className="card overflow-visible h-full w-full">
       <div className="card-body">
