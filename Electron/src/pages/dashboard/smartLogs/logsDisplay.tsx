@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DashboardContainer from '../dashboardContainer';
 
 //create empty array
@@ -7,7 +7,28 @@ import DashboardContainer from '../dashboardContainer';
 //display array
 
 export default function LogsDisplay() {
+  const [logs, updateLogs] = useState([]);
+  useEffect(()=>{
+    const logsQueryIntervalId = setInterval(()=>{
+      //query db
+      const getDbLogs = async ()=>{
+        try{
+          // const logs = await window.server.pgQuery('SELECT * FROM logs;')
+          // console.log(logs);
+          console.log(window)
+        }
+        catch(err){
+          console.log(err);
+        }
+      }
+      getDbLogs();
+    }, 5000);
 
+    // clear intervalId
+    return function cleanup() {
+      clearInterval(logsQueryIntervalId);
+    }
+  });
   return (
     <div className='w-full'>
       <DashboardContainer title='Logs'/>
