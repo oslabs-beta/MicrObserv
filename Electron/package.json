@@ -24,21 +24,23 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^6.7.1",
+    "daisyui": "^2.33.0",
     "electron": "^21.2.0",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "postcss": "^8.4.18",
     "postcss-loader": "^7.0.1",
     "postcss-preset-env": "^7.8.2",
     "style-loader": "^3.3.1",
+    "tailwind-scrollbar": "^2.0.1",
+    "tailwindcss": "^3.2.1",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
-    "daisyui": "^2.33.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwindcss": "^3.2.1",
     "ts-loader": "^9.4.1",
     "typescript": "^4.8.4"
   }
