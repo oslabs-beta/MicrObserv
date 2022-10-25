@@ -1,5 +1,5 @@
 import React from 'react';
-import LogFilterBtn from './logs/logFilter'
+import LogFilterBtn from './smartLogs/logFilter'
 function DashboardContainer(props) {
   return (
     <div className="card overflow-visible h-full w-full">

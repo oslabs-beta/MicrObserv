@@ -1,5 +1,5 @@
 import React from 'react';
-import LogsDisplay from './logs/logsDisplay';
+import LogsDisplay from './smartLogs/logsDisplay';
 import TracersDisplay from './tracers/tracersDisplay';
 export default function Dashboard() {
   return (
