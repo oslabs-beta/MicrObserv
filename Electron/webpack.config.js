@@ -24,7 +24,7 @@ const electronConfig = {
 
 const reactConfig = {
   entry: './src/App.tsx',
-  target: 'electron-renderer',
+  // target: 'electron-renderer',
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.js',
@@ -67,6 +67,6 @@ const reactConfig = {
 
 
 module.exports = [
-  electronConfig,
+  // electronConfig,
   reactConfig
 ];

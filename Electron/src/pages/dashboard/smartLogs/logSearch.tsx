@@ -6,7 +6,7 @@ export default function LogSearch() {
       <label className='input-group input-group-sm'>
         <input
           type='text'
-          placeholder='Search..'
+          placeholder='Service..'
           className='input input-bordered input-sm'
         />
       </label>
