@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, version} from 'react';
 import DashboardContainer from '../dashboardContainer';
 
 //create empty array
 //create fetch request
 //for each row create a div and push into array
 //display array
-
+window.ipcBridge.handle('res', (event, data)=> console.log(data));
 export default function LogsDisplay() {
   const [logs, updateLogs] = useState([]);
   useEffect(()=>{
@@ -13,9 +13,7 @@ export default function LogsDisplay() {
       //query db
       const getDbLogs = async ()=>{
         try{
-          // const logs = await window.server.pgQuery('SELECT * FROM logs;')
-          // console.log(logs);
-          console.log(window)
+          await window.ipcBridge.invoke('pgLogs', 'serviceA');
         }
         catch(err){
           console.log(err);
