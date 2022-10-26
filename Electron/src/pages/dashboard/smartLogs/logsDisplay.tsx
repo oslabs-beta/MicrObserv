@@ -8,29 +8,29 @@ import DashboardContainer from '../dashboardContainer';
 
 export default function LogsDisplay() {
   const [logs, updateLogs] = useState([]);
-  useEffect(()=>{
-    const logsQueryIntervalId = setInterval(()=>{
+
+  useEffect(() => {
+    const logsQueryIntervalId = setInterval(() => {
       //query db
-      const getDbLogs = async ()=>{
-        try{
+      const getDbLogs = async () => {
+        try {
           // const logs = await window.server.pgQuery('SELECT * FROM logs;')
           // console.log(logs);
-          console.log(window)
-        }
-        catch(err){
+          console.log(window);
+        } catch (err) {
           console.log(err);
         }
-      }
+      };
       getDbLogs();
     }, 5000);
 
     // clear intervalId
     return function cleanup() {
       clearInterval(logsQueryIntervalId);
-    }
+    };
   });
   return (
-    <div className='w-full'>
+    <div className='w-full overflow-hidden'>
       <DashboardContainer title='Logs' />
       <LogsContainer />
     </div>
@@ -40,7 +40,7 @@ export default function LogsDisplay() {
 const LogsContainer = () => {
   let logElements: any = [];
   // mock logs
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 9; i++) {
     logElements.push(<LogElement key={i} />);
   }
   return (
@@ -52,60 +52,48 @@ const LogsContainer = () => {
 
 // Expandable element for containing log info
 const LogElement = (props) => {
-  const msg = 'Running MicrObsrv\n\na';
+  const [style, setStyle] = useState('log-element');
+
+  const changeStyle = () => {
+    console.log('you just clicked');
+    if (style === 'log-element-clicked') {
+      setStyle('log-element');
+    } else {
+      setStyle('log-element-clicked');
+    }
+  };
+
   const serviceName = 'Service A';
+  const time = '21:22';
+  const logMessage = `Attempted to divide by zero.
+    Error: ENOENT: no such file or directory, open './NoFileNamedThis.txt'
+        at Object.openSync (fs.js:498:3)
+        at Object.readFileSync (fs.js:394:35)
+        at fileDoesNotExist (C:\Users.js:33:6)
+        at Object.<anonymous> (C:\Users:54:3)
+        at Module._compile (internal/modules/cjs/loader.js:1072:14)
+        at Object.Module._extensions..js (internal/modules/cjs/loader.js:1101:10)
+        at Module.load (internal/modules/cjs/loader.js:937:32)
+        at Function.Module._load (internal/modules/cjs/loader.js:778:12)
+        at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:76:12)
+        at internal/main/run_main_module.js:17:47 `;
 
   return (
     <div className='flex justify-between p-1'>
-      <div className='overflow-hidden convex-shadow text-justify p-3 bg-zinc-800 rounded-xl w-[99%]'>
+      <div
+        className={`${style} overflow-hidden convex-shadow text-justify p-3 bg-zinc-800 rounded-xl w-[99%]`}
+        onClick={changeStyle}
+      >
         {/* Service Name */}
-        <div className='flex justify-between'>
-          <h2 className='font-bold'>{serviceName}</h2>
-          <div>Time: 21:15</div>
+        <div className='title flex justify-between font-bold'>
+          <h2>{serviceName}</h2>
+          <div>{`Time: ${time}`}</div>
         </div>
-        <div
-          tabIndex={0}
-          className='collapse collapse-arrow border border-base-300 bg-base-200 rounded-box'
-        >
-          <div className='truncate overflow-hidden collapse-title text-md font-medium'>
-            Log Message Log Message Log Message Log Message Log Message Log
-            Message Log Message
-            
-          </div>
-          <div className='collapse-content'>
-            <p>
-              {' '}
-              Log MessageLog MessageLog MessageLog MessageLog MessageLog
-              MessageLog MessageLog Message
-            </p>
-            <hr></hr>
-            <p>
-              Source
-            </p>
-          </div>
+        {/* log's message */}
+        <div className='messageDiv overflow-hidden text-slate-50 mt-2'>
+          <code>{logMessage}</code>
         </div>
       </div>
-    </div>
-    // <div
-    //   tabIndex={0}
-    //   className='collapse collapse-arrow border border-base-300 bg-base-100 rounded-box'
-    // >
-    //   <div className='collapse-title text-xl font-medium'>
-    //     Focus me to see content
-    //   </div>
-    //   <div className='collapse-content'>
-    //     <p>tabIndex={0} attribute is necessary to make the div focusable</p>
-    //   </div>
-    // </div>
-  );
-};
-
-const LogData = (props) => {
-  return (
-    <div className='log-data self-end'>
-      <div>Time</div>
-      <div className='divider divider-horizontal'></div>
-      <div>Source</div>
     </div>
   );
 };

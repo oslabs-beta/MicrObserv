@@ -13,8 +13,10 @@ function DashboardContainer(props) {
         <div className='dash-nav items-center'>
           <button className='h-15'>{props.title}</button>
           {/* <LogFilterBtn /> */}
-          <LogSearch />
+          <div className='flex items-center gap-2'>
+            <LogSearch />
           <LogError />
+          </div>
         </div>
       </div>
     </div>

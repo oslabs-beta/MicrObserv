@@ -3,7 +3,7 @@ information.innerText = `This app is using Chrome (v${versions.chrome()}), Node.
 and Everything ${versions.everything()}`;
 
 const func = async () => {
-  const response = await versions.ping();
+  const response = await window.versions.ping();
   console.log(response); // prints out 'pong'
 };
 
