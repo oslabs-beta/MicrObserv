@@ -1,29 +1,39 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { Pool } = require('pg');
+const data = require('./demo/data');
+
+// const myURI = 'postgres://nzknncbd:AzIp1howQ8DKmTlflRP18UNTisXgzBsa@otto.db.elephantsql.com/nzknncbd';
+// const URI = process.env.PG_URI || myURI;
+// const pool = new Pool({
+  //   connectionString: URI
+  // });
+// const pgQuery = async (text, params, callback)=> pool.query(text, params, callback);
+// console.log('before');
+// pool.query('SELECT * FROM Logs;').then((data)=>console.log(data));
+// console.log('after');
+
 console.log('MicrObserv Desktop is running');
-
-const myURI = 'postgres://nzknncbd:AzIp1howQ8DKmTlflRP18UNTisXgzBsa@otto.db.elephantsql.com/nzknncbd';
-const URI = process.env.PG_URI || myURI;
-const pool = new Pool({
-  connectionString: URI
-});
-
-const pgQuery = async (text, params, callback)=> pool.query(text, params, callback);
-console.log('before');
-pool.query('SELECT * FROM Logs;').then((data)=>console.log(data));
-console.log('after');
 let win;
 
-const getData = async (serviceName) => {
-  try{
-    console.log(serviceName);
-    let results = await pgQuery('SELECT * FROM Logs;');
-    return results;
+const getLogs = async (serviceName) => {
+  data.generateLogs(serviceName);
+  if(!serviceName) return data.logs;
+  const serviceLogs = [];
+  for(const log of data.logs){
+    if(log.src === serviceName) serviceLogs.push(log);
   }
-  catch(err){
-    console.log(err);
+  return serviceLogs;
+}
+const getTracers = async (serviceName) => {
+  data.generateTracers(serviceName);
+  if(!serviceName) return data.tracers;
+  const serviceTracers = [];
+  for(const tracer of data.tracers){
+    if(tracer.src === serviceName || tracer.dest === serviceName)
+      serviceTracers.push(tracer);
   }
+  return serviceTracers;
 }
 
 // getData('serviceA').then((data)=>console.log(data));
@@ -39,7 +49,12 @@ const createWindow = () => {
 
   ipcMain.handle('pgLogs', async (event, serviceName) => {
     // win.webContents.send('res', 'dbLogs');
-    getData(serviceName)
+    getLogs(serviceName)
+    .then((data) => {
+      console.log(data);
+      win.webContents.send('res', data);
+    });
+    getTracers(serviceName)
     .then((data) => {
       console.log(data);
       win.webContents.send('res', data);
