@@ -1,5 +1,7 @@
 import React from 'react';
 
+// this is a slider that turns checks for error logs
+
 export default function LogError() {
   return (
     <div className='form-control flex-row items-center'>
