@@ -1,6 +1,6 @@
-// export {};
-// declare global {
-//   interface Window {
-//     server: any;
-//   }
-// }
+export {};
+declare global {
+  interface Window {
+    ipcBridge: any;
+  }
+}

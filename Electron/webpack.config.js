@@ -1,8 +1,30 @@
 //webpack.config.js
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-module.exports = {
+
+const electronConfig = {
+  entry: './main.js',
+  target: 'electron-main',
+  output: {
+    path: path.join(__dirname, '/dist'),
+    filename: 'main.js'
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.css']
+  },
+  module: {
+    rules: [{
+      test: /\.(ts|tsx)?$/,
+      exclude: /node_modules/,
+      loader: 'ts-loader',
+    }]
+  }
+};
+
+const reactConfig = {
   entry: './src/App.tsx',
+  // target: 'electron-renderer',
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.js',
@@ -42,3 +64,9 @@ module.exports = {
     }),
   ],
 };
+
+
+module.exports = [
+  // electronConfig,
+  reactConfig
+];
