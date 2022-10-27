@@ -1,7 +1,3 @@
-const data = {
-  logs: [],
-  tracers: []
-}
 
 const log = {
   src: 'serviceA',
@@ -38,49 +34,95 @@ const newTracer = (src, dest, traceId, sender, starttime, endtime, completed)=> 
   if(completed !== undefined) nTracer.completed = completed;
   return nTracer;
 }
-
-data.generateLogs = serviceName => {
-  if(data.logs.length > 15) return;
-  for(let i=0; i<2; i++){
-    const msg = i % 2 === 0 ? 'fetching data from dbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' : 'data received';
-    data.logs.push(
-      newLog(serviceName, msg, new Date().toISOString().slice(0, 19).replace('T', ' '))
-    );
+const data = {
+  logs: [],
+  tracers: [],
+  generateLogs: (serviceName) => {
+    if(data.logs.length > 15) return;
+    for(let i=0; i<2; i++){
+      const msg = i % 2 === 0 ? 'fetching data from b' : 'data received';
+      data.logs.push(
+        newLog(serviceName, msg, new Date().toISOString().slice(0, 19).replace('T', ' '))
+      );
+    }
+  },
+  generateTracers: (serviceName) => {
+    if(data.tracers.length > 15) return;
+    for(let i=0; i<2; i++){
+      const starttime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      const endtime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      if(i % 2 === 0){ // sender
+        data.tracers.push(
+          newTracer(
+            serviceName, 
+            'serviceB', 
+            `${i}`,
+            true,
+            starttime,
+            endtime,
+            true
+          )
+        );
+      }
+      else{ // receiver
+        data.tracers.push(
+          newTracer(
+            'serviceB',
+            'serviceB',
+            `${i-1}`,
+            false,
+            starttime,
+            endtime,
+            true
+          )
+        );
+      }
+    }
   }
 }
 
-data.generateTracers = serviceName => {
-  if(data.tracers.length > 15) return;
-  for(let i=0; i<2; i++){
-    const starttime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    const endtime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    if(i % 2 === 0){ // sender
-      data.tracers.push(
-        newTracer(
-          serviceName, 
-          'serviceB', 
-          `${i}`,
-          true,
-          starttime,
-          endtime,
-          true
-        )
-      );
-    }
-    else{ // receiver
-      data.tracers.push(
-        newTracer(
-          'serviceB',
-          'serviceB',
-          `${i-1}`,
-          false,
-          starttime,
-          endtime,
-          true
-        )
-      );
-    }
-  }
-}
+// data.generateLogs = serviceName => {
+//   if(data.logs.length > 15) return;
+//   for(let i=0; i<2; i++){
+//     const msg = i % 2 === 0 ? 'fetching data from b' : 'data received';
+//     data.logs.push(
+//       newLog(serviceName, msg, new Date().toISOString().slice(0, 19).replace('T', ' '))
+//     );
+//   }
+// }
+
+// data.generateTracers = serviceName => {
+//   if(data.tracers.length > 15) return;
+//   for(let i=0; i<2; i++){
+//     const starttime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+//     const endtime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+//     if(i % 2 === 0){ // sender
+//       data.tracers.push(
+//         newTracer(
+//           serviceName, 
+//           'serviceB', 
+//           `${i}`,
+//           true,
+//           starttime,
+//           endtime,
+//           true
+//         )
+//       );
+//     }
+//     else{ // receiver
+//       data.tracers.push(
+//         newTracer(
+//           'serviceB',
+//           'serviceB',
+//           `${i-1}`,
+//           false,
+//           starttime,
+//           endtime,
+//           true
+//         )
+//       );
+//     }
+//   }
+// }
 
 module.exports = data;

@@ -1,5 +1,7 @@
+// import { fork } from 'child_process';
 import React, { useEffect, useState, version} from 'react';
 import DashboardContainer from '../dashboardContainer';
+import { ipcRenderer } from 'electron';
 
 //create empty array
 //create fetch request
@@ -8,20 +10,28 @@ import DashboardContainer from '../dashboardContainer';
 export default function LogsDisplay() {
   const [logs, updateLogs] = useState([]);
   
-  // window.ipcBridge.handle('res', (event, data)=> updateLogs(data));
+  window.ipcBridge.handle('logs', (event, data)=> {
+    console.log(data);
+    updateLogs(data)
+  });
 
   useEffect(() => {
-    console.log(logs);
+    // console.log(logs);
     const logsQueryIntervalId = setInterval(() => {
       //query db
       const getDbLogs = async ()=>{
-        try{
-          console.log(window);
-          await window.ipcBridge.invoke('sendProcess', undefined, 'logData', 'serviceA');
-        }
-        catch(err){
-          console.log(err);
-        }
+        window.ipcBridge.invoke('getLogs');
+        // try{
+        //   // console.log(window);
+        //   // await window.ipcBridge.invoke('sendProcess', undefined, 'logData', 'serviceA');
+        //   const p = fork('./getLogs.js', ['serviceA'], {
+        //     stdio: ['pipe', 'pipe', 'pipe', 'ipc']
+        //   });
+        //   p.stdout.on('data', (data)=> console.log(data));
+        // }
+        // catch(err){
+        //   console.log(err);
+        // }
       };
       getDbLogs();
     }, 5000);

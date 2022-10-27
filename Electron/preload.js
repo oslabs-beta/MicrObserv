@@ -1,7 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 const invoke = (channel, callback = () => {return}, ...args) => {
-  console.log(channel);
+  // console.log(channel);
   ipcRenderer.invoke(channel, ...args).then((res) => callback(res));
 };
 
