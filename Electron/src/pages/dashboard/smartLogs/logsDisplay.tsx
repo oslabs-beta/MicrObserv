@@ -5,29 +5,29 @@ import DashboardContainer from '../dashboardContainer';
 //create fetch request
 //for each row create a div and push into array
 //display array
-window.ipcBridge.handle('res', (event, data)=> console.log(data));
+//window.ipcBridge.handle('res', (event, data)=> console.log(data));
 export default function LogsDisplay() {
   const [logs, updateLogs] = useState([]);
 
-  useEffect(() => {
-    const logsQueryIntervalId = setInterval(() => {
-      //query db
-      const getDbLogs = async ()=>{
-        try{
-          await window.ipcBridge.invoke('pgLogs', 'serviceA');
-        }
-        catch(err){
-          console.log(err);
-        }
-      };
-      getDbLogs();
-    }, 5000);
+  // useEffect(() => {
+  //   const logsQueryIntervalId = setInterval(() => {
+  //     //query db
+  //     const getDbLogs = async ()=>{
+  //       try{
+  //         await window.ipcBridge.invoke('pgLogs', 'serviceA');
+  //       }
+  //       catch(err){
+  //         console.log(err);
+  //       }
+  //     };
+  //     getDbLogs();
+  //   }, 5000);
 
-    // clear intervalId
-    return function cleanup() {
-      clearInterval(logsQueryIntervalId);
-    };
-  });
+  //   // clear intervalId
+  //   return function cleanup() {
+  //     clearInterval(logsQueryIntervalId);
+  //   };
+  // });
   return (
     <div className='w-full overflow-hidden'>
       <DashboardContainer title='Logs' />

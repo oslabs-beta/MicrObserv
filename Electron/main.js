@@ -54,6 +54,10 @@ const createWindow = () => {
       console.log(data);
       win.webContents.send('res', data);
     });
+  });
+
+  ipcMain.handle('pgTracers', async (event, serviceName) => {
+    // win.webContents.send('res', 'dbLogs');
     getTracers(serviceName)
     .then((data) => {
       console.log(data);
