@@ -5,8 +5,10 @@ import BarChart from './barChart';
 
 
 export default function TracersDisplay() {
-  const [tracers, updateTracers] = useState([]);
-  window.ipcBridge.handle('resTracer', (event, data)=> updateTracers(data));
+  const [tracers, updateTracers] = useState([{request:[],fulltime:[],initialTime:[]}]);
+  window.ipcBridge.handle('resTracers', (event, data)=> {
+    updateTracers(data)
+  });
   useEffect(() => {
     const tracersQueryIntervalId = setInterval(() => {
       //query db
@@ -26,13 +28,18 @@ export default function TracersDisplay() {
       clearInterval(tracersQueryIntervalId);
     };
   });
-
-  const {request, fullTime, initialTime} = splitData(tracers)
-  console.log(request);
+  interface tracerState {
+    request: any[],
+    fullTime: any[],
+    initialTime: any[]
+  }
+  const {request, fullTime, initialTime}: tracerState = tracers
+  //const {request, fullTime, initialTime} = splitData(tracers)
+  //console.log(tracers);
   return (
     <div className='overflow-hidden w-full'>
       <DashboardContainer title='Latency'/>
-      <BarChart communications={request} timeAtoA={fullTime} timeBtoA={initialTime}/>
+      <BarChart communications={comms} timeAtoA={fullTime} timeBtoA={initialTime}/>
     </div>
   );
 }
@@ -58,9 +65,9 @@ const splitData = tracerState =>{
   return output;
   
 }
-// const comms = ["Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A"];
-// const fullTime = [70, 180, 90, 250, 310, 100, 70, 180, 90, 250, 310, 100, 70, 1800, 90, 250, 310, 100];
-// const returnTime = [40, 70, 50, 20, 120, 50, 40, 70, 50, 20, 120, 50, 40, 70, 50, 20, 120, 50];
+const comms = ["Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A"];
+const fullTime = [70, 180, 90, 250, 310, 100, 70, 180, 90, 250, 310, 100, 70, 1800, 90, 250, 310, 100];
+const initialTime = [40, 70, 50, 20, 120, 50, 40, 70, 50, 20, 120, 50, 40, 70, 50, 20, 120, 50];
 
 // const test = [
 //   {

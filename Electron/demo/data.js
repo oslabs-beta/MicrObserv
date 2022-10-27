@@ -50,7 +50,7 @@ data.generateLogs = serviceName => {
 }
 
 data.generateTracers = serviceName => {
-  for(let i=0; i<11; i++){
+  for(let i=0; i<2; i++){
     // const starttime = new Date().toISOString().slice(0, 19).replace('T', ' ');
     // const endtime = new Date().toISOString().slice(0, 19).replace('T', ' ');
     const starttime = new Date().getTime();
@@ -60,7 +60,7 @@ data.generateTracers = serviceName => {
         newTracer(
           serviceName, 
           'serviceB', 
-          `${i}`,
+          '',
           true,
           starttime,
           endtime,
@@ -73,7 +73,7 @@ data.generateTracers = serviceName => {
         newTracer(
           'serviceB',
           'serviceB',
-          `${i-1}`,
+          '',
           false,
           starttime,
           endtime,

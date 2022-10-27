@@ -60,8 +60,22 @@ const createWindow = () => {
     // win.webContents.send('res', 'dbLogs');
     getTracers(serviceName)
     .then((data) => {
-      console.log(data);
-      win.webContents.send('res', data);
+      const output ={
+        request: [],
+        fullTime: [],
+        initialTime: []
+      };
+      for(let i = 0; i < data.length; i++ ){
+        console.log('forloop hit')
+        if(i % 2 === 0){
+          output.request.push(`${data[i].src} to ${data[i].dest}`)
+          output.fullTime.push(data[i].endtime-data[i].starttime)
+        }
+        else{
+          output.initialTime.push(data[i].starttime-data[i-1].starttime)
+        }
+      }
+      win.webContents.send('resTracers', output);
     });
   });
   
