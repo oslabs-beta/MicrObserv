@@ -5,16 +5,19 @@ import DashboardContainer from '../dashboardContainer';
 //create fetch request
 //for each row create a div and push into array
 //display array
-window.ipcBridge.handle('res', (event, data)=> console.log(data));
 export default function LogsDisplay() {
   const [logs, updateLogs] = useState([]);
+  
+  // window.ipcBridge.handle('res', (event, data)=> updateLogs(data));
 
   useEffect(() => {
+    console.log(logs);
     const logsQueryIntervalId = setInterval(() => {
       //query db
       const getDbLogs = async ()=>{
         try{
-          await window.ipcBridge.invoke('pgLogs', 'serviceA');
+          console.log(window);
+          await window.ipcBridge.invoke('sendProcess', undefined, 'logData', 'serviceA');
         }
         catch(err){
           console.log(err);
@@ -31,16 +34,17 @@ export default function LogsDisplay() {
   return (
     <div className='w-full overflow-hidden'>
       <DashboardContainer title='Logs' />
-      <LogsContainer />
+      <LogsContainer logs={logs}/>
     </div>
   );
 }
 
-const LogsContainer = () => {
+const LogsContainer = props => {
   let logElements: any = [];
   // mock logs
-  for (let i = 0; i < 9; i++) {
-    logElements.push(<LogElement key={i} />);
+  let i=0;
+  for (const log of props.logs) {
+    logElements.push(<LogElement key={i++} log={log}/>);
   }
   return (
     <div className='scrollbar-thin log-container mb-2 ml-2 mr-2 scrollbar-thumb-rounded-full scrollbar-thumb-zinc-500 overflow-hidden h-[72vh]'>
@@ -50,7 +54,7 @@ const LogsContainer = () => {
 };
 
 // Expandable element for containing log info
-const LogElement = (props) => {
+const LogElement = props => {
   const [style, setStyle] = useState('log-element');
 
   const changeStyle = () => {
@@ -62,20 +66,9 @@ const LogElement = (props) => {
     }
   };
 
-  const serviceName = 'Service A';
-  const time = '21:22';
-  const logMessage = `Attempted to divide by zero.
-    Error: ENOENT: no such file or directory, open './NoFileNamedThis.txt'
-        at Object.openSync (fs.js:498:3)
-        at Object.readFileSync (fs.js:394:35)
-        at fileDoesNotExist (C:\Users.js:33:6)
-        at Object.<anonymous> (C:\Users:54:3)
-        at Module._compile (internal/modules/cjs/loader.js:1072:14)
-        at Object.Module._extensions..js (internal/modules/cjs/loader.js:1101:10)
-        at Module.load (internal/modules/cjs/loader.js:937:32)
-        at Function.Module._load (internal/modules/cjs/loader.js:778:12)
-        at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:76:12)
-        at internal/main/run_main_module.js:17:47 `;
+  const serviceName = props.log.src;
+  const time = props.log.time;
+  const logMessage = props.log.msg;
 
   return (
     <div className='flex justify-between p-1'>

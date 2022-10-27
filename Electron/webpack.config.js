@@ -19,7 +19,15 @@ const electronConfig = {
       exclude: /node_modules/,
       loader: 'ts-loader',
     }]
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '/src/index.html'),
+    }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^pg-native$/
+    })
+  ],
 };
 
 const reactConfig = {
@@ -62,11 +70,14 @@ const reactConfig = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '/src/index.html'),
     }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^pg-native$/
+    })
   ],
 };
 
 
 module.exports = [
-  // electronConfig,
+  electronConfig,
   reactConfig
 ];

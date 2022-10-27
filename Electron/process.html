@@ -1,4 +1,17 @@
-const data = {
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>processing window</title>
+    <!-- Hidden window for offloading processes from main.js -->
+  </head>
+  <body>
+    <script>
+      window.ipcBridge.handle('logData', (event, serviceName)=> getLogs(serviceName));
+      window.ipcBridge.handle('tracerData', (event, serviceName)=> getTracers(serviceName));
+
+
+      const data = {
   logs: [],
   tracers: []
 }
@@ -40,6 +53,7 @@ const newTracer = (src, dest, traceId, sender, starttime, endtime, completed)=> 
 }
 
 data.generateLogs = serviceName => {
+  console.log('hit');
   if(data.logs.length > 15) return;
   for(let i=0; i<2; i++){
     const msg = i % 2 === 0 ? 'fetching data from dbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' : 'data received';
@@ -83,4 +97,29 @@ data.generateTracers = serviceName => {
   }
 }
 
-module.exports = data;
+
+
+      // Generate mock logs data
+      const getLogs = async (serviceName) => {
+        data.generateLogs(serviceName);
+        if(!serviceName) return data.logs;
+        const serviceLogs = [];
+        for(const log of data.logs){
+          if(log.src === serviceName) serviceLogs.push(log);
+        }
+        window.ipcBridge.send('sendClient', 'res', serviceLogs);
+      }
+      // Generate mock tracers data
+      const getTracers = async (serviceName) => {
+        data.generateTracers(serviceName);
+        if(!serviceName) return data.tracers;
+        const serviceTracers = [];
+        for(const tracer of data.tracers){
+          if(tracer.src === serviceName || tracer.dest === serviceName)
+            serviceTracers.push(tracer);
+        }
+        window.ipcBridge.send('sendClient', serviceTracers);
+      }
+    </script>
+  </body>
+</html>
