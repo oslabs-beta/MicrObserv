@@ -3,11 +3,11 @@ import { convertToObject } from 'typescript';
 import DashboardContainer from '../dashboardContainer';
 import BarChart from './barChart';
 
-
 export default function TracersDisplay() {
   const [tracers, updateTracers] = useState([]);
   window.ipcBridge.handle('resTracers', (event, data)=> {
-    updateTracers(data)
+    updateTracers(data);
+    console.log(tracers[0]);
   });
   useEffect(() => {
     const tracersQueryIntervalId = setInterval(() => {
@@ -28,14 +28,13 @@ export default function TracersDisplay() {
       clearInterval(tracersQueryIntervalId);
     };
   });
-  interface tracerState {
-    request: any[],
-    fullTime: any[],
-    initialTime: any[]
-  }
-  const {request, fullTime, initialTime}: tracerState = tracers
-  //const {request, fullTime, initialTime} = splitData(tracers)
-  //console.log(tracers);
+  // interface tracerState {
+  //   request: any[],
+  //   fullTime: any[],
+  //   initialTime: any[]
+  // }
+  // const {request, fullTime, initialTime} = tracers[0]
+
   return (
     <div className='overflow-hidden w-full'>
       <DashboardContainer title='Latency'/>
@@ -44,30 +43,30 @@ export default function TracersDisplay() {
   );
 }
 
-const splitData = tracerState =>{
-  //create 3 array request, fullTime, returnTime
-  console.log('hit')
-  const output:any ={
-    request: [],
-    fullTime: [],
-    initialTime: []
-  };
-  for(let i = 0; i < tracerState.length; i++ ){
-    if(i % 2 === 0){
-      output.request.push(`${tracerState[i].src} to ${tracerState[i].dest}`)
-      output.fullTime.push(tracerState[i].endtime-tracerState[i].starttime)
-    }
-    else{
-      output.initialTime.push(tracerState[i].starttime-tracerState[i-1].starttime)
-    }
-  }
-  //return an object of 3 arrays
-  return output;
+// const splitData = tracerState =>{
+//   //create 3 array request, fullTime, returnTime
+//   console.log('hit')
+//   const output:any ={
+//     request: [],
+//     fullTime: [],
+//     initialTime: []
+//   };
+//   for(let i = 0; i < tracerState.length; i++ ){
+//     if(i % 2 === 0){
+//       output.request.push(`${tracerState[i].src} to ${tracerState[i].dest}`)
+//       output.fullTime.push(tracerState[i].endtime-tracerState[i].starttime)
+//     }
+//     else{
+//       output.initialTime.push(tracerState[i].starttime-tracerState[i-1].starttime)
+//     }
+//   }
+//   //return an object of 3 arrays
+//   return output;
   
-}
+// }
 const comms = ["Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A","Service A to Service B", "Service B to Service A"];
-const fullTime = [70, 180, 90, 250, 310, 100, 70, 180, 90, 250, 310, 100, 70, 1800, 90, 250, 310, 100];
-const initialTime = [40, 70, 50, 20, 120, 50, 40, 70, 50, 20, 120, 50, 40, 70, 50, 20, 120, 50];
+const fullTime = [70, 180, 90, 250, 310, 100, 70, 180, 90, 250, 310, 100, 70, 500, 90, 250, 310, 100];
+const initialTime = [40, 100, 50, 20, 120, 50, 40, 70, 50, 20, 120, 50, 40, 70, 50, 20, 120, 50];
 
 // const test = [
 //   {

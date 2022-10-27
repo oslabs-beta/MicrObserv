@@ -60,19 +60,15 @@ const createWindow = () => {
     // win.webContents.send('res', 'dbLogs');
     getTracers(serviceName)
     .then((data) => {
-      const output ={
-        request: [],
-        fullTime: [],
-        initialTime: []
-      };
+      const output =[[],[],[]];
       for(let i = 0; i < data.length; i++ ){
         console.log('forloop hit')
         if(i % 2 === 0){
-          output.request.push(`${data[i].src} to ${data[i].dest}`)
-          output.fullTime.push(data[i].endtime-data[i].starttime)
+          output[0].push(`${data[i].src} to ${data[i].dest}`)
+          output[1].push(data[i].endtime-data[i].starttime)
         }
         else{
-          output.initialTime.push(data[i].starttime-data[i-1].starttime)
+          output[2].push(data[i].starttime-data[i-1].starttime)
         }
       }
       win.webContents.send('resTracers', output);
