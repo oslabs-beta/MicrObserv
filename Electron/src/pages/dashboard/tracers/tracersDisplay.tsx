@@ -5,7 +5,7 @@ import BarChart from './barChart';
 
 
 export default function TracersDisplay() {
-  const [tracers, updateTracers] = useState([{request:[],fulltime:[],initialTime:[]}]);
+  const [tracers, updateTracers] = useState([]);
   window.ipcBridge.handle('resTracers', (event, data)=> {
     updateTracers(data)
   });
