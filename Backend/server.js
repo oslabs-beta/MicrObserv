@@ -6,9 +6,10 @@ const PORT = 3000;
 const app = express();
 
 // start headless websocker
-const wsServer =  new ws.Server({ noServer: true });
+const wsServer =  new ws.Server({ server: server});
 
-app.use('/dist', express.static(path.join(__dirname, '../Electron/dist')));
+
+app.use('/',express.static(path.join(__dirname, '../Electron/dist/')));
 app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../Electron/dist/index.html')));
 
 
