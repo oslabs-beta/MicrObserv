@@ -5,7 +5,7 @@ import DashboardContainer from '../dashboardContainer';
 //create fetch request
 //for each row create a div and push into array
 //display array
-window.ipcBridge.handle('res', (event, data)=> console.log(data));
+// window.ipcBridge.handle('res', (event, data)=> console.log(data));
 export default function LogsDisplay() {
   const [logs, updateLogs] = useState([]);
 
