@@ -1,32 +1,21 @@
 import React, { useEffect, useState, version} from 'react';
 import DashboardContainer from '../dashboardContainer';
 
-//create empty array
-//create fetch request
-//for each row create a div and push into array
-//display array
-// window.ipcBridge.handle('res', (event, data)=> console.log(data));
 export default function LogsDisplay() {
+  const ws = new WebSocket('ws://localhost:3000/');
+  
   const [logs, updateLogs] = useState([]);
 
   useEffect(() => {
-    const logsQueryIntervalId = setInterval(() => {
-      //query db
-      const getDbLogs = async ()=>{
-        try{
-          await window.ipcBridge.invoke('pgLogs', 'serviceA');
-        }
-        catch(err){
-          console.log(err);
-        }
-      };
-      getDbLogs();
-    }, 5000);
-
-    // clear intervalId
-    return function cleanup() {
-      clearInterval(logsQueryIntervalId);
-    };
+    
+    //when connected
+    ws.onopen = () => console.log("connected to websocket server in Logs Display")
+    //when there is an incoming msg
+    ws.onmessage = (msg) => {
+      //create boolean checking if log
+      console.log('message from the server to Logs Display: ', msg.data);
+    }
+  
   });
   return (
     <div className='w-full overflow-hidden'>
