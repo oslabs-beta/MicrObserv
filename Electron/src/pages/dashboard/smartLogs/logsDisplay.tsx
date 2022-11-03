@@ -3,33 +3,47 @@ import DashboardContainer from '../dashboardContainer';
 
 export default function LogsDisplay() {
   const ws = new WebSocket('ws://localhost:3000/');
-  
+
   const [logs, updateLogs] = useState([]);
 
-  useEffect(() => {
-    
-    //when connected
-    ws.onopen = () => console.log("connected to websocket server in Logs Display")
+  ws.onopen = () => console.log("connected to websocket server in Logs Display")
     //when there is an incoming msg
     ws.onmessage = (msg) => {
       //create boolean checking if log
-      console.log('message from the server to Logs Display: ', msg.data);
+      //console.log('message from the server to Logs Display: ', msg.data);
+      updateLogs(JSON.parse(msg.data));
+      //console.log(logs);
     }
+  fetch('/getLogs')
+    .then(data => data.json()) 
+    .then(data => console.log(data)) 
+  // useEffect(() => {
+    
+  //   //when connected
+  //   ws.onopen = () => console.log("connected to websocket server in Logs Display")
+  //   //when there is an incoming msg
+  //   ws.onmessage = (msg) => {
+  //     //create boolean checking if log
+  //     //console.log('message from the server to Logs Display: ', msg.data);
+  //     updateLogs(JSON.parse(msg.data));
+  //     console.log(logs);
+  //   }
   
-  });
+  // });
   return (
     <div className='w-full overflow-hidden'>
       <DashboardContainer title='Logs' />
-      <LogsContainer />
+      <LogsContainer msg={logs}/>
     </div>
   );
 }
-
-const LogsContainer = () => {
+/* logs= [{},{},{}]*/
+const LogsContainer = (props) => {
+  //console.log("Inside Logs Container", props.msg);
   let logElements: any = [];
   // mock logs
-  for (let i = 0; i < 9; i++) {
-    logElements.push(<LogElement key={i} />);
+  for (let i = 0; i < props.msg.length; i++) {
+    logElements.push(<LogElement key={i} msg = {props.msg[i]}/>);
   }
   return (
     <div className='scrollbar-thin log-container mb-2 ml-2 mr-2 scrollbar-thumb-rounded-full scrollbar-thumb-zinc-500 overflow-hidden h-[72vh]'>
@@ -41,6 +55,7 @@ const LogsContainer = () => {
 // Expandable element for containing log info
 const LogElement = (props) => {
   const [style, setStyle] = useState('log-element');
+  console.log("inside log element",props.msg);
 
   const changeStyle = () => {
     console.log('you just clicked');
@@ -51,20 +66,9 @@ const LogElement = (props) => {
     }
   };
 
-  const serviceName = 'Service A';
-  const time = '21:22';
-  const logMessage = `Attempted to divide by zero.
-    Error: ENOENT: no such file or directory, open './NoFileNamedThis.txt'
-        at Object.openSync (fs.js:498:3)
-        at Object.readFileSync (fs.js:394:35)
-        at fileDoesNotExist (C:\Users.js:33:6)
-        at Object.<anonymous> (C:\Users:54:3)
-        at Module._compile (internal/modules/cjs/loader.js:1072:14)
-        at Object.Module._extensions..js (internal/modules/cjs/loader.js:1101:10)
-        at Module.load (internal/modules/cjs/loader.js:937:32)
-        at Function.Module._load (internal/modules/cjs/loader.js:778:12)
-        at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:76:12)
-        at internal/main/run_main_module.js:17:47 `;
+  const serviceName = props.msg.src;
+  const time = props.msg.time;
+  const logMessage = props.msg.msg;
 
   return (
     <div className='flex justify-between p-1'>
