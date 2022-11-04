@@ -4,14 +4,14 @@ import BarChart from './barChart';
 
 
 export default function TracersDisplay() {
-  const ws = new WebSocket('ws://localhost:3000/');
-  //when connected
-  ws.onopen = () => //console.log("connected to websocket server in Tracers Display")
-  //when there is an incoming msg
-  ws.onmessage = (msg) => {
-  //create boolean checking if a tracer obj
-  //console.log('message from the server to Tracers Display: ', msg.data);
-  }
+  // const ws = new WebSocket('ws://localhost:3000/');
+  // //when connected
+  // ws.onopen = () => //console.log("connected to websocket server in Tracers Display")
+  // //when there is an incoming msg
+  // ws.onmessage = (msg) => {
+  // //create boolean checking if a tracer obj
+  // //console.log('message from the server to Tracers Display: ', msg.data);
+  // }
   return (
     <div className='overflow-hidden w-full'>
       <DashboardContainer title='Latency'/>

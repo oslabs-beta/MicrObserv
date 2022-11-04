@@ -4,7 +4,7 @@ controller = {};
 
 controller.getLogs = (req, res, next) => {
   console.log("inside getLogs");
-  const queryString = `SELECT * FROM Logs LIMIT 50;`;
+  const queryString = `SELECT * FROM Logs ORDER BY id DESC LIMIT 50 ;`;
   db.query(queryString)
     .then((response) => {
       res.locals.logs = response.rows;

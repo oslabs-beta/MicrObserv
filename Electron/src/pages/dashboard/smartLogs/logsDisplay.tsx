@@ -2,34 +2,48 @@ import React, { useEffect, useState, version} from 'react';
 import DashboardContainer from '../dashboardContainer';
 
 export default function LogsDisplay() {
-  const ws = new WebSocket('ws://localhost:3000/');
+  // const ws = new WebSocket('ws://localhost:3000/');
 
   const [logs, updateLogs] = useState([]);
 
-  ws.onopen = () => console.log("connected to websocket server in Logs Display")
-    //when there is an incoming msg
-    ws.onmessage = (msg) => {
-      //create boolean checking if log
-      //console.log('message from the server to Logs Display: ', msg.data);
-      updateLogs(JSON.parse(msg.data));
-      //console.log(logs);
-    }
-  fetch('/getLogs')
-    .then(data => data.json()) 
-    .then(data => console.log(data)) 
-  // useEffect(() => {
-    
-  //   //when connected
-  //   ws.onopen = () => console.log("connected to websocket server in Logs Display")
+  // ws.onopen = () => console.log("connected to websocket server in Logs Display")
   //   //when there is an incoming msg
   //   ws.onmessage = (msg) => {
   //     //create boolean checking if log
   //     //console.log('message from the server to Logs Display: ', msg.data);
   //     updateLogs(JSON.parse(msg.data));
-  //     console.log(logs);
+  //     //console.log(logs);
   //   }
+ 
   
-  // });
+  useEffect(() => {
+    //get request for logs
+    const fetchData = async () => {
+      const data = await fetch('/getLogs');
+      const json = await data.json()
+      const jsonParsed = await JSON.parse(json);
+      updateLogs(jsonParsed);
+    }
+    fetchData()
+    },[]);
+    //console.log(logs)
+    // fetch('/getLogs', {mode: "no-cors"})
+    // .then(data => data.json()) 
+    // .then(data => updateLogs(JSON.parse(data)));
+
+    //WEBSOCKET
+    // //when connected
+    // ws.onopen = () => console.log("connected to websocket server in Logs Display")
+    // //when there is an incoming msg
+    // ws.onmessage = (msg) => {
+    //   //create boolean checking if log
+    //   //console.log('message from the server to Logs Display: ', msg.data);
+    //   updateLogs(JSON.parse(msg.data));
+    //   console.log(logs);
+    // }
+  
+
+  
   return (
     <div className='w-full overflow-hidden'>
       <DashboardContainer title='Logs' />
@@ -55,7 +69,7 @@ const LogsContainer = (props) => {
 // Expandable element for containing log info
 const LogElement = (props) => {
   const [style, setStyle] = useState('log-element');
-  console.log("inside log element",props.msg);
+  //console.log("inside log element", ((props.msg !== undefined) ? props.msg.src : "loading"));
 
   const changeStyle = () => {
     console.log('you just clicked');
@@ -66,9 +80,12 @@ const LogElement = (props) => {
     }
   };
 
-  const serviceName = props.msg.src;
-  const time = props.msg.time;
-  const logMessage = props.msg.msg;
+  const serviceName = ((props.msg !== undefined) ? props.msg.src : "loading...");
+  const time = ((props.msg !== undefined) ? props.msg.time : "loading...");
+  const logMessage = ((props.msg !== undefined) ? props.msg.msg : "loading...")
+  // const serviceName = "service A";
+  // const time = "12:00";
+  // const logMessage = "lala";
 
   return (
     <div className='flex justify-between p-1'>
