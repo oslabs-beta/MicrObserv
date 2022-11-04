@@ -24,7 +24,7 @@ export default function TracersDisplay() {
     }
     fetchData()
     },[]);
-   //console.log(tracers)
+   console.log(tracers)
   const output: any =[[],[],[]];
       for(let i = 0; i < 12; i++ ){
         console.log('forloop hit')

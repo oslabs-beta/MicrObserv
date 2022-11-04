@@ -16,7 +16,7 @@ controller.getLogs = (req, res, next) => {
 
 controller.getTracers = (req, res, next) => {
   console.log("inside getTracers");
-  const queryString = `SELECT * FROM Tracers LIMIT 50;`;
+  const queryString = `SELECT * FROM Tracers ORDER BY id ASC LIMIT 50;`;
   db.query(queryString)
     .then((response) => {
       console.log("response from getTracers", response)
