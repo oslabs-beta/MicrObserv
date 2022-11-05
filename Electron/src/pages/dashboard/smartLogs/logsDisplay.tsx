@@ -1,35 +1,22 @@
 import React, { useEffect, useState, version} from 'react';
 import DashboardContainer from '../dashboardContainer';
-
-export default function LogsDisplay() {
-  const ws = new WebSocket('ws://localhost:3000/');
-
-  const [logs, updateLogs] = useState([]);
-
-  ws.onopen = () => console.log("connected to websocket server in Logs Display")
+// websocket connection to backend server
+let ws;
+export default function LogsDisplay(props) {
+  const [logs, updateLogs] = useState<any>([]);
+  
+  useEffect(() => {
+    if(!ws){
+      ws = new WebSocket('ws://localhost:3001/');
+      ws.onopen = () => console.log("connected to websocket server in Logs Display");
+    }
     //when there is an incoming msg
     ws.onmessage = (msg) => {
       //create boolean checking if log
-      //console.log('message from the server to Logs Display: ', msg.data);
-      updateLogs(JSON.parse(msg.data));
-      //console.log(logs);
+      const newLogs = JSON.parse(msg.data).logs;
+      if(Array.isArray(newLogs)) updateLogs(logs => [...logs, ...newLogs]);
     }
-  fetch('/getLogs')
-    .then(data => data.json()) 
-    .then(data => console.log(data)) 
-  // useEffect(() => {
-    
-  //   //when connected
-  //   ws.onopen = () => console.log("connected to websocket server in Logs Display")
-  //   //when there is an incoming msg
-  //   ws.onmessage = (msg) => {
-  //     //create boolean checking if log
-  //     //console.log('message from the server to Logs Display: ', msg.data);
-  //     updateLogs(JSON.parse(msg.data));
-  //     console.log(logs);
-  //   }
-  
-  // });
+  });
   return (
     <div className='w-full overflow-hidden'>
       <DashboardContainer title='Logs' />
@@ -55,7 +42,7 @@ const LogsContainer = (props) => {
 // Expandable element for containing log info
 const LogElement = (props) => {
   const [style, setStyle] = useState('log-element');
-  console.log("inside log element",props.msg);
+  // console.log("inside log element",props.msg);
 
   const changeStyle = () => {
     console.log('you just clicked');

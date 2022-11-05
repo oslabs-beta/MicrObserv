@@ -10,41 +10,28 @@ const connections = []
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const data = [
-  {
-    id: 1,
-    src: "service A",
-    msg: "log1",
-    time: "12:50"
-  },
-  {
-    id: 2,
-    src: "service A",
-    msg: "log2",
-    time: "12:55"
-  },
-  {
-    id: 3,
-    src: "service A",
-    msg: "log3",
-    time: "13:00"
-  },
-]
-
 
 const wss = new ws.Server({ 
-  server: app.listen(3000),
+  server: app.listen(3001),
   host: 'localhost',
   path: '/'
  });
-
+// const wss = new ws.Server({ noServer: true });
 wss.on('connection', function connection(ws) {
-    console.log("New Logs Client");
+    console.log("New Connection Client");
     connections.push(ws)
     ws.on('message', function message(data) {
       console.log('received: %s', data);
     });
-    ws.send(JSON.stringify(data));
+    // send all logs and tracers from db
+    ws.send(JSON.stringify({
+      logs: [{src: 'Service A', msg: 'hi', time: 'today'}],
+      tracers: {
+        names: ['Service A to B', 'Service B to A'],
+        nTracerVals: [70, 90],
+        pTracerVals: [40, 10],
+      },
+    }));
   });
 
 app.use('/',express.static(path.join(__dirname, '../Electron/dist/')));
@@ -71,4 +58,9 @@ app.use((err, req, res) => {
   res.status(500).send(err);
 });
 
-app.listen(() => console.log(`Started server listening on port: ${PORT}`));
+app.listen(PORT, () => console.log(`Started server listening on port: ${PORT}`));
+app.on('upgrade', (request, socket, head) => {
+  wss.handleUpgrade(request, socket, head, socket => {
+    wss.emit('connection', socket, request);
+  });
+});
