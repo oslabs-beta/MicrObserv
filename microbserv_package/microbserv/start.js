@@ -1,7 +1,7 @@
 // Private variables
 let serviceName, config;
 const defaultErrorMsg = 'Error occured in microbserv:';
-const fetch = require('node-fetch');
+const http = require('http');
 
 // TRACERS
 /* createNTracer
@@ -14,10 +14,23 @@ const fetch = require('node-fetch');
  */
 const createNTracer = async tracer => {
     try{
-      const dbId = await fetch('', {
+      const opts = {
+        hostname: 'localhost',
+        port: 3000,
+        path: '/MicrObserv/newNTracer',
         method: 'POST',
         body: tracer
-      });
+      }
+      let dbId;
+      const req = http.request(opts, res => {
+        let data = '';
+        res.on('data', chunk => data += chunk);
+        res.on('end', () => dbId = data);
+      }, true);
+      
+      req.on('error', error => console.error(error));
+      req.end();
+      // console.log(dbId);
       return dbId;
     }
     catch(err){
@@ -32,10 +45,17 @@ const createNTracer = async tracer => {
  */
 const updateNTracer = async id => {
   try{
-    fetch('', {
+    const opts = {
+      hostname: 'localhost',
+      port: 3000,
+      path: '/MicrObserv/updateNTracer',
       method: 'POST',
       body: id
-    })
+    }
+    const req = http.request(opts, res => {}, true);
+    
+    req.on('error', error => console.error(error));
+    req.end();
   }
   catch(err){
     console.log(`${defaultErrorMsg} Problem sending network tracer update to server, Error: ${err}`);
@@ -51,10 +71,22 @@ const updateNTracer = async id => {
  */
 const createPTracer = async tracer => {
   try{
-    const dbId = await fetch('', {
+    const opts = {
+      hostname: 'localhost',
+      port: 3000,
+      path: '/MicrObserv/newPTracer',
       method: 'POST',
       body: tracer
-    });
+    }
+    let dbId;
+    const req = http.request(opts, res => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => dbId = data);
+    }, true);
+    
+    req.on('error', error => console.error(error));
+    req.end();
     return dbId;
   }
   catch(err){
@@ -69,10 +101,16 @@ const createPTracer = async tracer => {
  */
 const updatePTracer = async id => {
 try{
-  fetch('', {
+  const opts = {
+    hostname: 'localhost',
+    port: 3000,
+    path: '/MicrObserv/updateNTracer',
     method: 'POST',
     body: id
-  })
+  }
+  const req = http.request(opts, res => {}, true);
+  req.on('error', error => console.error(error));
+  req.end();
 }
 catch(err){
   console.log(`${defaultErrorMsg} Problem sending process tracer update to server, Error: ${err}`);
@@ -88,7 +126,8 @@ const httpRequestEventListener = () => {
     const http = require('http');
     const ogHttp = http.request;
     // reassign http.request to custom function
-    http.request = (options, callback)=>{
+    http.request = (options, callback, fromMicrObserv)=>{
+      if(!fromMicrObserv){
         // create tracerId for synchronizing tracers created on both sender and receiver
         const tracerId = options.href + Date.now(); //option.href = receiver endpoint
         options.headers['id'] = tracerId;
@@ -108,8 +147,10 @@ const httpRequestEventListener = () => {
             // invoke user passed response event listener
             if(callback) return callback(error, response, body);
         };
-        // invoke http.request
         return ogHttp(options, onResponse);
+      }
+      // invoke http.request
+      return ogHttp(options, callback);
     }
 
     // Same logic as http but for https
@@ -144,8 +185,7 @@ const expressServerEventListener = () => {
             // Send new process tracer to server
             const tracer = {
               src: serviceName,
-              dest: options.href,
-              tracerId: tracerId
+              tracerId: request.headers.id
             };
             const promise = createPTracer(tracer);
             const callback = async (error, response, body) => {
@@ -165,12 +205,19 @@ const expressServerEventListener = () => {
  * Parameters:
  * - log = log object to send to server
  */
-const createLog = async (log) => {
+const createLog = async log => {
   try{
-    await fetch('', {
+    const opts = {
+      hostname: 'localhost',
+      port: 3000,
+      path: '/MicrObserv/newLog',
       method: 'POST',
       body: log
-    });
+    }
+    const req = http.request(opts, res => {}, true);
+    
+    req.on('error', error => console.error(error));
+    req.end();
   }
   catch(err){
       console.log(`${defaultErrorMsg} Problem sending log to server, Error: ${err}`);
@@ -203,7 +250,6 @@ const consoleLogEventListener = () => {
 const start = (options, name) => {
     config = options;
     serviceName = name;
-    connectToDesktopAppDB();
     httpRequestEventListener();
     expressServerEventListener();
     consoleLogEventListener();
