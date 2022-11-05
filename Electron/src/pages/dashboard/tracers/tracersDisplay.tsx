@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import DashboardContainer from '../dashboardContainer';
 import BarChart from './barChart';
 
-
+let ws;
 export default function TracersDisplay() {
-  const ws = new WebSocket('ws://localhost:3000/');
-  //when connected
-  ws.onopen = () => //console.log("connected to websocket server in Tracers Display")
-  //when there is an incoming msg
-  ws.onmessage = (msg) => {
-  //create boolean checking if a tracer obj
-  //console.log('message from the server to Tracers Display: ', msg.data);
-  }
+  const [tracerNames, updateTracerNames] = useState<any>([]);
+  const [nTracerVals, updateNTracerVals] = useState<any>([]);
+  const [pTracerVals, updatePTracerVals] = useState<any>([]);
+  useEffect(() => {
+    if(!ws){
+      ws = new WebSocket('ws://localhost:3001/');
+      ws.onopen = () => console.log("connected to websocket server in Logs Display");
+    }
+    //when there is an incoming msg
+    ws.onmessage = (msg) => {
+      //create boolean checking if log
+      const tracers = JSON.parse(msg.data).tracers;
+      if(Array.isArray(tracers.names)) updateTracerNames(tracerNames => [...tracerNames, ...tracers.names]);
+      if(Array.isArray(tracers.nTracerVals)) updateNTracerVals(nTracerVals => [...nTracerVals, ...tracers.nTracerVals]);
+      if(Array.isArray(tracers.pTracerVals)) updatePTracerVals(pTracerVals => [...pTracerVals, ...tracers.pTracerVals]);
+    }
+  });
   return (
     <div className='overflow-hidden w-full'>
       <DashboardContainer title='Latency'/>
-      <BarChart communications={comms} timeAtoA={fullTime} timeBtoA={returnTime}/>
+      <BarChart communications={tracerNames} timeAtoA={nTracerVals} timeBtoA={pTracerVals}/>
     </div>
   );
 }
