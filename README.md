@@ -10,8 +10,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/oslabs-beta/MicrObserv/">
+    <img src="https://media.discordapp.net/attachments/1028453327018655764/1031985744203497503/9-765_850x480-pad.jpeg" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">MicrObserv</h3>
