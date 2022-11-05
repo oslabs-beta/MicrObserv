@@ -219,7 +219,7 @@ Use this space to list resources you find helpful and would like to give credit 
 [forks-url]: https://github.com/oslabs-beta/MicrObserv/network/members
 [stars-shield]: https://img.shields.io/github/stars/oslabs-beta/MicrObserv?style=for-the-badge
 [stars-url]: https://github.com/oslabs-beta/MicrObsrerv/stargazers
-[issues-shield]: ttps://img.shields.io/github/issues/oslabs-beta/MicrObserv?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/oslabs-beta/MicrObserv?style=for-the-badge
 [issues-url]: https://github.com/oslabs-beta/MicrObserv/issues
 [license-shield]: https://img.shields.io/github/license/oslabs-beta/MicrObserv?style=for-the-badge
 [license-url]: https://github.com/oslabs-beta/MicrObserv/blob/master/LICENSE.txt
