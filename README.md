@@ -11,7 +11,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/oslabs-beta/MicrObserv/">
-    <img src="https://media.discordapp.net/attachments/1028453327018655764/1031985744203497503/9-765_850x480-pad.jpeg" alt="Logo" width="80" height="80">
+    <img src="https://media.discordapp.net/attachments/1028453327018655764/1031985744203497503/9-765_850x480-pad.jpeg" alt="Logo" width="250" height="150">
   </a>
 
   <h3 align="center">MicrObserv</h3>
