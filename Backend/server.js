@@ -2,7 +2,7 @@ const express = require('express');
 const parse = require('url');
 const ws = require('ws');
 const path = require('path');
-const controller = require('./controllers/controller.js');
+const npmPackRouter = require('./routes')
 const PORT = 3000;
 const app = express();
 const connections = []
@@ -24,6 +24,7 @@ wss.on('connection', function connection(ws) {
       console.log('received: %s', data);
     });
     // send all logs and tracers from db
+    //dummy data for now
     ws.send(JSON.stringify({
       logs: [{src: 'Service A', msg: 'hi', time: 'today'}],
       tracers: {
@@ -37,21 +38,7 @@ wss.on('connection', function connection(ws) {
 app.use('/',express.static(path.join(__dirname, '../Electron/dist/')));
 app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../Electron/dist/index.html')));
 
-app.get('/getLogs', controller.getLogs, (req, res) => {
-  res.status(200).json(JSON.stringify(res.locals.logs));
-});
-
-app.get('/getTracers', controller.getTracers, (req, res) => {
-  res.status(200).json(JSON.stringify(res.locals.tracers));
-});
-
-app.post('/addLog', controller.addLog, (req, res) => {
-  res.status(200).json(JSON.stringify(req.body));
-});
-
-app.post('/addTracer', controller.addTracer, (req, res) => {
-  res.status(200).json(JSON.stringify(req.body));
-});
+app.use('/MicrObserv', npmPackRouter)
 
 app.use((err, req, res) => {
   console.log(err);
@@ -59,8 +46,3 @@ app.use((err, req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Started server listening on port: ${PORT}`));
-app.on('upgrade', (request, socket, head) => {
-  wss.handleUpgrade(request, socket, head, socket => {
-    wss.emit('connection', socket, request);
-  });
-});
