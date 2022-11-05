@@ -1,6 +1,7 @@
 // Private variables
 let serviceName, config;
 const defaultErrorMsg = 'Error occured in microbserv:';
+// using http for custom requests to the MicrObserv server
 const http = require('http');
 
 // TRACERS
@@ -14,12 +15,16 @@ const http = require('http');
  */
 const createNTracer = async tracer => {
     try{
+      tracer = JSON.stringify(tracer);
       const opts = {
         hostname: 'localhost',
         port: 3000,
         path: '/MicrObserv/newNTracer',
         method: 'POST',
-        body: tracer
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(tracer)
+        }
       }
       let dbId;
       const req = http.request(opts, res => {
@@ -29,6 +34,7 @@ const createNTracer = async tracer => {
       }, true);
       
       req.on('error', error => console.error(error));
+      req.write(tracer);
       req.end();
       // console.log(dbId);
       return dbId;
@@ -45,16 +51,21 @@ const createNTracer = async tracer => {
  */
 const updateNTracer = async id => {
   try{
+    id = JSON.stringify(id);
     const opts = {
       hostname: 'localhost',
       port: 3000,
       path: '/MicrObserv/updateNTracer',
       method: 'POST',
-      body: id
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(id)
+      }
     }
     const req = http.request(opts, res => {}, true);
     
     req.on('error', error => console.error(error));
+    req.write(id);
     req.end();
   }
   catch(err){
@@ -71,12 +82,16 @@ const updateNTracer = async id => {
  */
 const createPTracer = async tracer => {
   try{
+    tracer = JSON.stringify(tracer);
     const opts = {
       hostname: 'localhost',
       port: 3000,
       path: '/MicrObserv/newPTracer',
       method: 'POST',
-      body: tracer
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(tracer)
+      }
     }
     let dbId;
     const req = http.request(opts, res => {
@@ -86,6 +101,7 @@ const createPTracer = async tracer => {
     }, true);
     
     req.on('error', error => console.error(error));
+    req.write(tracer);
     req.end();
     return dbId;
   }
@@ -101,15 +117,20 @@ const createPTracer = async tracer => {
  */
 const updatePTracer = async id => {
 try{
+  id = JSON.stringify(id);
   const opts = {
     hostname: 'localhost',
     port: 3000,
     path: '/MicrObserv/updateNTracer',
     method: 'POST',
-    body: id
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(id)
+    }
   }
   const req = http.request(opts, res => {}, true);
   req.on('error', error => console.error(error));
+  req.write(id);
   req.end();
 }
 catch(err){
@@ -207,16 +228,21 @@ const expressServerEventListener = () => {
  */
 const createLog = async log => {
   try{
+    log = JSON.stringify(log);
     const opts = {
       hostname: 'localhost',
       port: 3000,
       path: '/MicrObserv/newLog',
       method: 'POST',
-      body: log
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(log)
+      }
     }
     const req = http.request(opts, res => {}, true);
     
     req.on('error', error => console.error(error));
+    req.write(log);
     req.end();
   }
   catch(err){

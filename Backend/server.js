@@ -1,11 +1,12 @@
 const express = require('express');
 const parse = require('url');
 const ws = require('ws');
+require('dotenv').config()
 const path = require('path');
 const npmPackRouter = require('./routes')
 const PORT = 3000;
 const app = express();
-const connections = []
+const electronController = require('./controllers/electronController')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,7 +20,7 @@ const wss = new ws.Server({
 // const wss = new ws.Server({ noServer: true });
 wss.on('connection', function connection(ws) {
     console.log("New Connection Client");
-    connections.push(ws)
+    electronController.connections.push(ws)
     ws.on('message', function message(data) {
       console.log('received: %s', data);
     });
@@ -33,6 +34,14 @@ wss.on('connection', function connection(ws) {
         pTracerVals: [40, 10],
       },
     }));
+    ws.send(JSON.stringify({
+      logs: [{src: 'Service A', msg: 'hi1', time: 'today'}],
+      tracers: {
+        names: ['Service A to B', 'Service B to A'],
+        nTracerVals: [70, 90],
+        pTracerVals: [40, 10],
+      },
+    }));
   });
 
 app.use('/',express.static(path.join(__dirname, '../Electron/dist/')));
@@ -40,9 +49,16 @@ app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../Ele
 
 app.use('/MicrObserv', npmPackRouter)
 
-app.use((err, req, res) => {
-  console.log(err);
-  res.status(500).send(err);
+// Global error handler, will trigger if any errors occur when handling requests
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: 'Error occured during middleware execution',
+    status: 400,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
 });
 
 app.listen(PORT, () => console.log(`Started server listening on port: ${PORT}`));

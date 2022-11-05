@@ -50,7 +50,7 @@ const fetchDataFalse = (req, res, next) => {
 
 // SERVER
 const serviceA = express();
-const PORT = 8080;
+const PORT = 8082;
 serviceA.use('/start', fetchDataTrue, startLoop, (req, res)=> res.status(200).send('Started'));
 serviceA.use('/stop', fetchDataFalse, (req, res) => res.status(200).send('Stopped'));
 

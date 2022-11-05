@@ -14,6 +14,8 @@ export default function LogsDisplay(props) {
     ws.onmessage = (msg) => {
       //create boolean checking if log
       const newLogs = JSON.parse(msg.data).logs;
+      console.log('RECIEVED MSG LOGS!');
+      console.log(JSON.parse(msg.data).logs)
       if(Array.isArray(newLogs)) updateLogs(logs => [...logs, ...newLogs]);
     }
   });

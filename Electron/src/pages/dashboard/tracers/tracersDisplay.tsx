@@ -14,6 +14,8 @@ export default function TracersDisplay() {
     }
     //when there is an incoming msg
     ws.onmessage = (msg) => {
+      console.log('RECIEVED MSG Tracers!');
+      
       //create boolean checking if log
       const tracers = JSON.parse(msg.data).tracers;
       if(Array.isArray(tracers.names)) updateTracerNames(tracerNames => [...tracerNames, ...tracers.names]);
