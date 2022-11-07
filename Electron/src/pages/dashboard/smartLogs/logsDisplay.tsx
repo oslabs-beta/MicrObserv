@@ -16,7 +16,7 @@ export default function LogsDisplay(props) {
       const newLogs = JSON.parse(msg.data).logs;
       console.log('RECIEVED MSG LOGS!');
       console.log(JSON.parse(msg.data).logs)
-      if(Array.isArray(newLogs)) updateLogs(logs => [...logs, ...newLogs]);
+      if(Array.isArray(newLogs)) updateLogs(logs => [...newLogs, ...logs]);
     }
   });
   return (
@@ -68,7 +68,7 @@ const LogElement = (props) => {
         {/* Service Name */}
         <div className='title flex justify-between font-bold'>
           <h2>{serviceName}</h2>
-          <div>{`Time: ${time}`}</div>
+          <div>{`${time}`}</div>
         </div>
         {/* log's message */}
         <div className='messageDiv overflow-hidden text-slate-50 mt-2'>

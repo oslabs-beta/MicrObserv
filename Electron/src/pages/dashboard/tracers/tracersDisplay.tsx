@@ -18,6 +18,7 @@ export default function TracersDisplay() {
       
       //create boolean checking if log
       const tracers = JSON.parse(msg.data).tracers;
+      console.log(tracers);
       if(Array.isArray(tracers.names)) updateTracerNames(tracerNames => [...tracerNames, ...tracers.names]);
       if(Array.isArray(tracers.nTracerVals)) updateNTracerVals(nTracerVals => [...nTracerVals, ...tracers.nTracerVals]);
       if(Array.isArray(tracers.pTracerVals)) updatePTracerVals(pTracerVals => [...pTracerVals, ...tracers.pTracerVals]);

@@ -14,6 +14,7 @@ const http = require('http');
  * - traceID = unique id used as a common key between services for created tracer objects
  */
 const createNTracer = async tracer => {
+  return new Promise ((resolve, reject) => {
     try{
       tracer = JSON.stringify(tracer);
       const opts = {
@@ -26,22 +27,22 @@ const createNTracer = async tracer => {
           'Content-Length': Buffer.byteLength(tracer)
         }
       }
-      let dbId;
       const req = http.request(opts, res => {
+        // Data will be tracerId sent as JSON
         let data = '';
         res.on('data', chunk => data += chunk);
-        res.on('end', () => dbId = data);
+        res.on('end', () => resolve(data));
       }, true);
       
-      req.on('error', error => console.error(error));
+      req.on('error', error => reject(error));
       req.write(tracer);
       req.end();
-      // console.log(dbId);
-      return dbId;
     }
     catch(err){
         console.log(`${defaultErrorMsg} Problem sending network tracer to server, Error: ${err}`);
+        reject(err);
     }
+  })
 }
 /* updateNTracer
  * Description: updates network tracer's 'comlpeted' attribute on MicrObserv backend to true.
@@ -164,7 +165,10 @@ const httpRequestEventListener = () => {
             // wait until createNTracer promise resolves
             const id = await Promise.resolve(promise);
             // update tracer obj's response time
-            await updateNTracer({id: id});
+            await updateNTracer({
+              id: id,
+              tracerId: tracerId
+            });
             // invoke user passed response event listener
             if(callback) return callback(error, response, body);
         };
@@ -177,20 +181,27 @@ const httpRequestEventListener = () => {
     // Same logic as http but for https
     const https = require('https');
     const ogHttps = https.request;
-    https.request = (options, callback)=>{
-        let newCallback = callback;
+    https.request = (options, callback, fromMicrObserv)=>{
+      if(!fromMicrObserv){
+        const tracerId = options.href + Date.now();
+        options.headers['id'] = tracerId;
         const tracer = {
           src: serviceName,
           dest: options.href,
           tracerId: tracerId
         };
         const promise = createNTracer(tracer);
-        newCallback = async (error, response, body) => {
+        const onResponse = async (error, response, body) => {
             const id = await Promise.resolve(promise);
-            await updateNTracer({id: id});
+            await updateNTracer({
+              id: id,
+              tracerId: tracerId
+            });
             if(callback) return callback(error, response, body);
         };
-        return ogHttps(options, newCallback);
+        return ogHttps(options, onResponse);
+      }
+      return ogHttps(options, callback);
     }
 }
 /* expressServerEventListener
@@ -203,6 +214,35 @@ const expressServerEventListener = () => {
     http.createServer = (options, requestListener) => {
         let server = ogCreateServer(options, requestListener);
         server.on('request', (request, response)=>{
+            // ignore requests that don't have an associated tracerId
+            if(request.headers.id){
+              // Send new process tracer to server
+              const tracer = {
+                src: serviceName,
+                tracerId: request.headers.id
+              };
+              const promise = createPTracer(tracer);
+              const callback = async (error, response, body) => {
+                  id = await Promise.resolve(promise);
+                  await updatePTracer({
+                    id: id,
+                    tracerId: request.headers.id
+                  });
+              };
+              // set event listener for when response is sent to client
+              response.on('finish', callback);
+            }
+        });
+        return server;
+    }
+
+    const https = require('https');
+    const ogCreateSecureServer = https.createServer;
+    https.createServer = (options, requestListener) => {
+        let server = ogCreateSecureServer(options, requestListener);
+        server.on('request', (request, response)=>{
+          // ignore requests that don't have an associated tracerId
+          if(request.headers.id){
             // Send new process tracer to server
             const tracer = {
               src: serviceName,
@@ -211,12 +251,16 @@ const expressServerEventListener = () => {
             const promise = createPTracer(tracer);
             const callback = async (error, response, body) => {
                 id = await Promise.resolve(promise);
-                await updatePTracer({id: id});
+                await updatePTracer({
+                  id: id,
+                  tracerId: request.headers.id
+                });
             };
             // set event listener for when response is sent to client
             response.on('finish', callback);
-        });
-        return server;
+          }
+      });
+      return server;
     }
 }
 

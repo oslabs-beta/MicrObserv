@@ -8,20 +8,14 @@ const debug = (req, res, next) => {
   return next;
 }
 
-router.post('/newLog', electronController.newLog, dbController.storeLog, (req, res) => {
-  res.sendStatus(200);
-});
-router.post('/newNTracer', debug, (req, res) => {
-  res.status(200).send(res.locals.id);
-});
-router.post('/updateNTracer', debug, (req, res) => {
-  res.sendStatus(200);
-});
-router.post('/newPTracer', debug, (req, res) => {
-  res.status(200).send(res.locals.id);
-});
-router.post('/updatePTracer', debug, (req, res) => {
-  res.sendStatus(200);
-});
+router.post('/newLog', electronController.newLog, dbController.storeLog, (req, res) => res.sendStatus(200));
+
+router.post('/newNTracer', electronController.newNTracer, dbController.storeNTracer, (req, res) => res.status(200).json(res.locals.id));
+
+router.post('/updateNTracer', electronController.updatedNTracer, dbController.updateNTracer, (req, res) => res.sendStatus(200));
+
+router.post('/newPTracer', electronController.newPTracer, dbController.storePTracer, (req, res) => res.status(200).json(res.locals.id));
+
+router.post('/updatePTracer', electronController.updatedPTracer, dbController.updatePTracer, (req, res) => res.sendStatus(200));
 
 module.exports = router;
