@@ -5,6 +5,7 @@ const { Pool } = require('pg');
  * Description: connects package to desktop application db and assigns a query function to global variable dbQuery
  */
 let pool;
+const defaultErrorMsg = 'Error init db:';
 const connectToDesktopAppDB = async () => {
   let dbQuery;
   try{    
@@ -21,8 +22,8 @@ const connectToDesktopAppDB = async () => {
                       nSrc VARCHAR NOT NULL,
                       dest VARCHAR NOT NULL,
                       traceId VARCHAR NOT NULL,
-                      nStartTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                      nEndTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                      nStartTime TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+                      nEndTime TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
                       nCompleted BOOLEAN DEFAULT FALSE,
                       PRIMARY KEY(id));`
                   );
@@ -36,8 +37,8 @@ const connectToDesktopAppDB = async () => {
                     id SERIAL,
                     pSrc VARCHAR NOT NULL,
                     traceId VARCHAR NOT NULL,
-                    pStartTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    pEndTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    pStartTime TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+                    pEndTime TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
                     pCompleted BOOLEAN DEFAULT FALSE,
                     PRIMARY KEY(id));`
                 );
@@ -105,12 +106,19 @@ const connectToDesktopAppDB = async () => {
                       id SERIAL,
                       src VARCHAR NOT NULL,
                       msg VARCHAR NOT NULL,
-                      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                      time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
                       PRIMARY KEY(id));`
                   );
   }
   catch(err) {
       console.log(`${defaultErrorMsg} Problem creating logs table in db, Error: ${err}`);
+  }
+   // Set timezone to LA time
+  try {
+    await dbQuery(`SET timezone = 'America/Los_Angeles';`);
+  }
+  catch(err) {
+    console.log(`${defaultErrorMsg} Problem setting time zone in db, Error: ${err}`);
   }
 }
 

@@ -3,6 +3,8 @@ const db = require('../model.js');
 controller = {};
 
 const cleanTimeStampData = time => {
+  // console.log(time);
+  // console.log('\n\n\n\n');
   const year = time.substring(0,4);
   const month = time.substring(6,8);
   const day = time.substring(9,11);
@@ -16,7 +18,10 @@ controller.getLogs = async (ws) => {
                          ORDER BY time DESC LIMIT 50;`;
     const data = await db.query(queryString);
     // clean timestamp data for frontend
+    // console.log(data.rows);
     for(const log of data.rows){
+      // console.log(log.time);
+      // console.log(log.id);
       log.time = cleanTimeStampData(JSON.stringify(log.time));
     }
     ws.send(JSON.stringify({
@@ -41,8 +46,8 @@ controller.getTracers = async (ws) => {
                          WHERE nCompleted = true
                          ORDER BY nStartTime LIMIT 50;`;
     const data = await db.query(queryString);
-    // console.log('TRACERS:');
-    // console.log(data.rows);
+    console.log('TRACERS:');
+    console.log(data.rows);
     ws.send(JSON.stringify({
       logs: [],
       tracers: {
