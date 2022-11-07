@@ -45,40 +45,56 @@ const connectToDesktopAppDB = async () => {
   catch(err) {
       console.log(`${defaultErrorMsg} Problem creating process tracers table in db, Error: ${err}`);
   } 
-  // Create update endTime function
+  // Create update nTracers endTime function
   try{
-      await dbQuery(`CREATE OR REPLACE FUNCTION update_endtime()
-                      RETURNS TRIGGER AS 
-                      $$
-                          BEGIN
-                              NEW.endTime = now();
-                              RETURN NEW;
-                          END;
-                      $$ 
-                      language 'plpgsql'`
-                  );
+    await dbQuery(`CREATE OR REPLACE FUNCTION update_nEndtime()
+                    RETURNS TRIGGER AS 
+                    $$
+                        BEGIN
+                            NEW.nEndTime = now();
+                            RETURN NEW;
+                        END;
+                    $$ 
+                    language 'plpgsql'`
+                );
+  }
+  catch(err) {
+      console.log(`${defaultErrorMsg} Problem creating db function update_endTime, Error: ${err}`);
+  }
+  // Create update pTracers endTime function
+  try{
+    await dbQuery(`CREATE OR REPLACE FUNCTION update_pEndtime()
+                    RETURNS TRIGGER AS 
+                    $$
+                        BEGIN
+                            NEW.pEndTime = now();
+                            RETURN NEW;
+                        END;
+                    $$ 
+                    language 'plpgsql'`
+                );
   }
   catch(err) {
       console.log(`${defaultErrorMsg} Problem creating db function update_endTime, Error: ${err}`);
   }
   // Create on nTracers update trigger for endTime function
   try{
-      await dbQuery(`CREATE TRIGGER update_endtime_on
+      await dbQuery(`CREATE TRIGGER update_nEndtime_on
                       BEFORE UPDATE
                       ON nTracers
                       FOR EACH ROW
-                      EXECUTE PROCEDURE update_endtime();`
+                      EXECUTE PROCEDURE update_nEndtime();`
                   );
   }
   // Expected trigger already exists error
   catch(err) {}
   // Create on nTracers update trigger for endTime function
   try{
-    await dbQuery(`CREATE TRIGGER update_endtime_on
+    await dbQuery(`CREATE TRIGGER update_pEndtime_on
                     BEFORE UPDATE
                     ON pTracers
                     FOR EACH ROW
-                    EXECUTE PROCEDURE update_endtime();`
+                    EXECUTE PROCEDURE update_pEndtime();`
                 );
   }
   // Expected trigger already exists error
