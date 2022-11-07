@@ -122,7 +122,7 @@ try{
   const opts = {
     hostname: 'localhost',
     port: 3000,
-    path: '/MicrObserv/updateNTracer',
+    path: '/MicrObserv/updatePTracer',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -149,9 +149,10 @@ const httpRequestEventListener = () => {
     const ogHttp = http.request;
     // reassign http.request to custom function
     http.request = (options, callback, fromMicrObserv)=>{
+      // ignore http requests coming from this npm package
       if(!fromMicrObserv){
         // create tracerId for synchronizing tracers created on both sender and receiver
-        const tracerId = options.href + Date.now(); //option.href = receiver endpoint
+        const tracerId = options.href + Math.random(Date.now()); //option.href = receiver endpoint
         options.headers['id'] = tracerId;
         // send new network tracer to server
         const tracer = {
@@ -170,7 +171,7 @@ const httpRequestEventListener = () => {
               tracerId: tracerId
             });
             // invoke user passed response event listener
-            if(callback) return callback(error, response, body);
+            // if(callback) return callback(error, response, body);
         };
         return ogHttp(options, onResponse);
       }
@@ -183,7 +184,7 @@ const httpRequestEventListener = () => {
     const ogHttps = https.request;
     https.request = (options, callback, fromMicrObserv)=>{
       if(!fromMicrObserv){
-        const tracerId = options.href + Date.now();
+        const tracerId = options.href + Math.random(Date.now());
         options.headers['id'] = tracerId;
         const tracer = {
           src: serviceName,
