@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 export default function AddSystems() {
 
-  const [services, updateSerices] = useState([]);
+  const [systems, updateSystems] = useState([]);
   //imput text from input fields
   const [systemName, updateSystemName] = useState('');
   const [uri, updateURI] = useState('');
@@ -34,7 +34,7 @@ export default function AddSystems() {
     })
     .then(data => {
 
-      return updateSerices(data);
+      return updateSystems(data);
     
     })
     .catch((err) => {
@@ -59,27 +59,19 @@ export default function AddSystems() {
 
       const result = await response.json();
 
-      updateSerices(result)
+      updateSystems(result)
     } catch (err) {
       console.log(err);
     } finally {
       setIsLoading(false);
     }
   }
-  
-   // const systemObj = {
-    //   systemName: systemName,
-    //   uri: uri
-    // }
-  console.log("This is an Array of Services FE", services);
 
   return (
     <div className='flex flex-col items-center gap-10 w-full'>
       <div className="artboard artboard-demo artboard-horizontal phone-5 flex flex-col items-center border-2 border-current gap-2">
-        <AddSystemContent />
-        <AddSystemContent />
-        <AddSystemContent />
-        <AddSystemContent />
+        <SystemContainer systems={systems}/>
+        
       </div>
       <div className='flex flex-row gap-3'>
       <input value ={systemName} onChange ={(e) => updateSystemName(e.target.value)} type="text" placeholder="Enter System Name..." className="input input-bordered justify-items-center w-full max-w-xs" />
@@ -90,14 +82,28 @@ export default function AddSystems() {
   )
 }
 
-const AddSystemContent = () => {
+const SystemContainer = (props) => {
+  
+  const systemElements:any = [];
+  for(let i = 0; i < props.systems.length; i++){
+    systemElements.push(<SystemElement key={i} systems={props.systems[i]}/>)
+  }
+  return (
+    <div tabIndex={0} className="collapse collapse-plus border border-base-300 bg-base-100 rounded-box">
+      {systemElements}
+    </div>
+  )
+}
+
+const SystemElement = (props) => {
+  console.log("inside element",props.systems)
   return (
     <div tabIndex={0} className="collapse collapse-plus border border-base-300 bg-base-100 rounded-box">
   <div className="collapse-title text-m font-medium">
-    System A
+    {props.systems.systemname}
   </div>
   <div className="collapse-content"> 
-    <p tabIndex={0}>URI: SKFLSFLSFHKLSHFSLHFLHSLFHLKFHSLKHF</p>
+    <p tabIndex={0}>{props.systems.uri}</p>
   </div>
 </div>
   )
