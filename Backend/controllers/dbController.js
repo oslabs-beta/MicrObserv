@@ -155,8 +155,8 @@ controller.storeSystem =(req,res,next) => {
     })  
   );
 }
+
 controller.getSystem =(req,res,next) => {
-  console.log("Inside getSystems in DB controllers");
   const queryString = `SELECT * FROM systems`;
   db.query(queryString)
   .then(data => {
