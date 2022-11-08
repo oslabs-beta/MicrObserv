@@ -9,7 +9,6 @@ const debug = (req, res, next) => {
 }
 
 router.get('/getSystem', dbController.getSystem, (req, res) => {
-  console.log("Inside getSystems route")
   console.log(res.locals.data);
   res.status(200).json(res.locals.data);
 });

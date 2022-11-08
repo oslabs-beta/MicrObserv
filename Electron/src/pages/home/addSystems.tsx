@@ -6,44 +6,73 @@ export default function AddSystems() {
   //imput text from input fields
   const [systemName, updateSystemName] = useState('');
   const [uri, updateURI] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [err, setErr] = useState('');
+//is this chance or vardan Vardan weird it shows your name as chance
 
+  //POST request to send service and URI to DB on click
   // const addSystem = (data) =>{
   //   console.log(data);
-  //   fetch('http://localhost:3000/addSystem',{
+  //   fetch('/addSystem',{
   //     method: 'POST',
-  //     headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000/", 
-  //       'Accept':'application/json'},
-  //     mode: "no-cors",
+  //     // headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000/", 
+  //     //   'Accept':'application/json'},
+  //     // mode: "no-cors",
   //     body: JSON.stringify(data)
   //   })
   // }
-  //
+  
   useEffect(() =>{
     getSystem();
-  })
+  },[]);
 
+  //GET request to get all data from DB
   const getSystem = () => {
     fetch("/MicrObserv/getSystem")
     .then(data => {
-      data.json()
+      return data.json()
     })
     .then(data => {
-      console.log("Inside data", data)
-      return data
+
+      return updateSerices(data);
     
     })
     .catch((err) => {
       console.log(err);
     });
   }
-  const handleClick = async () =>{
-    // const systemObj = {
+
+  const handleClick =  async() => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/MicrObserv/addSystem', {
+        method: 'POST',
+        body: JSON.stringify({
+          systemName: systemName,
+          uri: uri
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+
+      const result = await response.json();
+
+      updateSerices(result)
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  
+   // const systemObj = {
     //   systemName: systemName,
     //   uri: uri
     // }
-   getSystem()
-  }
-  
+  console.log("This is an Array of Services FE", services);
+
   return (
     <div className='flex flex-col items-center gap-10 w-full'>
       <div className="artboard artboard-demo artboard-horizontal phone-5 flex flex-col items-center border-2 border-current gap-2">
@@ -55,7 +84,7 @@ export default function AddSystems() {
       <div className='flex flex-row gap-3'>
       <input value ={systemName} onChange ={(e) => updateSystemName(e.target.value)} type="text" placeholder="Enter System Name..." className="input input-bordered justify-items-center w-full max-w-xs" />
       <input value ={uri} onChange ={(e) => updateURI(e.target.value)}type="text" placeholder="Database URI..." className="input input-bordered justify-items-center w-full max-w-xs" />
-      <button className="btn btn-outline" onClick={getSystem}>Add</button>
+      <button className="btn btn-outline" onClick={handleClick}>Add</button>
       </div>
     </div>
   )
