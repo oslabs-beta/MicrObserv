@@ -29,6 +29,9 @@ export default function Navbar() {
               <a>Home</a>
             </li>
             <li>
+              <a>Dashboard</a>
+            </li>
+            <li>
               <a>Logs</a>
             </li>
             <li>
