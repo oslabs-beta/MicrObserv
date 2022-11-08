@@ -8,6 +8,12 @@ const debug = (req, res, next) => {
   return next;
 }
 
+router.get('/getSystem', dbController.getSystem, (req, res) => {
+  console.log("Inside getSystems route")
+  console.log(res.locals.data);
+  res.status(200).json(res.locals.data);
+});
+
 router.post('/newLog', electronController.newLog, dbController.storeLog, (req, res) => res.sendStatus(200));
 
 router.post('/newNTracer', electronController.newNTracer, dbController.storeNTracer, (req, res) => res.status(200).json(res.locals.id));
@@ -24,11 +30,7 @@ router.post('/addSystem', dbController.storeSystem, (req, res) => {
   res.sendStatus(200);
 });
 
-router.get('/getSystem', dbController.getSystem, (req, res) => {
-  console.log("Inside getSystems route")
-  console.log(res.locals.data);
-  res.status(200).json(res.locals.data);
-});
+
 
 router.delete('/deleteSystem', (req, res) => res.sendStatus(200));
 

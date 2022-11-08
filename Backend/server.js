@@ -10,9 +10,7 @@ const app = express();
 const electronController = require('./controllers/electronController');
 const dbController = require('./controllers/dbController');
 
-app.use(cors({
-  origin: 'http://127.0.0.1:3000',
-}));
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
