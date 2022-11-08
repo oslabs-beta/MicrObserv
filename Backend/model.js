@@ -5,6 +5,7 @@ const { Pool } = require('pg');
  * Description: connects package to desktop application db and assigns a query function to global variable dbQuery
  */
 let pool;
+const defaultErrorMsg = 'Error init db';
 const connectToDesktopAppDB = async () => {
   let dbQuery;
   try{    
@@ -14,6 +15,17 @@ const connectToDesktopAppDB = async () => {
       dbQuery = (text, params, callback)=> pool.query(text, params, callback);
   }
   catch(err) {console.log('Error connecting URI: ', err) }
+  //Create systems URI table
+  try{
+    await dbQuery(`CREATE TABLE IF NOT EXISTS systems(
+                    id serial,
+                    systemName VARCHAR NOT NULL,
+                    uri VARCHAR NOT NULL,
+                    PRIMARY KEY(id));`)
+  }
+  catch(err){
+    console.log(`Problem creating systems table in db, Error: ${err}`);
+  }
   // Create network tracers table
   try{
       await dbQuery(`CREATE TABLE IF NOT EXISTS nTracers(

@@ -132,4 +132,43 @@ controller.updatePTracer = (req, res, next) => {
       })  
     );
 }
+/* CREATE TABLE IF NOT EXISTS systems(
+                    id serial,
+                    systemName VARCHAR NOT NULL
+                    URI VARCHAR NOT NULL
+                    PRIMARY KEY(id));`*/
+controller.storeSystem =(req,res,next) => {
+  console.log("Inside storeSystems in DB controllers");
+  const {systemName, uri} = req.body
+  const queryString = `INSERT into systems (systemName, uri)
+                       VALUES ($1, $2) RETURNING id`;
+  db.query(queryString, [systemName, uri])
+  .then(data => {
+    //console.log(data.rows[0])
+    res.locals.id = data.rows[0].id;
+    return next()
+  })
+  .catch(err => 
+    next({
+      log: 'Error storing process tracer db, src: dbContoller.storeSystem()',
+      message: { err: err }
+    })  
+  );
+}
+controller.getSystem =(req,res,next) => {
+  console.log("Inside getSystems in DB controllers");
+  const queryString = `SELECT * FROM systems`;
+  db.query(queryString)
+  .then(data => {
+    //console.log(data.rows[0])
+    res.locals.data = data.rows;
+    return next()
+  })
+  .catch(err => 
+    next({
+      log: 'Error storing process tracer db, src: dbContoller.storeSystem()',
+      message: { err: err }
+    })  
+  );
+}
 module.exports = controller;

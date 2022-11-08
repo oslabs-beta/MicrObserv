@@ -5,9 +5,14 @@ require('dotenv').config()
 const path = require('path');
 const npmPackRouter = require('./routes');
 const PORT = 3000;
+const cors = require("cors");
 const app = express();
 const electronController = require('./controllers/electronController');
 const dbController = require('./controllers/dbController');
+
+app.use(cors({
+  origin: 'http://127.0.0.1:3000',
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

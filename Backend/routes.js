@@ -18,4 +18,18 @@ router.post('/newPTracer', electronController.newPTracer, dbController.storePTra
 
 router.post('/updatePTracer', electronController.updatedPTracer, dbController.updatePTracer, (req, res) => res.sendStatus(200));
 
+router.post('/addSystem', dbController.storeSystem, (req, res) => {
+  console.log("Inside add systems route");
+  console.log(res.locals.id);
+  res.sendStatus(200);
+});
+
+router.get('/getSystem', dbController.getSystem, (req, res) => {
+  console.log("Inside getSystems route")
+  console.log(res.locals.data);
+  res.status(200).json(res.locals.data);
+});
+
+router.delete('/deleteSystem', (req, res) => res.sendStatus(200));
+
 module.exports = router;
