@@ -3,16 +3,10 @@ const fetch = require('node-fetch');
 require('dotenv').config()
 // REQUIRE MODULE IN EACH SERVER
 /* SETUP PACKAGE WITH OPTIONS
- * URI: (postgres uri for storing logs and tracers)
+ * 
  */
-/* FOR LOCAL TESTING
- * DO NOT PUSH YOUR "pgURI" TO GITHUB
- * REPLACE THE EMPTY STRING WITH YOUR LOCAL/MLAB/ELEPHANTSQL URI AND UNCOMMENT || EXPRESSION ON LINE 11
- */
-// const pgURI = "";
-const microbservURI = process.env.PG_URI // || pgURI;
 const options = {
-    URI: microbservURI
+   
 }
 require('../../microbserv_package/microbserv/start').start(options, 'serviceA');
 
@@ -56,7 +50,7 @@ const fetchDataFalse = (req, res, next) => {
 
 // SERVER
 const serviceA = express();
-const PORT = 8080;
+const PORT = 8082;
 serviceA.use('/start', fetchDataTrue, startLoop, (req, res)=> res.status(200).send('Started'));
 serviceA.use('/stop', fetchDataFalse, (req, res) => res.status(200).send('Stopped'));
 

@@ -1,10 +1,15 @@
-const { contextBridge, ipcRenderer } = require('electron');
+// const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('versions', {
-  everything: () => process.getSystemMemoryInfo().total,
-  node: () => process.versions.node,
-  chrome: () => process.versions.chrome,
-  electron: () => process.versions.electron,
-  ping: () => ipcRenderer.invoke('ping'),
-  // we can also expose variables, not just functions
-});
+// const invoke = (channel, args, callback = () => {return}) => {
+//   ipcRenderer.invoke(channel, args).then((res) => callback(res));
+// };
+
+// const handle = (channel, callback) => {
+//   ipcRenderer.on(channel, (event, message) => callback(event, message));
+// };
+
+// contextBridge.exposeInMainWorld('ipcBridge', {
+//   invoke: invoke,
+//   handle: handle
+// });
+
