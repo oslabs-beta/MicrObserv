@@ -11,7 +11,7 @@ export default function AddSystems() {
   
   useEffect(() =>{
     getSystem();
-  },[]);
+  });
 
   //GET request to get all data from DB
   const getSystem = () => {
@@ -56,7 +56,7 @@ export default function AddSystems() {
 
   return (
     <div className='flex flex-col items-center gap-10 w-full'>
-      <div className="artboard artboard-demo artboard-horizontal phone-5 flex flex-col items-center border-2 border-current gap-2">
+      <div className="scrollbar-thin artboard artboard-demo artboard-horizontal phone-5 flex flex-col items-center border-2 border-current gap-2">
         <SystemContainer systems={systems}/>
       </div>
       <div className='flex flex-row gap-3'>
