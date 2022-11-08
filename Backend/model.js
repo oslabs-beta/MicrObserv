@@ -6,11 +6,11 @@ const { Pool } = require('pg');
  */
 let pool;
 const defaultErrorMsg = 'Error init db;';
-const connectToDesktopAppDB = async () => {
+const connectToDesktopAppDB = async (uri) => {
   let dbQuery;
   try{    
       pool = new Pool({
-          connectionString: process.env.PG_URI
+          connectionString: uri ? uri : process.env.PG_URI
       });
       dbQuery = (text, params, callback)=> pool.query(text, params, callback);
   }
@@ -137,5 +137,6 @@ connectToDesktopAppDB();
 
 
 module.exports = {
-  query: (text, params, callback) => pool.query(text, params, callback)
+  query: (text, params, callback) => pool.query(text, params, callback),
+  updateDbConnection: (uri) => connectToDesktopAppDB(uri)
 };
