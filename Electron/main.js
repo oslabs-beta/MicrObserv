@@ -1,20 +1,21 @@
-console.log('Electron is Running');
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
+console.log('MicrObserv Desktop is running');
+let win;
+
+
 const createWindow = () => {
-  const win = new BrowserWindow({
+    win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-  ipcMain.handle('ping', () => 'pong');
-  //   win.loadURL('https://github.com');
-  // win.loadURL('http://localhost:8080/');
+  
+  //loads webpage from
   win.loadFile('./dist/index.html');
-  // win.loadURL(path.join(__dirname, 'dist/index.html'));
 };
 
 app.whenReady().then(() => {
@@ -23,6 +24,7 @@ app.whenReady().then(() => {
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
+  
 });
 
 //Quit the app when all windows are closed (Windows & Linux)

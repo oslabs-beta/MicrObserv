@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.log-element {
+  height: 10vh;
+  transition: height 0.75s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.log-element-clicked {
+  height: fit-content;
+}
+
+.log-element .log-data {
+  display: none;
+}
+.log-element:hover .log-data {
+  display: flex;
+}
+
+.log-container {
+  overflow-y: hidden;
+}
+.log-container:hover {
+  overflow-y: scroll;
+}
+
+.dash-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.convex-shadow {
+  box-shadow: inset 6px 6px 10px 0 rgba(0, 0, 0, 0.2) inset -6px -6px 10px 0
+    rgba(25, 255, 255, 0.5);
+}
