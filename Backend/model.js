@@ -5,7 +5,7 @@ const { Pool } = require('pg');
  * Description: connects package to desktop application db and assigns a query function to global variable dbQuery
  */
 let pool;
-const defaultErrorMsg = 'Error init db';
+const defaultErrorMsg = 'Error init db;';
 const connectToDesktopAppDB = async () => {
   let dbQuery;
   try{    
