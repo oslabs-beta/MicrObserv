@@ -8,19 +8,6 @@ export default function AddSystems() {
   const [uri, updateURI] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState('');
-//is this chance or vardan Vardan weird it shows your name as chance
-
-  //POST request to send service and URI to DB on click
-  // const addSystem = (data) =>{
-  //   console.log(data);
-  //   fetch('/addSystem',{
-  //     method: 'POST',
-  //     // headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000/", 
-  //     //   'Accept':'application/json'},
-  //     // mode: "no-cors",
-  //     body: JSON.stringify(data)
-  //   })
-  // }
   
   useEffect(() =>{
     getSystem();
@@ -59,7 +46,7 @@ export default function AddSystems() {
 
       const result = await response.json();
 
-      updateSystems(result)
+      return updateSystems(result)
     } catch (err) {
       console.log(err);
     } finally {
@@ -71,7 +58,6 @@ export default function AddSystems() {
     <div className='flex flex-col items-center gap-10 w-full'>
       <div className="artboard artboard-demo artboard-horizontal phone-5 flex flex-col items-center border-2 border-current gap-2">
         <SystemContainer systems={systems}/>
-        
       </div>
       <div className='flex flex-row gap-3'>
       <input value ={systemName} onChange ={(e) => updateSystemName(e.target.value)} type="text" placeholder="Enter System Name..." className="input input-bordered justify-items-center w-full max-w-xs" />
@@ -83,20 +69,18 @@ export default function AddSystems() {
 }
 
 const SystemContainer = (props) => {
-  
   const systemElements:any = [];
   for(let i = 0; i < props.systems.length; i++){
     systemElements.push(<SystemElement key={i} systems={props.systems[i]}/>)
   }
   return (
-    <div tabIndex={0} className="collapse collapse-plus border border-base-300 bg-base-100 rounded-box">
+    <div >
       {systemElements}
     </div>
   )
 }
 
 const SystemElement = (props) => {
-  console.log("inside element",props.systems)
   return (
     <div tabIndex={0} className="collapse collapse-plus border border-base-300 bg-base-100 rounded-box">
   <div className="collapse-title text-m font-medium">
