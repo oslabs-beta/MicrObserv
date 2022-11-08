@@ -23,9 +23,18 @@ export default function AddSystems() {
   })
 
   const getSystem = () => {
-    fetch("http://localhost:3000/getSystem")
-    .then(data => data.json())
-    .then(data => console.log(data))
+    fetch("/MicrObserv/getSystem")
+    .then(data => {
+      data.json()
+    })
+    .then(data => {
+      console.log("Inside data", data)
+      return data
+    
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
   const handleClick = async () =>{
     // const systemObj = {
