@@ -72,9 +72,9 @@ export default function Systems(props) {
   return (
     <div className='flex flex-col items-center gap-5 w-full'>
       <div className='navbar justify-center bg-base-100'>
-        <a className='btn btn-ghost normal-case text-xl'>MicrObserv</a>
+        <a className='normal-case text-xl'>MicrObserv</a>
       </div>
-      <div className='scrollbar-thin artboard artboard-demo artboard-horizontal phone-5 flex flex-col items-center border-2 border-current gap-3'>
+      <div className='px-20 py-5 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-zinc-500 h-[72vh] rounded-lg artboard artboard-horizontal phone-5 flex flex-col items-center border-2 border-current gap-3'>
         <SystemContainer
           systems={systems}
           handleDelete={handleDelete}
@@ -116,7 +116,7 @@ const SystemContainer = (props) => {
       />
     );
   }
-  return <div>{systemElements}</div>;
+  return systemElements;
 };
 
 const SystemElement = (props) => {
