@@ -94,13 +94,13 @@ Use the `BLANK_README.md` to get started.
 ### Built With
 
 - [![React][react.js]][react-url]
-- Electron
+- [![Electron][electron.com]][electron-url]
 - [![Node.js][node.com]][node-url]
 - [![Express.js][express.com]][express-url]
-- Webpack
+- [![Webpack][webpack.com]][webpack-url]
 - Websockets
 - [![Typescript][typescript.com]][typescript-url]
-- Chart.js
+- [![Chart.js][chartjs.com]][chartjs-url]
 - [![PostgresSQL][postgres.dev]][postgres-url]
 - [![Tailwindcss][tailwindcss.com]][tailwindcss-url]
 
