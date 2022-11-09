@@ -16,16 +16,16 @@ export default props => {
       
       //create boolean checking if log
       const tracers = JSON.parse(msg.data).tracers;
+      if(tracers.names.length) updateTracerNames(tracerNames => [...tracerNames, ...tracers.names]);
+      if(tracers.nTracerVals.length) updateNTracerVals(nTracerVals => [...nTracerVals, ...tracers.nTracerVals]);
+      if(tracers.pTracerVals.length) updatePTracerVals(pTracerVals => [...pTracerVals, ...tracers.pTracerVals]);
       console.log(pTracerVals);
-      if(Array.isArray(tracers.names)) updateTracerNames(tracerNames => [...tracerNames, ...tracers.names]);
-      if(Array.isArray(tracers.nTracerVals)) updateNTracerVals(nTracerVals => [...nTracerVals, ...tracers.nTracerVals]);
-      if(Array.isArray(tracers.pTracerVals)) updatePTracerVals(pTracerVals => [...pTracerVals, ...tracers.pTracerVals]);
     }
   }, []);
   return (
     <div className='overflow-hidden w-full'>
       <DashboardContainer title='Latency'/>
-      <BarChart communications={tracerNames} timeAtoA={nTracerVals} timeBtoA={pTracerVals}/>
+      <BarChart communications={tracerNames.slice(Math.max(tracerNames.length - 10, 0)).reverse()} timeAtoA={nTracerVals.slice(Math.max(nTracerVals.length - 10, 0)).reverse()} timeBtoA={pTracerVals.slice(Math.max(pTracerVals.length - 10, 0)).reverse()}/>
       <div className='flex justify-center'>
         <button className='btn' onClick={()=>props.showRealTime(false)}>Next</button>
       </div>
