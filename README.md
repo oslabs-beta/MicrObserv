@@ -99,7 +99,7 @@ Use the `BLANK_README.md` to get started.
 - [![Express.js][express.com]][express-url]
 - Webpack
 - Websockets
-- Typescript
+- [![Typescript][typescript.com]][typescript-url]
 - Chart.js
 - [![PostgresSQL][postgres.dev]][postgres-url]
 - [![Tailwindcss][tailwindcss.com]][tailwindcss-url]
@@ -242,3 +242,5 @@ Use this space to list resources you find helpful and would like to give credit 
 [node-url]: https://nodejs.org/en/
 [express.com]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
 [express-url]: https://expressjs.com/
+[typescript.com]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
+[typescript-url]: https://www.typescriptlang.org/
