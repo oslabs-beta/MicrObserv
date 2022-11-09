@@ -184,10 +184,10 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-* Andrew Ngo - (https://twitter.com/your_username) - email@example.com
+* Andrew Ngo - [@andrew-tien-ngo](https://www.linkedin.com/in/andrew-tien-ngo/)
 * Chancellor Kupersmith - [@chance-kupersmith](https://www.linkedin.com/in/chance-kupersmith/) - email@example.com
-* Otis Jones - [@andrew-tien-ngo](https://www.linkedin.com/in/andrew-tien-ngo/) - email@example.com
-* Vardan Vanyan - [@vardanvanyan](https://www.linkedin.com/in/vardanvanyan/) - email@example.com
+* Otis Jones - [@otis-jones](https://www.linkedin.com/in/andrew-tien-ngo/) - email@example.com
+* Vardan Vanyan - [@vardanvanyan](https://www.linkedin.com/in/vardanvanyan/) - vardan.vanyan@gmail.com
 
 * Project Link: [https://github.com/oslabs-beta/MicrObserv](https://github.com/oslabs-beta/MicrObserv)
 
