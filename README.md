@@ -87,6 +87,8 @@ Use the `BLANK_README.md` to get started.
 <img src="./assets/Demo.gif" alt="Logo" width="600" height="450">
 </div>
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Built With
 
 - [![React][react.js]][react-url]
