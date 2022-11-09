@@ -1,6 +1,8 @@
 const db = require('../model.js');
 
-controller = {};
+controller = {
+  tracerHistoryIndex: 0
+};
 
 const cleanTimeStampData = time => {
   const year = time.substring(0,4);
@@ -38,21 +40,64 @@ controller.getTracers = async (ws) => {
                          INNER JOIN pTracers p
                          ON p.traceId = n.traceId
                          WHERE nCompleted = true
-                         ORDER BY nStartTime LIMIT 50;`;
+                         ORDER BY nStartTime LIMIT 10;`;
     const data = await db.query(queryString);
-    console.log('TRACERS:');
-    console.log(data.rows);
+    const names = data.rows.map(tracer => `${tracer.nsrc}-${tracer.psrc}`);
+    const nTracerVals = data.rows.map(tracer => tracer.nendtime - tracer.nstarttime);
+    const pTracerVals = data.rows.map(tracer => tracer.pendtime - tracer.pstarttime);
     ws.send(JSON.stringify({
       logs: [],
       tracers: {
-        names: [],
-        nTracerVals: [],
-        pTracerVals: [],
+        names: names,
+        nTracerVals: nTracerVals,
+        pTracerVals: pTracerVals,
       },
     }));
+
   }
   catch(err){
     console.log(err);
+  }
+}
+let tracerHistIndex = 10;
+controller.getTracerHistory = (req, res, nxt) => {
+  try{
+    const { next, prev } = req.body;
+    if(next) tracerHistIndex += 10;
+    if(prev) tracerHistIndex -= 10;
+    tracerHistIndex = Math.max(tracerHistIndex, 10);
+    const queryString = `SELECT * FROM nTracers n
+    INNER JOIN pTracers p
+    ON p.traceId = n.traceId
+    WHERE nCompleted = true
+    ORDER BY nStartTime LIMIT $1;`;
+    db.query(queryString, [tracerHistIndex])
+      .then(data => {
+        const names = data.rows.map(tracer => `${tracer.nsrc}-${tracer.psrc}`);
+        const nTracerVals = data.rows.map(tracer => tracer.nendtime - tracer.nstarttime);
+        const pTracerVals = data.rows.map(tracer => tracer.pendtime - tracer.pstarttime);
+        res.locals.tracers = {
+          logs: [],
+          tracers: {
+            names: names.slice(names.length - 10),
+            nTracerVals: nTracerVals.slice(nTracerVals.length - 10),
+            pTracerVals: pTracerVals.slice(pTracerVals.length - 10),
+          },
+        };
+        return nxt();
+      })
+      .catch(err => 
+        nxt({
+          log: 'Error getting tracer history from db, src: dbContoller.getTracerHistory()',
+          message: { err: err }
+        })
+      );
+  }
+  catch(err){
+    return next({
+      log: 'Error handling getTracerHistory request, src: dbContoller.getTracerHistory()',
+      message: { err: err }
+    });
   }
 }
 
