@@ -4,6 +4,7 @@ import DashboardContainer from '../dashboardContainer';
 export default function LogsDisplay(props) {
   const [logs, updateLogs] = useState<any>([]);
   const [filter, updateFilter] = useState<any>('');
+  const [isChecked, check] = useState<boolean>(false);
   useEffect(() => {
 
     let ws = new WebSocket('ws://localhost:3001/');
@@ -13,15 +14,13 @@ export default function LogsDisplay(props) {
     ws.onmessage = (msg) => {
       //create boolean checking if log
       const newLogs = JSON.parse(msg.data).logs;
-      
-      let logsToDisplay = [...newLogs, ...logs];
-      if(newLogs.length) updateLogs(logsToDisplay);
+      if(newLogs.length) updateLogs(logs => [...newLogs, ...logs]);
     };
   }, []);
 
   return (
     <div className='w-full overflow-hidden'>
-      <DashboardContainer updatePage={props.updatePage} title='Logs' updateFilter={updateFilter} />
+      <DashboardContainer check={check} isChecked={isChecked} updatePage={props.updatePage} title='Logs' filter={filter} updateFilter={updateFilter} />
       <LogsContainer filter={filter} msg={logs} />
     </div>
   );
@@ -30,13 +29,20 @@ export default function LogsDisplay(props) {
 const LogsContainer = (props) => {
   // console.log("Inside Logs Container", props);
   let logElements: any = [];
-  // mock logs
+  const onlyErrors: any = document.getElementById('onlyErrors');
   for (let i = 0; i < props.msg.length; i++) {
-    if(props.filter === '') logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+    if(props.filter === '') {
+      if(!onlyErrors.checked)
+        logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+      else{
+        if(props.msg[i].msg.toLowerCase().includes('err')) logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+      }
+    }
     else{
       if(props.msg[i].src.includes(props.filter) || props.msg[i].msg.includes(props.filter)) logElements.push(<LogElement key={i} msg={props.msg[i]} />);
     }
   }
+  console.log(logElements);
   return (
     <div className='scrollbar-thin log-container mb-2 ml-2 mr-2 scrollbar-thumb-rounded-full scrollbar-thumb-zinc-500 overflow-hidden h-[72vh]'>
       {logElements}

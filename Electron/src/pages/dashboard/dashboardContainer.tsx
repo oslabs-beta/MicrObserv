@@ -12,7 +12,7 @@ function DashboardContainer(props) {
           {/* <LogFilterBtn /> */}
           <div className='flex items-center gap-2'>
             <LogSearch updateFilter={props.updateFilter}/>
-          <LogError />
+          <LogError checked={props.checked} isChecked={props.isChecked} filter={props.filter} updateFilter={props.updateFilter}/>
           </div>
         </div>
       </div>

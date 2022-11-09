@@ -18,11 +18,17 @@ const startLoop = async (req, res, next) => {
     const getDataFromServiceB = async () => {
         const { reqTime , timeOut } = req.query;
         try{
-            const response = await fetch(`http://localhost:8081/demo?reqTime=${reqTime}`);
+            const longerProcess = Math.floor(Math.random() * 5);
+            const response = await fetch(`http://localhost:8081/demo?reqTime=${reqTime + longerProcess}`);
             if(response.status === 200){
                 const data = await response.json();
                 console.log('Data received from Service B.');
-                if (fetchData) setTimeout(getDataFromServiceB, timeOut);
+                if (fetchData) {
+                  const throwErr = Math.floor(Math.random() * 10) === 1;
+                  // if(throwErr) throw new Error('test error');
+                  throw new Error('test error');
+                  setTimeout(getDataFromServiceB, timeOut);
+                }
             }else{
                 return console.log("HTTP Error: ", response);
             }   
