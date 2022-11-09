@@ -4,13 +4,13 @@ import ReactDOM, { render } from 'react-dom';
 import Login from './pages/login/login';
 import SignUp from './pages/login/signUp';
 import BothDisplay from './pages/dashboard/bothDisplay';
-import Systems from './pages/home/systems'
+import Systems from './pages/home/systems';
 //styles
 import './styles';
 
 const App = () => {
   const [page, updatePage] = useState('home');
-
+  const [systemName, updateSystemName] = useState('MicrObserv');
   const renderPage = function () {
     //check to see if user is logged in
     switch (page) {
@@ -19,7 +19,7 @@ const App = () => {
         break;
       case 'home':
         //go to home
-        return <Systems/>
+        return <Systems updatePage={updatePage} updateSystemName={updateSystemName}/>;
         break;
       case 'settings':
         //go to settings
