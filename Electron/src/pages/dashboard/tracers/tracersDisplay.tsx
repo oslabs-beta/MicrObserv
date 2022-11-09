@@ -9,22 +9,21 @@ export default props => {
   const [pTracerVals, updatePTracerVals] = useState<any>([]);
   useEffect(() => {
     let ws = new WebSocket('ws://localhost:3001/');
-    ws.onopen = () => console.log("connected to websocket server in Logs Display");
+    ws.onopen = () => console.log("connected to websocket server in Tracer Display");
     //when there is an incoming msg
     ws.onmessage = (msg) => {
-      console.log('RECIEVED MSG Tracers!');
+      // console.log('RECIEVED MSG Tracers!');
       
       //create boolean checking if log
       const tracers = JSON.parse(msg.data).tracers;
       if(tracers.names.length) updateTracerNames(tracerNames => [...tracerNames, ...tracers.names]);
       if(tracers.nTracerVals.length) updateNTracerVals(nTracerVals => [...nTracerVals, ...tracers.nTracerVals]);
       if(tracers.pTracerVals.length) updatePTracerVals(pTracerVals => [...pTracerVals, ...tracers.pTracerVals]);
-      console.log(pTracerVals);
     }
   }, []);
   return (
     <div className='overflow-hidden w-full'>
-      <DashboardContainer title='Latency'/>
+      <DashboardContainer updatePage={props.updatePage} title='Latency'/>
       <BarChart communications={tracerNames.slice(Math.max(tracerNames.length - 10, 0)).reverse()} timeAtoA={nTracerVals.slice(Math.max(nTracerVals.length - 10, 0)).reverse()} timeBtoA={pTracerVals.slice(Math.max(pTracerVals.length - 10, 0)).reverse()}/>
       <div className='flex justify-center'>
         <button className='btn' onClick={()=>props.showRealTime(false)}>Next</button>

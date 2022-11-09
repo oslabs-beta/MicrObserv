@@ -6,7 +6,7 @@ import SignUp from './pages/login/signUp';
 import BothDisplay from './pages/dashboard/bothDisplay';
 import Systems from './pages/home/systems';
 import LogsDisplay from './pages/dashboard/smartLogs/logsDisplay';
-import TracersDisplay from './pages/dashboard/tracers/tracersDisplay';
+import TracersDisplay, { TracersDisplayHistory } from './pages/dashboard/tracers/tracersDisplay';
 import Navbar from './pages/dashboard/navbar';
 //styles
 import './styles';
@@ -14,6 +14,7 @@ import './styles';
 const App = () => {
   const [page, updatePage] = useState('home');
   const [systemName, updateSystemName] = useState('MicrObserv');
+  const [realTime, showRealTime] = useState<boolean>(true);
   const renderPage = function () {
     //check to see if user is logged in
     switch (page) {
@@ -41,11 +42,11 @@ const App = () => {
             <Navbar updatePage={updatePage} />
             <div className='flex w-screen h-[87.5vh]'>
               <div className=' grid flex-grow w-1/2 ml-4 bg-base-300 rounded-box place-items-start'>
-                <LogsDisplay />
+                <LogsDisplay updatePage={updatePage}/>
               </div>
               <div className='divider divider-horizontal'></div>
               <div className=' grid flex-grow w-1/2 mr-4 bg-base-300 rounded-box place-items-start'>
-                <LogsDisplay />
+                <LogsDisplay updatePage={updatePage}/>
               </div>
             </div>
           </div>
@@ -57,7 +58,7 @@ const App = () => {
             <Navbar updatePage={updatePage} />
             <div className='flex w-screen h-[87.5vh]'>
               <div className=' grid flex-grow w-full m-4 bg-base-300 rounded-box place-items-start'>
-                <TracersDisplay />
+              { realTime ? <TracersDisplay updatePage={updatePage} showRealTime={showRealTime}/> : <TracersDisplayHistory updatePage={updatePage} showRealTime={showRealTime}/> }
               </div>
             </div>
           </div>

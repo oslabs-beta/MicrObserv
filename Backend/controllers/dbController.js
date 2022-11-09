@@ -73,7 +73,9 @@ controller.getTracerHistory = (req, res, nxt) => {
     ORDER BY nStartTime LIMIT $1;`;
     db.query(queryString, [tracerHistIndex])
       .then(data => {
+        // console.log(data.rows);
         const names = data.rows.map(tracer => `${tracer.nsrc}-${tracer.psrc}`);
+        console.log(data.rows)
         const nTracerVals = data.rows.map(tracer => tracer.nendtime - tracer.nstarttime);
         const pTracerVals = data.rows.map(tracer => tracer.pendtime - tracer.pstarttime);
         res.locals.tracers = {
@@ -160,6 +162,7 @@ controller.storePTracer = (req, res, next) => {
                        VALUES ($1, $2) RETURNING id;`;
   db.query(queryString, [src, tracerId])
     .then(data => {
+      console.log()
       res.locals.id = data.rows[0].id;
       return next()
     })
@@ -173,6 +176,7 @@ controller.storePTracer = (req, res, next) => {
 
 controller.updatePTracer = (req, res, next) => {
   const { id } = req.body;
+  console.log('ID: ' + id);
   const queryString = `UPDATE pTracers SET pCompleted = TRUE
                        WHERE id = $1;`;
   db.query(queryString, [id])
