@@ -12,7 +12,7 @@ import Navbar from './pages/dashboard/navbar';
 import './styles';
 
 const App = () => {
-  const [page, updatePage] = useState('dashboard');
+  const [page, updatePage] = useState('home');
   const [systemName, updateSystemName] = useState('MicrObserv');
   const renderPage = function () {
     //check to see if user is logged in
