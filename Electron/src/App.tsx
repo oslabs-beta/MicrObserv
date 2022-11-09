@@ -12,7 +12,7 @@ import Navbar from './pages/dashboard/navbar';
 import './styles';
 
 const App = () => {
-  const [page, updatePage] = useState('home');
+  const [page, updatePage] = useState('latency');
   const [systemName, updateSystemName] = useState('MicrObserv');
   const [realTime, showRealTime] = useState<boolean>(true);
   const renderPage = function () {
@@ -57,7 +57,7 @@ const App = () => {
           <div>
             <Navbar updatePage={updatePage} />
             <div className='flex w-screen h-[87.5vh]'>
-              <div className=' grid flex-grow w-full m-4 bg-base-300 rounded-box place-items-start'>
+              <div className='w-full shrink overflow-auto m-4 bg-base-300 rounded-box place-items-start'>
               { realTime ? <TracersDisplay updatePage={updatePage} showRealTime={showRealTime}/> : <TracersDisplayHistory updatePage={updatePage} showRealTime={showRealTime}/> }
               </div>
             </div>
