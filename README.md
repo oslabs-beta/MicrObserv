@@ -94,10 +94,10 @@ Use the `BLANK_README.md` to get started.
 ### Built With
 
 - [![React][react.js]][react-url]
-- [![Electron][electron.com]][electron-url]
+- Electron
 - [![Node.js][node.com]][node-url]
 - [![Express.js][express.com]][express-url]
-- [![Electron][electron.com]][electron-url]
+- Webpack
 - Websockets
 - [![Typescript][typescript.com]][typescript-url]
 - Chart.js
