@@ -99,7 +99,7 @@ Use the `BLANK_README.md` to get started.
 - [![Express.js][express.com]][express-url]
 - [![Webpack][webpack.com]][webpack-url]
 - [![Typescript][typescript.com]][typescript-url]
-- [![Chart.js][chartjs.com]][chartjs-url]
+-
 - [![PostgresSQL][postgres.dev]][postgres-url]
 - [![Tailwindcss][tailwindcss.com]][tailwindcss-url]
 - Websockets
