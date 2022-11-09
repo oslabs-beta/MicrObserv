@@ -184,9 +184,12 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+* Andrew Ngo - [@your_twitter](https://twitter.com/your_username) - email@example.com
+* Chancellor Kupersmith - [@your_twitter](https://twitter.com/your_username) - email@example.com
+* Otis Jones - [@your_twitter](https://twitter.com/your_username) - email@example.com
+* Vardan Vanyan - [@your_twitter](https://twitter.com/your_username) - email@example.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+* Project Link: [https://github.com/your_username/repo_name](https://github.com/oslabs-beta/MicrObserv)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
