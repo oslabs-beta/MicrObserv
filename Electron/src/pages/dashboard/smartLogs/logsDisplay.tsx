@@ -13,15 +13,16 @@ export default function LogsDisplay(props) {
     ws.onmessage = (msg) => {
       //create boolean checking if log
       const newLogs = JSON.parse(msg.data).logs;
-      // console.log('RECIEVED MSG LOGS!');
-      if (newLogs.length) updateLogs((logs) => [...newLogs, ...logs]);
+      
+      let logsToDisplay = [...newLogs, ...logs];
+      if(newLogs.length) updateLogs(logsToDisplay);
     };
   }, []);
 
   return (
     <div className='w-full overflow-hidden'>
       <DashboardContainer updatePage={props.updatePage} title='Logs' updateFilter={updateFilter} />
-      <LogsContainer msg={logs} />
+      <LogsContainer filter={filter} msg={logs} />
     </div>
   );
 }
@@ -31,7 +32,10 @@ const LogsContainer = (props) => {
   let logElements: any = [];
   // mock logs
   for (let i = 0; i < props.msg.length; i++) {
-    logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+    if(props.filter === '') logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+    else{
+      if(props.msg[i].src.includes(props.filter) || props.msg[i].msg.includes(props.filter)) logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+    }
   }
   return (
     <div className='scrollbar-thin log-container mb-2 ml-2 mr-2 scrollbar-thumb-rounded-full scrollbar-thumb-zinc-500 overflow-hidden h-[72vh]'>

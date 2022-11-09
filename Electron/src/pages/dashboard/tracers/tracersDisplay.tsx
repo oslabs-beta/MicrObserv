@@ -22,7 +22,7 @@ export default props => {
     }
   }, []);
   return (
-    <div className='overflow-hidden w-full'>
+    <div className='w-full'>
       <DashboardContainer updatePage={props.updatePage} title='Latency'/>
       <BarChart communications={tracerNames.slice(Math.max(tracerNames.length - 10, 0)).reverse()} timeAtoA={nTracerVals.slice(Math.max(nTracerVals.length - 10, 0)).reverse()} timeBtoA={pTracerVals.slice(Math.max(pTracerVals.length - 10, 0)).reverse()}/>
       <div className='flex justify-center'>
