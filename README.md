@@ -98,7 +98,7 @@ Use the `BLANK_README.md` to get started.
 - [![Node.js][node.com]][node-url]
 - [![Express.js][express.com]][express-url]
 - [![Webpack][webpack.com]][webpack-url]
-- Websockets
+- [![Websocket][websocket.com]][websocket-url]
 - [![Typescript][typescript.com]][typescript-url]
 - [![Chart.js][chartjs.com]][chartjs-url]
 - [![PostgresSQL][postgres.dev]][postgres-url]
@@ -248,3 +248,5 @@ Use this space to list resources you find helpful and would like to give credit 
 [chartjs-url]: https://www.chartjs.org/
 [webpack.com]: https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black
 [webpack-url]: https://webpack.js.org/
+[websocket.com]: https://img.shields.io/badge/WS-Websocket-2ea44f?style=for-the-badge&logo=appveyor
+[websocket-url]: https://webpack.js.org/
