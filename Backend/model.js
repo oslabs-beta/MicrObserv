@@ -8,7 +8,7 @@ let pool;
 const defaultErrorMsg = 'Error init db;';
 const connectToDesktopAppDB = async () => {
   let dbQuery;
-  try{    
+  try{
       pool = new Pool({
           connectionString: process.env.PG_URI
       });
@@ -56,17 +56,17 @@ const connectToDesktopAppDB = async () => {
   }
   catch(err) {
       console.log(`${defaultErrorMsg} Problem creating process tracers table in db, Error: ${err}`);
-  } 
+  }
   // Create update nTracers endTime function
   try{
     await dbQuery(`CREATE OR REPLACE FUNCTION update_nEndtime()
-                    RETURNS TRIGGER AS 
+                    RETURNS TRIGGER AS
                     $$
                         BEGIN
                             NEW.nEndTime = now();
                             RETURN NEW;
                         END;
-                    $$ 
+                    $$
                     language 'plpgsql'`
                 );
   }
@@ -76,13 +76,13 @@ const connectToDesktopAppDB = async () => {
   // Create update pTracers endTime function
   try{
     await dbQuery(`CREATE OR REPLACE FUNCTION update_pEndtime()
-                    RETURNS TRIGGER AS 
+                    RETURNS TRIGGER AS
                     $$
                         BEGIN
                             NEW.pEndTime = now();
                             RETURN NEW;
                         END;
-                    $$ 
+                    $$
                     language 'plpgsql'`
                 );
   }

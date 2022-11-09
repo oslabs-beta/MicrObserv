@@ -9,7 +9,7 @@ import Systems from './pages/home/systems'
 import './styles';
 
 const App = () => {
-  const [page, updatePage] = useState('home');
+  const [page, updatePage] = useState('dashboard');
 
   const renderPage = function () {
     //check to see if user is logged in

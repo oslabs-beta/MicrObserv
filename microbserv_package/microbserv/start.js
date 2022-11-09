@@ -4,7 +4,10 @@ const defaultErrorMsg = 'Error occured in microbserv:';
 // using http for custom requests to the MicrObserv server
 const http = require('http');
 
+
 // TRACERS
+
+
 /* createNTracer
  * Description: sends new 'network tracer' to MicrObserv backend server with attributes src, dest, traceID
  * Network tracers track time it takes for a request to get sent to and from a service (network speed).
@@ -33,7 +36,7 @@ const createNTracer = async tracer => {
         res.on('data', chunk => data += chunk);
         res.on('end', () => resolve(data));
       }, true);
-      
+
       req.on('error', error => reject(error));
       req.write(tracer);
       req.end();
@@ -64,7 +67,7 @@ const updateNTracer = async id => {
       }
     }
     const req = http.request(opts, res => {}, true);
-    
+
     req.on('error', error => console.error(error));
     req.write(id);
     req.end();
@@ -73,6 +76,7 @@ const updateNTracer = async id => {
     console.log(`${defaultErrorMsg} Problem sending network tracer update to server, Error: ${err}`);
   }
 }
+
 /* createPTracer
  * Description: sends new 'process tracer' to MicrObserv backend server with attributes src, dest, traceID
  * Process tracers track time it takes for a microservice process to complete.
@@ -100,7 +104,7 @@ const createPTracer = async tracer => {
       res.on('data', chunk => data += chunk);
       res.on('end', () => dbId = data);
     }, true);
-    
+
     req.on('error', error => console.error(error));
     req.write(tracer);
     req.end();
@@ -285,7 +289,7 @@ const createLog = async log => {
       }
     }
     const req = http.request(opts, res => {}, true);
-    
+
     req.on('error', error => console.error(error));
     req.write(log);
     req.end();
