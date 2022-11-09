@@ -60,12 +60,12 @@
 
 <div align="center" >
 <a href="https://github.com/oslabs-beta/MicrObserv/">
-<img src="./images/Screenshot 2022-11-09 at 10.59.59 AM.jpg" alt="Logo" width="700" height="350">
+<img src="./images/Screenshot 2022-11-09 at 10.59.59 AM.jpg" alt="Logo" width="700" height="550">
 </a>
 </div>
 <div align="center">
 <a href="https://github.com/oslabs-beta/MicrObserv/">
-<img src="./images/Screenshot%202022-11-09%20at%2010.57.56%20AM.jpg" alt="Logo" width="700" height="350">
+<img src="./images/Screenshot%202022-11-09%20at%2010.57.56%20AM.jpg" alt="Logo" width="700" height="550">
 </a>
 </div>
 
