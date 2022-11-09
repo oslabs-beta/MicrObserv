@@ -58,12 +58,12 @@
 
 <div align="center" >
 <a href="https://github.com/oslabs-beta/MicrObserv/">
-<img src="./images/Screenshot 2022-11-09 at 10.59.59 AM.jpg" alt="Logo" width="600" height="450">
+<img src="./assets/Screenshot 2022-11-09 at 10.59.59 AM.jpg" alt="Logo" width="600" height="450">
 </a>
 </div>
 <div align="center">
 <a href="https://github.com/oslabs-beta/MicrObserv/">
-<img src="./images/Screenshot%202022-11-09%20at%2010.57.56%20AM.jpg" alt="Logo" width="600" height="450">
+<img src="./assets/Screenshot%202022-11-09%20at%2010.57.56%20AM.jpg" alt="Logo" width="600" height="450">
 </a>
 </div>
 
@@ -80,6 +80,12 @@ Of course, no one template will serve all projects since your needs may be diffe
 Use the `BLANK_README.md` to get started.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Demo
+
+<div align="center">
+<img src="./assets/Demo.gif" alt="Logo" width="600" height="450">
+</div>
 
 ### Built With
 
