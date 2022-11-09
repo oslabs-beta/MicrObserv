@@ -101,7 +101,7 @@ Use the `BLANK_README.md` to get started.
 - Websockets
 - Typescript
 - Chart.js
-- [![PostgresSQL][postgres.dev]][postgres.url]
+- [![PostgresSQL][postgres.dev]][postgres-url]
 - PostgresSQL
 - Tailwind CSS
 
@@ -234,7 +234,7 @@ Use this space to list resources you find helpful and would like to give credit 
 [react.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [react-url]: https://reactjs.org/
 [postgres.dev]: https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white
-[postgres-url]: https://svelte.dev/
+[postgres-url]: https://www.postgresql.org/
 [laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
 [laravel-url]: https://laravel.com
 [bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
