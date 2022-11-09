@@ -37,7 +37,7 @@ export default props => {
 
 // TracersDisplayHistory
 const getTracerHist = (updateTracerNames, updateNTracerVals, updatePTracerVals, next) => {
-  fetch('/MicrObserv/tracerHist', {
+  fetch('http://localhost:3000/MicrObserv/tracerHist', {
     method: 'POST',
     body: JSON.stringify({
       next: next,
