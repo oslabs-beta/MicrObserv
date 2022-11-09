@@ -10,12 +10,12 @@ const BarChart = ({communications, timeAtoA, timeBtoA}) => {
     labels: labels,
     datasets: [
       {
-        label: "B to A",
+        label: "Process Time",
         backgroundColor: "#f6d860",
         data: timeBtoA,
       },
       {
-        label: "A to B",
+        label: "Network Time",
         backgroundColor: "#37cdbe",
         data: timeAtoA,
       }

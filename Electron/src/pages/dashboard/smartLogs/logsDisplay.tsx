@@ -16,8 +16,7 @@ export default function LogsDisplay(props) {
       //create boolean checking if log
       const newLogs = JSON.parse(msg.data).logs;
       console.log('RECIEVED MSG LOGS!');
-      console.log(JSON.parse(msg.data).logs);
-      if (Array.isArray(newLogs)) updateLogs((logs) => [...newLogs, ...logs]);
+      if (newLogs.length) updateLogs((logs) => [...newLogs, ...logs]);
     };
 
     //filter
