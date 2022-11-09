@@ -94,15 +94,15 @@ Use the `BLANK_README.md` to get started.
 ### Built With
 
 - [![React][react.js]][react-url]
-- Electron
+- [![Electron][electron.com]][electron-url]
 - [![Node.js][node.com]][node-url]
 - [![Express.js][express.com]][express-url]
-- Webpack
-- Websockets
+- [![Webpack][webpack.com]][webpack-url]
 - [![Typescript][typescript.com]][typescript-url]
-- Chart.js
+- [![Chart.js][chartjs.com]][chartjs-url]
 - [![PostgresSQL][postgres.dev]][postgres-url]
 - [![Tailwindcss][tailwindcss.com]][tailwindcss-url]
+- Websockets
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -234,8 +234,8 @@ Use this space to list resources you find helpful and would like to give credit 
 [react-url]: https://reactjs.org/
 [postgres.dev]: https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white
 [postgres-url]: https://www.postgresql.org/
-[electron.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[electron-url]: https://laravel.com
+[electron.com]: https://img.shields.io/badge/Electron-191970?style=for-the-badge&logo=Electron&logoColor=white)
+[electron-url]: https://www.electronjs.org/
 [tailwindcss.com]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
 [tailwindcss-url]: https://tailwindcss.com/
 [node.com]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
@@ -244,3 +244,7 @@ Use this space to list resources you find helpful and would like to give credit 
 [express-url]: https://expressjs.com/
 [typescript.com]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
 [typescript-url]: https://www.typescriptlang.org/
+[chartjs.com]: https://img.shields.io/badge/chart.js-F5788D.svg?style=for-the-badge&logo=chart.js&logoColor=white
+[chartjs-url]: https://www.chartjs.org/
+[webpack.com]: https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black
+[webpack-url]: https://webpack.js.org/
