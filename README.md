@@ -189,7 +189,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 * Otis Jones - [@your_twitter](https://twitter.com/your_username) - email@example.com
 * Vardan Vanyan - [@your_twitter](https://twitter.com/your_username) - email@example.com
 
-* Project Link: [https://github.com/your_username/repo_name](https://github.com/oslabs-beta/MicrObserv)
+* Project Link: [https://github.com/oslabs-beta/MicrObserv](https://github.com/oslabs-beta/MicrObserv)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
