@@ -3,8 +3,6 @@ const db = require('../model.js');
 controller = {};
 
 const cleanTimeStampData = time => {
-  // console.log(time);
-  // console.log('\n\n\n\n');
   const year = time.substring(0,4);
   const month = time.substring(6,8);
   const day = time.substring(9,11);
@@ -17,11 +15,7 @@ controller.getLogs = async (ws) => {
     const queryString = `SELECT * FROM Logs
                          ORDER BY time DESC LIMIT 50;`;
     const data = await db.query(queryString);
-    // clean timestamp data for frontend
-    // console.log(data.rows);
     for(const log of data.rows){
-      // console.log(log.time);
-      // console.log(log.id);
       log.time = cleanTimeStampData(JSON.stringify(log.time));
     }
     ws.send(JSON.stringify({
@@ -63,17 +57,25 @@ controller.getTracers = async (ws) => {
 }
 
 controller.storeLog = (req, res, next) => {
-  const {src, msg} = req.body;
-  const queryString = `INSERT INTO Logs(src, msg)
-                       VALUES ($1, $2);`;
-  db.query(queryString, [src, msg])
-    .then(()=> next())
-    .catch(err => 
-      next({
-        log: 'Error storing log in db, src: dbContoller.storeLog()',
-        message: { err: err }
-      })
+  try{
+    const {src, msg} = req.body;
+    const queryString = `INSERT INTO Logs(src, msg)
+                         VALUES ($1, $2);`;
+    db.query(queryString, [src, msg])
+      .then(()=> next())
+      .catch(err => 
+        next({
+          log: 'Error storing log in db, src: dbContoller.storeLog()',
+          message: { err: err }
+        })
     );
+  }
+  catch(err){
+    return next({
+      log: 'Error storing network tracer in db, src: dbContoller.storeNTracer()',
+      message: { err: err }
+    });
+  }
 };
 
 controller.storeNTracer = (req, res, next) => {
@@ -143,22 +145,20 @@ controller.updatePTracer = (req, res, next) => {
                     URI VARCHAR NOT NULL
                     PRIMARY KEY(id));`*/
 controller.storeSystem =(req,res,next) => {
-  console.log("Inside storeSystems in DB controllers");
-  const {systemName, uri} = req.body
-  const queryString = `INSERT into systems (systemName, uri)
-                       VALUES ($1, $2) RETURNING id`;
-  db.query(queryString, [systemName, uri])
-  .then(data => {
-    //console.log(data.rows[0])
-    res.locals.id = data.rows[0].id;
-    return next()
-  })
-  .catch(err => 
-    next({
-      log: 'Error storing process tracer db, src: dbContoller.storeSystem()',
-      message: { err: err }
-    })  
-  );
+  
+    console.log("Inside storeSystems in DB controllers");
+    const {systemName, uri} = req.body
+    const queryString = `INSERT into systems (systemName, uri)
+                        VALUES ($1, $2);`;
+    db.query(queryString, [systemName, uri])
+    .then(() => next())
+    .catch(err => 
+      next({
+        log: 'Error storing process tracer db, src: dbContoller.storeSystem()',
+        message: { err: err }
+      })  
+    );
+  
 }
 
 controller.getSystem =(req,res,next) => {
@@ -175,5 +175,33 @@ controller.getSystem =(req,res,next) => {
       message: { err: err }
     })  
   );
+}
+controller.setSystem = (req, res, next) => {
+  try{
+    const { uri } = req.body;
+    db.updateDbConnection(uri);
+    return next();
+  }
+  catch(err){
+    return next({
+      log: 'Error updating db connection, src: dbContoller.setSystem()',
+      message: { err: err }
+    }) 
+  }
+}
+
+controller.deleteSystem = (req,res,next) => {
+  try{
+    const {id} = req.body;
+    const queryString = `DELETE FROM systems WHERE id = $1`
+    db.query(queryString, [id])
+    .then(() => next()) 
+  }
+  catch(err){
+    return next({
+      log: 'Error deleting system, src: dbContoller.deleteSystem()',
+      message: { err: err }
+    }) 
+  }
 }
 module.exports = controller;
