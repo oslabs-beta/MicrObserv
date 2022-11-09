@@ -134,6 +134,13 @@ controller.newPTracer = async (req, res, next) => {
     });
   }
 }
+const wait = ms => {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < ms);
+}
 /* updatedPTracer
  * Description: updates process tracers time
  */
@@ -141,11 +148,23 @@ controller.updatedPTracer = async (req, res, next) => {
   try{
     const now = Date.now();
     const { tracerId } = req.body;
-    const tracer = controller.pTracerCache.get(tracerId);
-    tracer.time = now - tracer.time;
-    console.log(`P TIME: ${tracer.time}`);
-    controller.pTracerCache.set(tracerId, tracer);
-    return next();
+    if(!tracerId){
+      console.log('No tracer ID');
+    }
+    let tracer = controller.pTracerCache.get(tracerId);
+    // Bug: Sometimes http responses come in before tracer data has been stored in cache.
+    // Temp Fix: wait 1 sec and check again
+    if(!tracer){
+      wait(1000);
+      console.log('No tracer');
+      tracer = controller.pTracerCache.get(tracerId);
+    }
+    if(tracer){
+      tracer.time = now - tracer.time;
+      console.log(`P TIME: ${tracer.time}`);
+      controller.pTracerCache.set(tracerId, tracer);
+      return next();
+    }
   }
   catch(err){
     return next({

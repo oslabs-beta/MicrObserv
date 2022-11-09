@@ -2,10 +2,11 @@ import React from 'react';
 import Navbar from './navbar';
 import Dashboard from './dashboard';
 
-export default function BothDisplay() {
+export default function BothDisplay(props) {
   return (
     <div>
-      <Navbar />
+      <Navbar updatePage={props.updatePage} />
+      <div></div>
       <Dashboard />
     </div>
   );

@@ -4,9 +4,6 @@ import LogError from './smartLogs/logError';
 import LogSearch from './smartLogs/logSearch';
 
 function DashboardContainer(props) {
-  useEffect(()=>{
-
-  })
   return (
     <div className='card overflow-visible h-full w-full'>
       <div className='card-body'>
@@ -14,7 +11,7 @@ function DashboardContainer(props) {
           <button className='h-15'>{props.title}</button>
           {/* <LogFilterBtn /> */}
           <div className='flex items-center gap-2'>
-            <LogSearch />
+            <LogSearch updateFilter={props.updateFilter}/>
           <LogError />
           </div>
         </div>

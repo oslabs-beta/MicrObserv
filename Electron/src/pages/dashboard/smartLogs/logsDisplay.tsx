@@ -1,28 +1,44 @@
-import React, { useEffect, useState, version} from 'react';
+import React, { useEffect, useState, version } from 'react';
 import DashboardContainer from '../dashboardContainer';
 // websocket connection to backend server
 let ws;
 export default function LogsDisplay(props) {
   const [logs, updateLogs] = useState<any>([]);
-  
+  const [filter, updateFilter] = useState<any>('');
   useEffect(() => {
-    if(!ws){
+    if (!ws) {
       ws = new WebSocket('ws://localhost:3001/');
-      ws.onopen = () => console.log("connected to websocket server in Logs Display");
+      ws.onopen = () =>
+        console.log('connected to websocket server in Logs Display');
     }
     //when there is an incoming msg
     ws.onmessage = (msg) => {
       //create boolean checking if log
       const newLogs = JSON.parse(msg.data).logs;
       console.log('RECIEVED MSG LOGS!');
-      console.log(JSON.parse(msg.data).logs)
-      if(Array.isArray(newLogs)) updateLogs(logs => [...newLogs, ...logs]);
+      console.log(JSON.parse(msg.data).logs);
+      if (Array.isArray(newLogs)) updateLogs((logs) => [...newLogs, ...logs]);
+    };
+
+    //filter
+    if (filter === '') {
+      updateLogs(logs);
+    } else {
+      let newLogs = logs.filter((log) => {
+        log.src.includes(filter);
+      });
+      updateLogs(newLogs);
     }
+    // const newLogs = [{
+    //   src: src,
+    //   msg: msg,
+    //   time: time
+    // }];
   });
   return (
     <div className='w-full overflow-hidden'>
-      <DashboardContainer title='Logs' />
-      <LogsContainer msg={logs}/>
+      <DashboardContainer title='Logs' updateFilter={updateFilter} />
+      <LogsContainer msg={logs} />
     </div>
   );
 }
@@ -32,7 +48,7 @@ const LogsContainer = (props) => {
   let logElements: any = [];
   // mock logs
   for (let i = 0; i < props.msg.length; i++) {
-    logElements.push(<LogElement key={i} msg = {props.msg[i]}/>);
+    logElements.push(<LogElement key={i} msg={props.msg[i]} />);
   }
   return (
     <div className='scrollbar-thin log-container mb-2 ml-2 mr-2 scrollbar-thumb-rounded-full scrollbar-thumb-zinc-500 overflow-hidden h-[72vh]'>
