@@ -111,15 +111,20 @@ Make sure you are running version v18.10.0 of node.
 
 ### Installation
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/oslabs-beta/MicrObserv.git
-   ```
-2. Install NPM package into each of your microservices for a given application
+1. Install NPM package into each of your microservices for a given application
    ```sh
    npm install
    ```
-3.    
+2. Clone the repo
+   ```sh
+   git clone https://github.com/oslabs-beta/MicrObserv.git
+   ```
+3. Start the application
+   ```npm start
+
+   ```
+4. Input application/system name and PostgreSQL database URI and click ADD
+5. Click on the newly created System Name to open up the dashboard
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -139,9 +144,9 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 - [x] Add README
 - [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add Additional Templates w/ Examples
+- [ ] Add GitHub Merges Tracking.
+- [ ] Add Login & Registration.
+- [ ] Add Multiple Charts to keep track of different metrics.
 
 See the [open issues](https://github.com/oslabs-beta/MicrObserv/issues?q=is%3Aopen+is%3Aissue) for a full list of proposed features (and known issues).
 
@@ -178,7 +183,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 - Andrew Ngo - [@andrew-tien-ngo](https://www.linkedin.com/in/andrew-tien-ngo/) - andrewngo91@gmail.com
 - Chancellor Kupersmith - [@chance-kupersmith](https://www.linkedin.com/in/chance-kupersmith/) - kupersmith3.6@gmail.com
-- Otis Jones - [@otis-jones](https://www.linkedin.com/in/andrew-tien-ngo/) - email@example.com
+- Otis Jones - [@otis-jones](https://www.linkedin.com/in/andrew-tien-ngo/) - otisjones1@gmail.com
 - Vardan Vanyan - [@vardanvanyan](https://www.linkedin.com/in/vardanvanyan/) - vardan.vanyan@gmail.com
 
 - Project Link: [https://github.com/oslabs-beta/MicrObserv](https://github.com/oslabs-beta/MicrObserv)
