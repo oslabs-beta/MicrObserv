@@ -81,6 +81,8 @@ Use the `BLANK_README.md` to get started.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- DEMO -->
+
 ## Demo
 
 <div align="center">
@@ -96,7 +98,11 @@ Use the `BLANK_README.md` to get started.
 - Node
 - Express
 - Webpack
+- Websockets
+- Typescript
+- Chart.js
 - PostgresSQL
+- Tailwind CSS
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
