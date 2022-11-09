@@ -95,15 +95,14 @@ Use the `BLANK_README.md` to get started.
 
 - [![React][react.js]][react-url]
 - Electron
-- Node
-- Express
+- [![Node.js][node.com]][node-url]
+- [![Express.js][express.com]][express-url]
 - Webpack
 - Websockets
 - Typescript
 - Chart.js
 - [![PostgresSQL][postgres.dev]][postgres-url]
-- PostgresSQL
-- Tailwind CSS
+- [![Tailwindcss][tailwindcss.com]][tailwindcss-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -235,9 +234,11 @@ Use this space to list resources you find helpful and would like to give credit 
 [react-url]: https://reactjs.org/
 [postgres.dev]: https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white
 [postgres-url]: https://www.postgresql.org/
-[laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[laravel-url]: https://laravel.com
-[bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[bootstrap-url]: https://getbootstrap.com
-[jquery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[jquery-url]: https://jquery.com
+[electron.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
+[electron-url]: https://laravel.com
+[tailwindcss.com]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
+[tailwindcss-url]: https://tailwindcss.com/
+[node.com]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
+[node-url]: https://nodejs.org/en/
+[express.com]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
+[express-url]: https://expressjs.com/
