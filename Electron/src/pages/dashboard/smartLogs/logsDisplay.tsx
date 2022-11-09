@@ -1,49 +1,33 @@
 import React, { useEffect, useState, version } from 'react';
 import DashboardContainer from '../dashboardContainer';
-// websocket connection to backend server
-let ws;
+
 export default function LogsDisplay(props) {
   const [logs, updateLogs] = useState<any>([]);
   const [filter, updateFilter] = useState<any>('');
   useEffect(() => {
-    if (!ws) {
-      ws = new WebSocket('ws://localhost:3001/');
-      ws.onopen = () =>
-        console.log('connected to websocket server in Logs Display');
-    }
+
+    let ws = new WebSocket('ws://localhost:3001/');
+    ws.onopen = () =>
+      console.log('connected to websocket server in Logs Display');
     //when there is an incoming msg
     ws.onmessage = (msg) => {
       //create boolean checking if log
       const newLogs = JSON.parse(msg.data).logs;
-      console.log('RECIEVED MSG LOGS!');
+      // console.log('RECIEVED MSG LOGS!');
       if (newLogs.length) updateLogs((logs) => [...newLogs, ...logs]);
     };
+  }, []);
 
-    //filter
-    if (filter === '') {
-      updateLogs(logs);
-    } else {
-      let newLogs = logs.filter((log) => {
-        log.src.includes(filter);
-      });
-      updateLogs(newLogs);
-    }
-    // const newLogs = [{
-    //   src: src,
-    //   msg: msg,
-    //   time: time
-    // }];
-  });
   return (
     <div className='w-full overflow-hidden'>
-      <DashboardContainer title='Logs' updateFilter={updateFilter} />
+      <DashboardContainer updatePage={props.updatePage} title='Logs' updateFilter={updateFilter} />
       <LogsContainer msg={logs} />
     </div>
   );
 }
 /* logs= [{},{},{}]*/
 const LogsContainer = (props) => {
-  //console.log("Inside Logs Container", props.msg);
+  // console.log("Inside Logs Container", props);
   let logElements: any = [];
   // mock logs
   for (let i = 0; i < props.msg.length; i++) {
@@ -62,7 +46,6 @@ const LogElement = (props) => {
   // console.log("inside log element",props.msg);
 
   const changeStyle = () => {
-    console.log('you just clicked');
     if (style === 'log-element-clicked') {
       setStyle('log-element');
     } else {

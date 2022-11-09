@@ -8,7 +8,7 @@ function DashboardContainer(props) {
     <div className='card overflow-visible h-full w-full'>
       <div className='card-body'>
         <div className='dash-nav items-center'>
-          <button className='h-15'>{props.title}</button>
+          <button className='h-15' onClick={() => props.updatePage(props.title.toLowerCase())}>{props.title}</button>
           {/* <LogFilterBtn /> */}
           <div className='flex items-center gap-2'>
             <LogSearch updateFilter={props.updateFilter}/>
