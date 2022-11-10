@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import DashboardContainer from '../dashboardContainer';
+import { TracerDashboardContainer } from '../dashboardContainer';
 import BarChart from './barChart';
 
 // TracersDisplay
@@ -7,6 +7,7 @@ export default props => {
   const [tracerNames, updateTracerNames] = useState<any>([]);
   const [nTracerVals, updateNTracerVals] = useState<any>([]);
   const [pTracerVals, updatePTracerVals] = useState<any>([]);
+  const [filter, updateFilter] = useState<any>('');
   useEffect(() => {
     let ws = new WebSocket('ws://localhost:3001/');
     ws.onopen = () => console.log("connected to websocket server in Tracer Display");
@@ -21,9 +22,10 @@ export default props => {
       if(tracers.pTracerVals.length) updatePTracerVals(pTracerVals => [...pTracerVals, ...tracers.pTracerVals]);
     }
   }, []);
+ 
   return (
     <div className='w-full'>
-      <DashboardContainer updatePage={props.updatePage} title='Latency'/>
+      <TracerDashboardContainer noSearch={true} updatePage={props.updatePage} filter={filter} updateFilter={updateFilter} title='Latency'/>
       <BarChart communications={tracerNames.slice(Math.max(tracerNames.length - 10, 0)).reverse()} timeAtoA={nTracerVals.slice(Math.max(nTracerVals.length - 10, 0)).reverse()} timeBtoA={pTracerVals.slice(Math.max(pTracerVals.length - 10, 0)).reverse()}/>
       <div className='flex justify-center'>
         <button className='btn' onClick={()=>props.showRealTime(false)}>Next</button>
@@ -62,6 +64,7 @@ const TracersDisplayHistory = props => {
   const [tracerNames, updateTracerNames] = useState<any>([]);
   const [nTracerVals, updateNTracerVals] = useState<any>([]);
   const [pTracerVals, updatePTracerVals] = useState<any>([]);
+  const [filter, updateFilter] = useState<any>('');
   useEffect(() => {
     page = 1;
     getTracerHist(updateTracerNames, updateNTracerVals, updatePTracerVals, false);
@@ -69,7 +72,7 @@ const TracersDisplayHistory = props => {
   
   return (
     <div className='overflow-hidden w-full'>
-      <DashboardContainer title='Latency'/>
+      <TracerDashboardContainer noSearch={true} updatePage={props.updatePage} filter={filter} updateFilter={updateFilter} title='Latency'/>
       <BarChart communications={tracerNames} timeAtoA={nTracerVals} timeBtoA={pTracerVals}/>
       <div className='flex justify-center'>
       <button className='btn' onClick={
