@@ -34,6 +34,7 @@ router.delete('/deleteSystem', dbController.deleteSystem, dbController.getSystem
 
 router.post('/setSystem', dbController.setSystem, (req, res) => res.sendStatus(200));
 
+router.post('/tracerHist', dbController.getTracerHistory, (req, res) => res.status(200).json(res.locals.tracers));
 
 
 module.exports = router;

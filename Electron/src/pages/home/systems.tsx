@@ -14,7 +14,7 @@ export default function Systems(props) {
 
   //GET request to get all data from DB
   const getSystem = () => {
-    fetch('/MicrObserv/getSystem')
+    fetch('http://localhost:3000/MicrObserv/getSystem')
       .then((data) => {
         return data.json();
       })
@@ -28,7 +28,7 @@ export default function Systems(props) {
   //on click to add a system to DB
   const handleAdd = async () => {
     try {
-      const response = await fetch('/MicrObserv/addSystem', {
+      const response = await fetch('http://localhost:3000/MicrObserv/addSystem', {
         method: 'POST',
         body: JSON.stringify({
           systemName: systemName,
@@ -50,7 +50,7 @@ export default function Systems(props) {
   //on click to delete a system to DB
   const handleDelete = (id) => {
     console.log('Clicked delete btn');
-    fetch('/MicrObserv/deleteSystem', {
+    fetch('http://localhost:3000/MicrObserv/deleteSystem', {
       method: 'DELETE',
       body: JSON.stringify({
         id: id,
@@ -123,7 +123,7 @@ const SystemElement = (props) => {
   const navigatePage = async () => {
     console.log('Hello');
     try {
-      const response = await fetch('/MicrObserv/setSystem', {
+      const response = await fetch('http://localhost:3000/MicrObserv/setSystem', {
         method: 'POST',
         body: JSON.stringify({
           uri: props.systems.uri,

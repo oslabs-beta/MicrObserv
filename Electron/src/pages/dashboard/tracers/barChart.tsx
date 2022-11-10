@@ -10,12 +10,12 @@ const BarChart = ({communications, timeAtoA, timeBtoA}) => {
     labels: labels,
     datasets: [
       {
-        label: "B to A",
+        label: "Process Time",
         backgroundColor: "#f6d860",
         data: timeBtoA,
       },
       {
-        label: "A to B",
+        label: "Network Time",
         backgroundColor: "#37cdbe",
         data: timeAtoA,
       }
@@ -40,13 +40,13 @@ const BarChart = ({communications, timeAtoA, timeBtoA}) => {
       },
       title: {
         display: true,
-        text: 'Chart.js Horizontal Bar Chart',
+        text: 'Microservice Tracer Messages',
       },
     },
   };
   return (
     <div className='flex'>
-      <Bar options={options} data={data} className='object-fit shrink'/>
+      <Bar options={options} data={data} className='object-scale-down shrink'/>
     </div>
   );
 };

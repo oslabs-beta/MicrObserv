@@ -82,33 +82,35 @@ const updateNTracer = async id => {
  * - traceID = unique id used as a common key between services for created tracer objects
  */
 const createPTracer = async tracer => {
-  try{
-    tracer = JSON.stringify(tracer);
-    const opts = {
-      hostname: 'localhost',
-      port: 3000,
-      path: '/MicrObserv/newPTracer',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(tracer)
+  return new Promise ((resolve, reject) => {
+    try{
+      tracer = JSON.stringify(tracer);
+      const opts = {
+        hostname: 'localhost',
+        port: 3000,
+        path: '/MicrObserv/newPTracer',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(tracer)
+        }
       }
+      const req = http.request(opts, res => {
+        // Data will be tracerId sent as JSON
+        let data = '';
+        res.on('data', chunk => data += chunk);
+        res.on('end', () => resolve(data));
+      }, true);
+      
+      req.on('error', error => reject(error));
+      req.write(tracer);
+      req.end();
     }
-    let dbId;
-    const req = http.request(opts, res => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => dbId = data);
-    }, true);
-    
-    req.on('error', error => console.error(error));
-    req.write(tracer);
-    req.end();
-    return dbId;
-  }
-  catch(err){
-      console.log(`${defaultErrorMsg} Problem sending process tracer to server, Error: ${err}`);
-  }
+    catch(err){
+        console.log(`${defaultErrorMsg} Problem sending network tracer to server, Error: ${err}`);
+        reject(err);
+    }
+  })
 }
 /* updatePTracer
  * Description: updates process tracer's 'comlpeted' attribute on MicrObserv backend to true.
@@ -225,6 +227,7 @@ const expressServerEventListener = () => {
               const promise = createPTracer(tracer);
               const callback = async (error, response, body) => {
                   id = await Promise.resolve(promise);
+                  console.log(id);
                   await updatePTracer({
                     id: id,
                     tracerId: request.headers.id

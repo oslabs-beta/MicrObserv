@@ -27,7 +27,7 @@ const LogFilterDropDown = props => {
           {/* error */}
           <div className='flex justify-between'>
             <span>Only Errors</span>
-            <input type='checkbox' className='checkbox' />
+            <input type='checkbox' id='onlyErrors' className='checkbox' />
           </div>
         </li>
       </ul>
