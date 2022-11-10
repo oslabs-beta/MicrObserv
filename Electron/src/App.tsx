@@ -12,7 +12,7 @@ import Navbar from './pages/dashboard/navbar';
 import './styles';
 
 const App = () => {
-  const [page, updatePage] = useState('latency');
+  const [page, updatePage] = useState('home');
   const [systemName, updateSystemName] = useState('MicrObserv');
   const [realTime, showRealTime] = useState<boolean>(true);
   const renderPage = function () {
