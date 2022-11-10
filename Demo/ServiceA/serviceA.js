@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 const fetch = require('node-fetch');
 require('dotenv').config()
 // REQUIRE MODULE IN EACH SERVER
@@ -25,9 +26,10 @@ const startLoop = async (req, res, next) => {
                 console.log('Data received from Service B.');
                 if (fetchData) {
                   const throwErr = Math.floor(Math.random() * 10) === 1;
+                  setTimeout(getDataFromServiceB, timeOut);
                   // if(throwErr) throw new Error('test error');
                   throw new Error('test error');
-                  setTimeout(getDataFromServiceB, timeOut);
+                  
                 }
             }else{
                 return console.log("HTTP Error: ", response);
@@ -57,6 +59,7 @@ const fetchDataFalse = (req, res, next) => {
 // SERVER
 const serviceA = express();
 const PORT = 8082;
+serviceA.use(cors());
 serviceA.use('/start', fetchDataTrue, startLoop, (req, res)=> res.status(200).send('Started'));
 serviceA.use('/stop', fetchDataFalse, (req, res) => res.status(200).send('Stopped'));
 
