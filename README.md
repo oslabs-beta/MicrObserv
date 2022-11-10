@@ -79,6 +79,38 @@ MicrObserv is here to simplify observability for your microservice architecture 
 <img src="./assets/Demo.gif" alt="Logo" width="600" height="450">
 </div>
 
+need gif of dashboard updating
+1. Fork and Clone the repo
+2. Install dependencies in the root folder and into each of the following folders
+    1. Backend
+    2. Electron
+    3. Demo
+    4. Demo/SeviceA
+    5. Demo/ServiceB
+    6. Demo/website
+3. Start servers `npm start` in the following folders
+    1. Backend
+    2. Demo
+    
+1. Download and Launch MicrObserv executable based on your OS
+   
+2. Lauching takes you to the homepage where you can input a your system name and PostgreSQL URI for storing logs and tracers.
+    1. For the demo, the system name can be anything, but you must input a valid PostgreSQL URI.
+    
+3. Launching Demo GUI
+    1. Fork and Clone the repo
+    2. navigate to the website directory in the Demo folder
+        ```sh
+        
+        ```
+
+explain how to start up demo gui
+are we having user fork and clone and starting from terminal?
+
+explain frenquecy and time out
+
+
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
