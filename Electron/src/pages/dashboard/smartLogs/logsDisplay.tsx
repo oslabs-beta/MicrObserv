@@ -39,7 +39,14 @@ const LogsContainer = (props) => {
       }
     }
     else{
-      if(props.msg[i].src.includes(props.filter) || props.msg[i].msg.includes(props.filter)) logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+      if(!onlyErrors.checked){
+        if(props.msg[i].src.includes(props.filter) || props.msg[i].msg.includes(props.filter)) logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+      }
+      else{
+        if((props.msg[i].src.includes(props.filter) || props.msg[i].msg.includes(props.filter)) && props.msg[i].msg.toLowerCase().includes('err')) logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+
+      }
+        
     }
   }
   console.log(logElements);

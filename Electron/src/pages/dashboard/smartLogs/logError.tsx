@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // this is a slider that turns checks for error logs
 
 export default function LogError(props) {
-  const [isChecked, check] = useState<boolean>(false);
+  console.log(props);
   return (
     <div className='form-control flex-row items-center'>
       <div className='badge badge-error gap-2'>
