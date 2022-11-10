@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+  content: ['./client/**/*.{html,js,jsx}'],
   theme: {
     extend: {},
   },
@@ -9,7 +9,7 @@ module.exports = {
   ],
   daisyui: {
     styled: true,
-    themes: ['luxury', 'winter', 'emerald'],
+    themes: ['luxury'],
     base: true,
     utils: true,
     logs: true,
