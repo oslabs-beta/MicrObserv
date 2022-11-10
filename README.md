@@ -123,8 +123,7 @@ Make sure you are running version v18.10.0 of node.
    ```npm start
 
    ```
-4. Input application/system name and PostgreSQL database URI and click ADD
-5. Click on the newly created System Name to open up the dashboard
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -132,7 +131,13 @@ Make sure you are running version v18.10.0 of node.
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+1. Input application/system name and PostgreSQL database URI and click ADD
+
+<div align="center">
+<img src="./assets/Demo.gif" alt="Logo" width="600" height="450">
+</div>
+
+2. Click on the newly created System Name to open up the dashboard
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
@@ -143,8 +148,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 - [x] Add README
-- [x] Add back to top links
-- [ ] Add GitHub Merges Tracking.
+- [ ] Add GitHub Merge Tracking.
 - [ ] Add Login & Registration.
 - [ ] Add Multiple Charts to keep track of different metrics.
 
