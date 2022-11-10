@@ -27,8 +27,8 @@ const startLoop = async (req, res, next) => {
                 if (fetchData) {
                   const throwErr = Math.floor(Math.random() * 10) === 1;
                   setTimeout(getDataFromServiceB, timeOut);
-                  // if(throwErr) throw new Error('test error');
-                  throw new Error('test error');
+                //   if(throwErr) throw new Error('test error');
+                //   throw new Error('test error');
                   
                 }
             }else{
