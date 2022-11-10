@@ -7,7 +7,7 @@ export default function BothDisplay(props) {
     <div>
       <Navbar updatePage={props.updatePage} />
       <div></div>
-      <Dashboard />
+      <Dashboard updatePage={props.updatePage} />
     </div>
   );
 }

@@ -1,55 +1,55 @@
 import React, { useEffect, useState, version } from 'react';
 import DashboardContainer from '../dashboardContainer';
-// websocket connection to backend server
-let ws;
+
 export default function LogsDisplay(props) {
   const [logs, updateLogs] = useState<any>([]);
   const [filter, updateFilter] = useState<any>('');
+  const [isChecked, check] = useState<boolean>(false);
   useEffect(() => {
-    if (!ws) {
-      ws = new WebSocket('ws://localhost:3001/');
-      ws.onopen = () =>
-        console.log('connected to websocket server in Logs Display');
-    }
+
+    let ws = new WebSocket('ws://localhost:3001/');
+    ws.onopen = () =>
+      console.log('connected to websocket server in Logs Display');
     //when there is an incoming msg
     ws.onmessage = (msg) => {
       //create boolean checking if log
       const newLogs = JSON.parse(msg.data).logs;
-      console.log('RECIEVED MSG LOGS!');
-      console.log(JSON.parse(msg.data).logs);
-      if (Array.isArray(newLogs)) updateLogs((logs) => [...newLogs, ...logs]);
+      if(newLogs.length) updateLogs(logs => [...newLogs, ...logs]);
     };
+  }, []);
 
-    //filter
-    if (filter === '') {
-      updateLogs(logs);
-    } else {
-      let newLogs = logs.filter((log) => {
-        log.src.includes(filter);
-      });
-      updateLogs(newLogs);
-    }
-    // const newLogs = [{
-    //   src: src,
-    //   msg: msg,
-    //   time: time
-    // }];
-  });
   return (
     <div className='w-full overflow-hidden'>
-      <DashboardContainer title='Logs' updateFilter={updateFilter} />
-      <LogsContainer msg={logs} />
+      <DashboardContainer check={check} isChecked={isChecked} updatePage={props.updatePage} title='Logs' filter={filter} updateFilter={updateFilter} />
+      <LogsContainer filter={filter} msg={logs} />
     </div>
   );
 }
 /* logs= [{},{},{}]*/
 const LogsContainer = (props) => {
-  //console.log("Inside Logs Container", props.msg);
+  // console.log("Inside Logs Container", props);
   let logElements: any = [];
-  // mock logs
+  const onlyErrors: any = document.getElementById('onlyErrors');
   for (let i = 0; i < props.msg.length; i++) {
-    logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+    if(props.filter === '') {
+      if(!onlyErrors.checked)
+        logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+      else{
+        if(props.msg[i].msg.toLowerCase().includes('err')) logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+      }
+    }
+    else{
+      if(!onlyErrors.checked){
+        if(props.msg[i].src.includes(props.filter) || props.msg[i].msg.includes(props.filter)) logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+      }
+      else{
+        if((props.msg[i].src.includes(props.filter) || props.msg[i].msg.includes(props.filter)) && props.msg[i].msg.toLowerCase().includes('err')) logElements.push(<LogElement key={i} msg={props.msg[i]} />);
+
+      }
+        
+    }
   }
+  console.log(logElements);
   return (
     <div className='scrollbar-thin log-container mb-2 ml-2 mr-2 scrollbar-thumb-rounded-full scrollbar-thumb-zinc-500 overflow-hidden h-[72vh]'>
       {logElements}
@@ -63,7 +63,6 @@ const LogElement = (props) => {
   // console.log("inside log element",props.msg);
 
   const changeStyle = () => {
-    console.log('you just clicked');
     if (style === 'log-element-clicked') {
       setStyle('log-element');
     } else {
