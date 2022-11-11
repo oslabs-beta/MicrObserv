@@ -40,7 +40,7 @@ controller.getTracers = async (ws) => {
                          INNER JOIN pTracers p
                          ON p.traceId = n.traceId
                          WHERE nCompleted = true
-                         ORDER BY nStartTime LIMIT 10;`;
+                         ORDER BY nStartTime DESC LIMIT 10;`;
     const data = await db.query(queryString);
     const names = data.rows.map(tracer => `${tracer.nsrc}-${tracer.psrc}`);
     const nTracerVals = data.rows.map(tracer => tracer.nendtime - tracer.nstarttime);
@@ -70,7 +70,7 @@ controller.getTracerHistory = (req, res, nxt) => {
     INNER JOIN pTracers p
     ON p.traceId = n.traceId
     WHERE nCompleted = true
-    ORDER BY nStartTime LIMIT $1;`;
+    ORDER BY nStartTime DESC LIMIT $1;`;
     db.query(queryString, [tracerHistIndex])
       .then(data => {
         // console.log(data.rows);
@@ -144,6 +144,8 @@ controller.storeNTracer = (req, res, next) => {
 
 controller.updateNTracer = (req, res, next) => {
   const { id } = req.body;
+  console.log('ID: ');
+  console.log(id);
   const queryString = `UPDATE nTracers SET nCompleted = TRUE
                        WHERE id = $1;`;
   db.query(queryString, [id])
