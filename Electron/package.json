@@ -52,15 +52,10 @@
     "ws": "^8.10.0"
   },
   "build": {
-    "appId": "com.microbserv.app",
-    "productName": "MicrObserv",
-    "target": "NSIS",
+    "appId": "com.microbserv.electron",
+    "productName": "MicrOberv",
     "directories": {
       "output": "build"
-    },
-    "nsis": {
-      "allowToChangeInstallationDirectory": true,
-      "oneClick": false
     }
   }
 }
