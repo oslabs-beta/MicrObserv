@@ -91,6 +91,7 @@ controller.updatedNTracer = async (req, res, next) => {
       // send new tracer data to frontend ws connections
       console.log(nTracer.time);
       console.log(pTracer.time);
+      if(nTracer.time > 7000 || pTracer.time > 7000) return next();
       const newTracers = {
         names: [nTracer.name + '-' + pTracer.name],
         nTracerVals: [nTracer.time],
@@ -116,7 +117,7 @@ controller.updatedNTracer = async (req, res, next) => {
  * Description: saves process tracer data in cache
  * saves current time for finding difference upon completion in updatedPTracer
  */
-controller.newPTracer = async (req, res, next) => {
+controller.newPTracer = (req, res, next) => {
   try{
     const time = Date.now();
     const {src, tracerId} = req.body;
@@ -144,7 +145,7 @@ const wait = ms => {
 /* updatedPTracer
  * Description: updates process tracers time
  */
-controller.updatedPTracer = async (req, res, next) => {
+controller.updatedPTracer = (req, res, next) => {
   try{
     const now = Date.now();
     const { tracerId } = req.body;

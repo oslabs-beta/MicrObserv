@@ -9,15 +9,29 @@ function DashboardContainer(props) {
       <div className='card-body'>
         <div className='dash-nav items-center'>
           <button className='h-15' onClick={() => props.updatePage(props.title.toLowerCase())}>{props.title}</button>
-          {/* <LogFilterBtn /> */}
-          <div className='flex items-center gap-2'>
-            <LogSearch updateFilter={props.updateFilter}/>
-          <LogError check={props.check} isChecked={props.isChecked} filter={props.filter} updateFilter={props.updateFilter}/>
-          </div>
+            <div className='flex items-center gap-2'>
+              <LogSearch updateFilter={props.updateFilter}/>
+            <LogError check={props.check} isChecked={props.isChecked} filter={props.filter} updateFilter={props.updateFilter}/>
+            </div>
         </div>
       </div>
     </div>
   );
 }
 
+const TracerDashboardContainer = props => {
+  return (
+    <div className='card overflow-visible h-full w-full'>
+      <div className='card-body'>
+        <div className='dash-nav items-center'>
+          <button className='h-15' onClick={() => props.updatePage(props.title.toLowerCase())}>{props.title}</button>
+            <div className='flex items-center gap-2'>
+              <LogSearch updateFilter={props.updateFilter}/>
+            </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+export { TracerDashboardContainer };
 export default DashboardContainer;

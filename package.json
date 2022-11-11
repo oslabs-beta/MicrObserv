@@ -1,6 +1,6 @@
 {
   "name": "microbserv",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An open source real-time &amp; event-driven observability tool for microservices.",
   "main": "index.js",
   "scripts": {
