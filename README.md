@@ -38,10 +38,6 @@
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
@@ -56,60 +52,90 @@
 
 ## About The Project
 
-<div align="center" >
-<a href="https://github.com/oslabs-beta/MicrObserv/">
-<img src="./assets/Screenshot 2022-11-09 at 10.59.59 AM.jpg" alt="Logo" width="600" height="450">
-</a>
-</div>
-<div align="center">
-<a href="https://github.com/oslabs-beta/MicrObserv/">
-<img src="./assets/Screenshot%202022-11-09%20at%2010.57.56%20AM.jpg" alt="Logo" width="600" height="450">
-</a>
-</div>
+MicrObserv is here to simplify observability for your microservice architecture by consolidating all logs and tracers into one centralized database.
 
-MicrObserv is here to simplify observability for your microservice architecture by consolidating all logs and tracers into one consolidated database.
+<!-- GETTING STARTED -->
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## Getting Started
 
-<!-- DEMO -->
+1. Fork and Clone the repo
 
-## Demo
+2. Install dependencies
+    ```sh
+    cd Backend
+    ```
+    ```sh
+    npm install
+    ```
 
+2. Demo the application (skip to step 3 if you want to implement on your actual microservices)
+    1. Install dependencies
+        ```sh
+        cd ../Demo
+        ```
+        ```sh
+        npm run install
+        ```
+    2. Start servers
+        ```sh
+        cd ../Backend
+        ```
+        1. Start Backend Server
+        ```sh
+        npm start
+        ```
+        2. Start demo backend server
+        ```sh
+        cd ../Demo
+        ```
+        ```sh
+        npm run start-services
+        ```
+    3. Launch demo front-end 
+        ```sh
+        npm run start-web-app
+        ```
+        1. This will open the frontend in your Chrome browser to start up the demo microservices, which includes 2 services communicating back and forth
+            - includes two input fields
+              - Request Time - simulates the speed at which a microservice will take to respond to a request
+              - Time Out - refers to how often the a new request will be made
+                - this should be greater than Request Time
+
+
+3. Microservice Integration 
+    1. Install npm package in each microservice for tracking data.
+    ```sh
+    npm i microbserv
+    ```
+    2. Locally start microbserv server
+      1. clone Microbserv repo
+      2. Inside repo change directories and enter Backend folder
+      ```sh
+      cd Backend
+      ```
+      3. Install npm dependencies
+      ```sh
+      npm install
+      ```
+      4. Start server
+      ```sh
+      npm start
+      ```
+    
+4. Download and Launch MicrObserv executable based on your OS
+   - This is a link to our DropBox 
+   https://www.dropbox.com/s/n8s2wzp8ucgs9cx/MicrOberv-1.0.0-arm64.dmg?dl=0
+   - Launching takes you to the homepage where you can input your system name and a valid PostgreSQL URI for storing logs and tracers.
+5. Click on your newly added system
 <div align="center">
 <img src="./assets/Demo.gif" alt="Logo" width="600" height="450">
 </div>
 
-need gif of dashboard updating
-1. Fork and Clone the repo
-2. Install dependencies in the root folder and into each of the following folders
-    1. Backend
-    2. Electron
-    3. Demo
-    4. Demo/SeviceA
-    5. Demo/ServiceB
-    6. Demo/website
-3. Start servers `npm start` in the following folders
-    1. Backend
-    2. Demo
-    
-1. Download and Launch MicrObserv executable based on your OS
-   
-2. Lauching takes you to the homepage where you can input a your system name and PostgreSQL URI for storing logs and tracers.
-    1. For the demo, the system name can be anything, but you must input a valid PostgreSQL URI.
-    
-3. Launching Demo GUI
-    1. Fork and Clone the repo
-    2. navigate to the website directory in the Demo folder
-        ```sh
-        
-        ```
-
-explain how to start up demo gui
-are we having user fork and clone and starting from terminal?
-
-explain frenquecy and time out
-
-
+<div align="center">
+<a href="https://github.com/oslabs-beta/MicrObserv/">
+<img src="./assets/dashboard.jpg" alt="Logo" width="600" height="450">
+</a>
+</div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -125,53 +151,6 @@ explain frenquecy and time out
 - [![Chart.js][chartjs.com]][chartjs-url]
 - [![PostgresSQL][postgres.dev]][postgres-url]
 - [![Tailwindcss][tailwindcss.com]][tailwindcss-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- GETTING STARTED -->
-
-## Getting Started
-
-### Prerequisites
-
-Make sure you are running version v18.10.0 of node.
-
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-1. Install NPM package into each of your microservices for a given application
-   ```sh
-   npm install
-   ```
-2. Clone the repo
-   ```sh
-   git clone https://github.com/oslabs-beta/MicrObserv.git
-   ```
-3. Start the application
-   ```npm start
-
-   ```
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- USAGE EXAMPLES -->
-
-## Usage
-
-1. Input application/system name and PostgreSQL database URI and click ADD
-
-<div align="center">
-<img src="./assets/Demo.gif" alt="Logo" width="600" height="450">
-</div>
-
-2. Click on the newly created System Name to open up the dashboard
-
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
