@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 export default function Systems(props) {
   const [systems, updateSystems] = useState([]);
-  //imput text from input fields
+  
+  //input text from input fields
   const [systemName, updateSystemName] = useState('');
   const [uri, updateURI] = useState('');
   const [isLoading, setIsLoading] = useState(false);
