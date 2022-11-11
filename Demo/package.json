@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "concurrently \"nodemon ServiceA/serviceA.js\"",
+    "start-services": "concurrently \"nodemon ServiceA/serviceA.js\" \"nodemon ServiceB/serviceB.js\"",
+    "start-web-app": "cd website",
+    "install": "npm install; cd ServiceA; npm install; cd ../ServiceB; npm install;",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
