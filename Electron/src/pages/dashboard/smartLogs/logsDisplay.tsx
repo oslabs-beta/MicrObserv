@@ -44,7 +44,6 @@ const LogsContainer = (props) => {
       }
       else{
         if((props.msg[i].src.includes(props.filter) || props.msg[i].msg.includes(props.filter)) && props.msg[i].msg.toLowerCase().includes('err')) logElements.push(<LogElement key={i} msg={props.msg[i]} />);
-
       }
         
     }
