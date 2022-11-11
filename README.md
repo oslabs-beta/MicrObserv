@@ -61,8 +61,12 @@ MicrObserv is here to simplify observability for your microservice architecture 
 1. Fork and Clone the repo
 
 2. Install dependencies
-    1. cd Backend
-    2. npm install
+    ```sh
+    cd Backend
+    ```
+    ```sh
+    npm install
+    ```
 
 2. Demo the application (skip to step 3 if you want to implement on your actual microservices)
     1. Install dependencies
