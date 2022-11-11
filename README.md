@@ -58,8 +58,6 @@ MicrObserv is here to simplify observability for your microservice architecture 
 
 ## Getting Started
 
-
-need gif of dashboard updating
 1. Fork and Clone the repo
 
 2. Install dependencies
