@@ -125,8 +125,8 @@ MicrObserv is here to simplify observability for your microservice architecture 
       ```
     
 4. Download and Launch MicrObserv executable based on your OS
-   - This is a link to our DropBox 
-   https://www.dropbox.com/s/n8s2wzp8ucgs9cx/MicrOberv-1.0.0-arm64.dmg?dl=0
+   - [Windows] (https://github.com/oslabs-beta/MicrObserv/releases/download/release/MicrOberv.Setup.1.0.0.Windows.exe)
+   - [Mac - M1] (https://github.com/oslabs-beta/MicrObserv/releases/download/release/MicrOberv-1.0.0-arm64.Mac.dmg)
    - Launching takes you to the homepage where you can input your system name and a valid PostgreSQL URI for storing logs and tracers.
 5. Click on your newly added system
 <div align="center">
