@@ -76,7 +76,9 @@ MicrObserv is here to simplify observability for your microservice architecture 
         ```sh
         npm run install
         ```
-    2. Start servers
+    2. Create .env file in the Demo folder
+        1. Assign a PostgreSQL URI to "DEMO_URI"
+    3. Start servers
         ```sh
         cd ../Backend
         ```
@@ -91,7 +93,7 @@ MicrObserv is here to simplify observability for your microservice architecture 
         ```sh
         npm run start-services
         ```
-    3. Launch demo front-end 
+    4. Launch demo front-end 
         ```sh
         npm run start-web-app
         ```
