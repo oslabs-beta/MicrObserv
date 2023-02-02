@@ -6,16 +6,20 @@ export default function LogsDisplay(props) {
   const [filter, updateFilter] = useState<any>('');
   const [isChecked, check] = useState<boolean>(false);
   useEffect(() => {
-
-    let ws = new WebSocket('ws://localhost:3001/');
-    ws.onopen = () =>
-      console.log('connected to websocket server in Logs Display');
-    //when there is an incoming msg
-    ws.onmessage = (msg) => {
-      //create boolean checking if log
+    let eventSource = new EventSource('/eventsource');
+    eventSource.onmessage = (msg) => {
       const newLogs = JSON.parse(msg.data).logs;
       if(newLogs.length) updateLogs(logs => [...newLogs, ...logs]);
-    };
+    }
+    // let ws = new WebSocket('ws://localhost:3001/');
+    // ws.onopen = () =>
+    //   console.log('connected to websocket server in Logs Display');
+    // //when there is an incoming msg
+    // ws.onmessage = (msg) => {
+    //   //create boolean checking if log
+    //   const newLogs = JSON.parse(msg.data).logs;
+    //   if(newLogs.length) updateLogs(logs => [...newLogs, ...logs]);
+    // };
   }, []);
 
   return (

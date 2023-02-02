@@ -34,8 +34,8 @@ controller.newLog = async (req, res, next) => {
       msg: msg,
       time: time
     }];
-    for(ws of controller.connections){
-      ws.send(JSON.stringify({...defaultWSMsg, logs: newLogs}));
+    for(let event of controller.connections){ 
+      res.write(`data: ${JSON.stringify({...defaultWSMsg, logs: newLogs})}`);
     }
     return next();
   }
@@ -97,8 +97,8 @@ controller.updatedNTracer = async (req, res, next) => {
         nTracerVals: [nTracer.time],
         pTracerVals: [pTracer.time]
       };
-      for(ws of controller.connections){
-        ws.send(JSON.stringify({...defaultWSMsg, tracers: newTracers}));
+      for(let event of controller.connections){ 
+        res.write(`data: ${JSON.stringify({...defaultWSMsg, tracers: newTracers})}`);
       }
       controller.nTracerCache.delete(tracerId);
       controller.pTracerCache.delete(tracerId);

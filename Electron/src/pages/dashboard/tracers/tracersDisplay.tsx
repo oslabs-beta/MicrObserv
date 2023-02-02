@@ -9,18 +9,26 @@ export default props => {
   const [pTracerVals, updatePTracerVals] = useState<any>([]);
   const [filter, updateFilter] = useState<any>('');
   useEffect(() => {
-    let ws = new WebSocket('ws://localhost:3001/');
-    ws.onopen = () => console.log("connected to websocket server in Tracer Display");
-    //when there is an incoming msg
-    ws.onmessage = (msg) => {
-      // console.log('RECIEVED MSG Tracers!');
-      
-      //create boolean checking if log
+    let eventSource = new EventSource('/eventsource');
+    eventSource.onmessage = (msg) => {
+      console.log('Received MSG Tracer')
       const tracers = JSON.parse(msg.data).tracers;
       if(tracers.names.length) updateTracerNames(tracerNames => [...tracerNames, ...tracers.names]);
       if(tracers.nTracerVals.length) updateNTracerVals(nTracerVals => [...nTracerVals, ...tracers.nTracerVals]);
       if(tracers.pTracerVals.length) updatePTracerVals(pTracerVals => [...pTracerVals, ...tracers.pTracerVals]);
     }
+    // let ws = new WebSocket('ws://localhost:3001/');
+    // ws.onopen = () => console.log("connected to websocket server in Tracer Display");
+    // //when there is an incoming msg
+    // ws.onmessage = (msg) => {
+    //   // console.log('RECIEVED MSG Tracers!');
+      
+    //   //create boolean checking if log
+    //   const tracers = JSON.parse(msg.data).tracers;
+    //   if(tracers.names.length) updateTracerNames(tracerNames => [...tracerNames, ...tracers.names]);
+    //   if(tracers.nTracerVals.length) updateNTracerVals(nTracerVals => [...nTracerVals, ...tracers.nTracerVals]);
+    //   if(tracers.pTracerVals.length) updatePTracerVals(pTracerVals => [...pTracerVals, ...tracers.pTracerVals]);
+    // }
   }, []);
  
   return (

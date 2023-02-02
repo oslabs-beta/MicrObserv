@@ -1,6 +1,7 @@
 const express = require('express');
 const dbController = require('./controllers/dbController');
 const electronController = require('./controllers/electronController');
+const eventSourceController = require('./controllers/eventSourceController');
 const router = express.Router();
 
 const debug = (req, res, next) => {
@@ -8,7 +9,7 @@ const debug = (req, res, next) => {
   return next;
 }
 
-
+router.get('/eventSource', eventSourceController.sendEvents, dbController.getLogs,  dbController.getTracers);
 
 router.post('/newLog', electronController.newLog, dbController.storeLog, (req, res) => res.sendStatus(200));
 

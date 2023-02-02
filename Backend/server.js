@@ -7,7 +7,7 @@ const npmPackRouter = require('./routes');
 const PORT = 3000;
 const cors = require("cors");
 const app = express();
-const electronController = require('./controllers/electronController');
+const eventSourceController = require('./controllers/eventSourceController');
 const dbController = require('./controllers/dbController');
 
 app.use(cors());
@@ -16,35 +16,36 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-const wss = new ws.Server({ 
-  server: app.listen(3001),
-  host: 'localhost',
-  path: '/'
- });
-// const wss = new ws.Server({ noServer: true });
-wss.on('connection', function connection(ws) {
-    console.log("New Connection Client");
-    electronController.connections.push(ws)
-    ws.on('message', function message(data) {
-      console.log('received: %s', data);
-    });
-    // send all logs and tracers from db
-    dbController.getLogs(ws);
-    dbController.getTracers(ws);
-    //dummy data for now
-    // ws.send(JSON.stringify({
-    //   logs: [{src: 'Service A', msg: 'hi1', time: 'today'}],
-    //   tracers: {
-    //     names: ['Service A to B', 'Service B to A'],
-    //     nTracerVals: [70, 90],
-    //     pTracerVals: [40, 10],
-    //   },
-    // }));
-  });
+// const wss = new ws.Server({ 
+//   server: app.listen(3001),
+//   host: 'localhost',
+//   path: '/'
+//  });
+// // const wss = new ws.Server({ noServer: true });
+// wss.on('connection', function connection(ws) {
+//     console.log("New Connection Client");
+//     electronController.connections.push(ws)
+//     ws.on('message', function message(data) {
+//       console.log('received: %s', data);
+//     });
+//     // send all logs and tracers from db
+//     dbController.getLogs(ws);
+//     dbController.getTracers(ws);
+//     //dummy data for now
+//     // ws.send(JSON.stringify({
+//     //   logs: [{src: 'Service A', msg: 'hi1', time: 'today'}],
+//     //   tracers: {
+//     //     names: ['Service A to B', 'Service B to A'],
+//     //     nTracerVals: [70, 90],
+//     //     pTracerVals: [40, 10],
+//     //   },
+//     // }));
+//   });
 
 app.use('/', express.static(path.join(__dirname, '../Electron/dist/')));
 app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../Electron/dist/index.html')));
 
+app.get('/eventSource', eventSourceController.sendEvents, dbController.getLogs, dbController.getTracers);
 app.use('/MicrObserv', npmPackRouter)
 
 // Global error handler, will trigger if any errors occur when handling requests

@@ -12,7 +12,7 @@ const cleanTimeStampData = time => {
   return `${month}/${day} - ${t}`;
 }
 
-controller.getLogs = async (ws) => {
+controller.getLogs = async (req, res) => {
   try{
     const queryString = `SELECT * FROM Logs
                          ORDER BY time DESC LIMIT 50;`;
@@ -20,14 +20,22 @@ controller.getLogs = async (ws) => {
     for(const log of data.rows){
       log.time = cleanTimeStampData(JSON.stringify(log.time));
     }
-    ws.send(JSON.stringify({
+    res.write(`data: ${JSON.stringify({
       logs: data.rows,
       tracers: {
         names: [],
         nTracerVals: [],
         pTracerVals: [],
       },
-    }));
+    })}`)
+    // ws.send(JSON.stringify({
+    //   logs: data.rows,
+    //   tracers: {
+    //     names: [],
+    //     nTracerVals: [],
+    //     pTracerVals: [],
+    //   },
+    // }));
   }
   catch(err){
     console.log(err)
@@ -45,14 +53,23 @@ controller.getTracers = async (ws) => {
     const names = data.rows.map(tracer => `${tracer.nsrc}-${tracer.psrc}`);
     const nTracerVals = data.rows.map(tracer => tracer.nendtime - tracer.nstarttime);
     const pTracerVals = data.rows.map(tracer => tracer.pendtime - tracer.pstarttime);
-    ws.send(JSON.stringify({
+    
+    res.write(`data: ${JSON.stringify({
       logs: [],
       tracers: {
         names: names,
         nTracerVals: nTracerVals,
         pTracerVals: pTracerVals,
       },
-    }));
+    })}`)
+    // ws.send(JSON.stringify({
+    //   logs: [],
+    //   tracers: {
+    //     names: names,
+    //     nTracerVals: nTracerVals,
+    //     pTracerVals: pTracerVals,
+    //   },
+    // }));
 
   }
   catch(err){
