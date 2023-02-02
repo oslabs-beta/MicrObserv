@@ -42,7 +42,7 @@ wss.on('connection', function connection(ws) {
     // }));
   });
 
-app.use('/',express.static(path.join(__dirname, '../Electron/dist/')));
+app.use('/', express.static(path.join(__dirname, '../Electron/dist/')));
 app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../Electron/dist/index.html')));
 
 app.use('/MicrObserv', npmPackRouter)

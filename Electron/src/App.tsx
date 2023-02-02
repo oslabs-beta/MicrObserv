@@ -15,6 +15,7 @@ const App = () => {
   const [page, updatePage] = useState('home');
   const [systemName, updateSystemName] = useState('MicrObserv');
   const [realTime, showRealTime] = useState<boolean>(true);
+
   const renderPage = function () {
     //check to see if user is logged in
     switch (page) {
